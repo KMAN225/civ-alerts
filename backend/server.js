@@ -38,9 +38,11 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 if (isProd) {
   const frontendDist = path.join(__dirname, '..', 'frontend', 'dist');
   app.use(express.static(frontendDist));
-  app.get('*', (req, res) => {
+  app.get('*', (req, res, next) => {
     if (!req.path.startsWith('/api')) {
       res.sendFile(path.join(frontendDist, 'index.html'));
+    } else {
+      next();
     }
   });
 }
