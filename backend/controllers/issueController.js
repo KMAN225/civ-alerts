@@ -3,7 +3,7 @@ const { analyzeIssue } = require('../services/aiService');
 
 exports.getAllIssues = async (req, res) => {
   try {
-    const issues = await Issue.find().sort({ votes: -1 });
+    const issues = await Issue.find({ deletedAt: null }).sort({ votes: -1 });
     res.json(issues);
   } catch (err) {
     res.status(500).json({ message: 'Erreur serveur', error: err.message });
@@ -40,7 +40,7 @@ exports.createIssue = async (req, res) => {
 exports.voteIssue = async (req, res) => {
   try {
     const userId = req.user._id;
-    const issue = await Issue.findById(req.params.id);
+    const issue = await Issue.findOne({ _id: req.params.id, deletedAt: null });
     if (!issue) return res.status(404).json({ message: 'Signalement introuvable' });
 
     if (issue.voters.includes(userId)) {
@@ -60,15 +60,61 @@ exports.voteIssue = async (req, res) => {
 
 exports.deleteIssue = async (req, res) => {
   try {
-    const issue = await Issue.findById(req.params.id);
+    const issue = await Issue.findOne({ _id: req.params.id, deletedAt: null });
     if (!issue) return res.status(404).json({ message: 'Signalement introuvable' });
 
     if (issue.userId.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
       return res.status(403).json({ message: 'Vous n\'êtes pas autorisé à supprimer ce signalement' });
     }
 
+    issue.deletedAt = new Date();
+    await issue.save();
+    res.json({ message: 'Signalement déplacé dans la corbeille' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.getTrash = async (req, res) => {
+  try {
+    const issues = await Issue.find({
+      userId: req.user._id,
+      deletedAt: { $ne: null }
+    }).sort({ deletedAt: -1 });
+    res.json(issues);
+  } catch (err) {
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+};
+
+exports.restoreIssue = async (req, res) => {
+  try {
+    const issue = await Issue.findOne({
+      _id: req.params.id,
+      userId: req.user._id,
+      deletedAt: { $ne: null }
+    });
+    if (!issue) return res.status(404).json({ message: 'Signalement introuvable dans la corbeille' });
+
+    issue.deletedAt = null;
+    await issue.save();
+    res.json({ message: 'Signalement restauré' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.permanentDelete = async (req, res) => {
+  try {
+    const issue = await Issue.findOne({
+      _id: req.params.id,
+      userId: req.user._id,
+      deletedAt: { $ne: null }
+    });
+    if (!issue) return res.status(404).json({ message: 'Signalement introuvable dans la corbeille' });
+
     await issue.deleteOne();
-    res.json({ message: 'Signalement supprimé avec succès' });
+    res.json({ message: 'Signalement supprimé définitivement' });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
