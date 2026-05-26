@@ -4,6 +4,10 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Home from './pages/Home';
 import AdminDashboard from './pages/AdminDashboard';
+import About from './pages/About';
+import Terms from './pages/Terms';
+import Privacy from './pages/Privacy';
+import Contact from './pages/Contact';
 import { ToastProvider } from './components/Toast';
 import { API_URL } from './config';
 
@@ -65,6 +69,10 @@ function App() {
               </>
             } />
             <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/contact" element={<Contact />} />
           </Routes>
           <footer className="bg-ciDark text-gray-400">
             <div className="max-w-7xl mx-auto px-6 py-16">
@@ -94,10 +102,10 @@ function App() {
                 <div>
                   <h4 className="text-[10px] font-black text-white uppercase tracking-widest mb-4">Liens utiles</h4>
                   <ul className="space-y-2.5">
-                    <li><a href="#" className="text-xs text-gray-500 hover:text-white transition-colors font-medium">À propos</a></li>
-                    <li><a href="#" className="text-xs text-gray-500 hover:text-white transition-colors font-medium">Conditions d'utilisation</a></li>
-                    <li><a href="#" className="text-xs text-gray-500 hover:text-white transition-colors font-medium">Confidentialité</a></li>
-                    <li><a href="#" className="text-xs text-gray-500 hover:text-white transition-colors font-medium">Contact</a></li>
+                    <li><a href="/about" className="text-xs text-gray-500 hover:text-white transition-colors font-medium">À propos</a></li>
+                    <li><a href="/terms" className="text-xs text-gray-500 hover:text-white transition-colors font-medium">Conditions d'utilisation</a></li>
+                    <li><a href="/privacy" className="text-xs text-gray-500 hover:text-white transition-colors font-medium">Confidentialité</a></li>
+                    <li><a href="/contact" className="text-xs text-gray-500 hover:text-white transition-colors font-medium">Contact</a></li>
                   </ul>
                 </div>
               </div>
