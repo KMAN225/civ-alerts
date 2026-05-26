@@ -8,6 +8,7 @@ const compression = require('compression');
 const issueRoutes = require('./routes/issueRoutes');
 const authRoutes = require('./routes/authRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const contactRoutes = require('./routes/contactRoutes');
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.use('/api/issues', issueRoutes);
 app.use('/api/auth', authRoutes);
 
 app.use('/api/admin', adminRoutes);
+app.use('/api/contact', contactRoutes);
 
 // Global error handler
 app.use((err, req, res, next) => {

@@ -1,41 +1,148 @@
 import React from 'react';
 
+const values = [
+  {
+    icon: '🎯',
+    title: 'Mission',
+    desc: 'Faciliter la communication entre les citoyens et les autorités ivoiriennes en digitalisant le signalement des dysfonctionnements urbains et sectoriels, pour une résolution rapide et transparente.',
+  },
+  {
+    icon: '👁️',
+    title: 'Vision',
+    desc: 'Bâtir une Côte d\'Ivoire où chaque citoyen est acteur de l\'amélioration de son cadre de vie, grâce à des outils numériques souverains, transparents et accessibles à tous.',
+  },
+  {
+    icon: '🤝',
+    title: 'Valeurs',
+    desc: 'Transparence intégrale des processus, engagement citoyen, innovation technologique au service de l\'intérêt général et traitement équitable de chaque signalement.',
+  },
+];
+
+const team = [
+  { name: 'Boris K.', role: 'Fondateur & Développeur', initials: 'BK' },
+  { name: 'Vous ?', role: 'Rejoignez l\'équipe', initials: '?' },
+];
+
+const stats = [
+  { value: '6', label: 'Secteurs couverts', sub: 'Agriculture, Santé, Éducation, Transport, Numérique, Énergie' },
+  { value: 'AI', label: 'IA intégrée', sub: 'Catégorisation et priorisation automatiques' },
+  { value: '24/7', label: 'Disponibilité', sub: 'Signalement et suivi en temps réel' },
+];
+
 export default function About() {
   return (
     <div className="min-h-screen bg-gray-50 pt-28 pb-16">
-      <div className="max-w-4xl mx-auto px-6">
-        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 sm:p-12">
-          <div className="inline-flex items-center gap-2 bg-ciGreen/5 px-3 py-1.5 rounded-full text-[10px] font-bold text-ciGreen uppercase tracking-wider border border-ciGreen/10 mb-6">
-            À propos
+      <div className="max-w-5xl mx-auto px-6 space-y-8">
+
+        {/* Hero section */}
+        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
+          <div className="bg-gradient-to-br from-ciGreen to-green-700 p-8 sm:p-12 text-white">
+            <div className="inline-flex items-center gap-2 bg-white/15 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider border border-white/20 mb-5">
+              Plateforme d'intérêt public
+            </div>
+            <h1 className="text-3xl sm:text-5xl font-black mb-4">
+              CIV<span className="text-ciOrange">-Alerts</span>
+            </h1>
+            <p className="text-white/80 text-lg max-w-2xl leading-relaxed font-medium">
+              Portail national de signalement citoyen des dysfonctionnements urbains et sectoriels en République de Côte d'Ivoire.
+            </p>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black text-ciDark mb-6">
-            CIV<span className="text-ciOrange">-Alerts</span>
-          </h1>
-          <div className="prose prose-gray max-w-none space-y-4 text-gray-600 leading-relaxed">
-            <p className="text-lg font-medium">
-              CIV-Alerts est une plateforme d'intérêt public dédiée à l'amélioration du cadre de vie en Côte d'Ivoire.
-            </p>
-            <p>
-              Notre mission est de faciliter la communication entre les citoyens et les autorités compétentes en permettant un signalement rapide et structuré des dysfonctionnements urbains et sectoriels.
-            </p>
-            <h2 className="text-xl font-black text-ciDark mt-8">Notre Vision</h2>
-            <p>
-              Bâtir une Côte d'Ivoire où chaque citoyen peut contribuer activement à l'entretien et à l'amélioration de son environnement, grâce à des outils numériques transparents et accessibles à tous.
-            </p>
-            <h2 className="text-xl font-black text-ciDark mt-8">Comment ça marche</h2>
-            <ol className="list-decimal list-inside space-y-2">
-              <li>Identifiez un dysfonctionnement dans votre quartier ou votre secteur</li>
-              <li>Soumettez un signalement via notre formulaire avec photo</li>
-              <li>Notre IA catégorise et priorise automatiquement votre rapport</li>
-              <li>Les autorités compétentes sont notifiées et traitent le problème</li>
-              <li>Suivez l'évolution du traitement en temps réel</li>
-            </ol>
-            <h2 className="text-xl font-black text-ciDark mt-8">Transparence</h2>
-            <p>
-              Chaque signalement est suivi de sa soumission jusqu'à sa résolution. Les citoyens peuvent consulter l'état d'avancement et voter pour les priorités collectives.
-            </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-gray-100">
+            {stats.map((s, i) => (
+              <div key={i} className="p-6 sm:p-8 text-center">
+                <p className="text-2xl font-black text-ciDark mb-1">{s.value}</p>
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">{s.label}</p>
+                <p className="text-[11px] text-gray-400 mt-1">{s.sub}</p>
+              </div>
+            ))}
           </div>
         </div>
+
+        {/* Values */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          {values.map((v, i) => (
+            <div key={i} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-md transition-shadow">
+              <span className="text-3xl block mb-4">{v.icon}</span>
+              <h3 className="text-sm font-black text-ciDark uppercase tracking-wider mb-2">{v.title}</h3>
+              <p className="text-sm text-gray-500 leading-relaxed">{v.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* How it works */}
+        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 sm:p-12">
+          <h2 className="text-2xl font-black text-ciDark mb-8">Fonctionnement</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-5 gap-6">
+            {[
+              { step: '01', title: 'Identification', desc: 'Repérez un dysfonctionnement dans votre localité' },
+              { step: '02', title: 'Signalement', desc: 'Soumettez via notre formulaire avec photo' },
+              { step: '03', title: 'Traitement IA', desc: 'Notre IA catégorise et priorise automatiquement' },
+              { step: '04', title: 'Instruction', desc: 'Les autorités notifiées traitent le dossier' },
+              { step: '05', title: 'Suivi', desc: 'Suivez la résolution en temps réel' },
+            ].map((item, i) => (
+              <div key={i} className="text-center">
+                <div className="w-12 h-12 bg-ciGreen/10 rounded-2xl flex items-center justify-center text-sm font-black text-ciGreen mx-auto mb-3">{item.step}</div>
+                <h4 className="text-xs font-black text-ciDark uppercase tracking-wider mb-1">{item.title}</h4>
+                <p className="text-[11px] text-gray-500">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-8 pt-6 border-t border-gray-100">
+            <div className="flex items-center gap-3 p-4 bg-amber-50 rounded-2xl border border-amber-200">
+              <span className="text-xl">⚖️</span>
+              <p className="text-xs text-amber-700 font-medium">
+                CIV-Alerts est une plateforme indépendante. Les signalements sont transmis aux autorités compétentes sans garantie de délai de traitement.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Tech */}
+        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 sm:p-12">
+          <h2 className="text-2xl font-black text-ciDark mb-6">Architecture technique</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {[
+              { label: 'Frontend', tech: 'React 18, Vite, Tailwind CSS', icon: '⚛️' },
+              { label: 'Backend', tech: 'Node.js, Express, MongoDB', icon: '🖥️' },
+              { label: 'IA', tech: 'Anthropic Claude API', icon: '🧠' },
+            ].map((t, i) => (
+              <div key={i} className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl border border-gray-100">
+                <span className="text-2xl">{t.icon}</span>
+                <div>
+                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-wider">{t.label}</p>
+                  <p className="text-xs font-bold text-ciDark">{t.tech}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Team */}
+        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 sm:p-12">
+          <h2 className="text-2xl font-black text-ciDark mb-6">Équipe</h2>
+          <p className="text-sm text-gray-500 mb-6">Un projet open source en cours de développement. Contribuez sur GitHub.</p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {team.map((m, i) => (
+              <div key={i} className="flex items-center gap-4 p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                <div className="w-12 h-12 bg-ciGreen/10 rounded-2xl flex items-center justify-center text-sm font-black text-ciGreen">{m.initials}</div>
+                <div>
+                  <p className="text-sm font-bold text-ciDark">{m.name}</p>
+                  <p className="text-[10px] text-gray-400 font-medium">{m.role}</p>
+                </div>
+              </div>
+            ))}
+            <a
+              href="https://github.com/KMAN225/civ-alerts"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 p-4 bg-gray-50 rounded-2xl border border-dashed border-gray-200 hover:border-ciGreen/50 hover:bg-ciGreen/5 transition-all group"
+            >
+              <span className="text-lg">⭐</span>
+              <span className="text-xs font-bold text-gray-400 group-hover:text-ciGreen transition-colors">Contribuer sur GitHub</span>
+            </a>
+          </div>
+        </div>
+
       </div>
     </div>
   );
