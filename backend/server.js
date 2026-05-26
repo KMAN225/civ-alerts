@@ -54,7 +54,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({
     status: 'error',
     message: 'Une erreur interne est survenue sur le serveur',
-    error: !isProd ? err.message : undefined
+    error: !isProd ? err.message : err.message
   });
 });
 
