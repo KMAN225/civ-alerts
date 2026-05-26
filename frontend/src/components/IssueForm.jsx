@@ -5,14 +5,13 @@ import { API_URL } from '../config';
 export default function IssueForm({ onIssueAdded, initialSector }) {
   const toast = useToast();
   const [formData, setFormData] = useState({ title: '', description: '', sector: initialSector || 'Agriculture', location: '', priority: 'Moyenne' });
+  const [sending, setSending] = useState(false);
 
   useEffect(() => {
     if (initialSector) {
       setFormData(prev => ({ ...prev, sector: initialSector }));
     }
   }, [initialSector]);
-  const [file, setFile] = useState(null);
-  const [sending, setSending] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,27 +22,21 @@ export default function IssueForm({ onIssueAdded, initialSector }) {
     }
     setSending(true);
     try {
-      const data = new FormData();
-      data.append('title', formData.title);
-      data.append('description', formData.description);
-      data.append('sector', formData.sector);
-      data.append('location', formData.location);
-      data.append('priority', formData.priority);
-      if (file) data.append('image', file);
-
       const res = await fetch(`${API_URL}/api/issues`, {
         method: 'POST',
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
-        body: data
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
       });
       if (res.ok) {
         toast.success('Signalement transmis avec succès');
         onIssueAdded();
         setFormData({ title: '', description: '', sector: 'Agriculture', location: '', priority: 'Moyenne' });
-        setFile(null);
       } else {
         const err = await res.json();
-        const msg = err.errors ? err.errors.map(e => '• ' + e.message).join('\n') : err.message;
+        const msg = err.errors ? err.errors.map(e => e.message).join('\n') : (err.message || 'Erreur lors de l\'envoi');
         toast.error(msg || 'Erreur lors de l\'envoi');
       }
     } catch {
@@ -71,22 +64,20 @@ export default function IssueForm({ onIssueAdded, initialSector }) {
             <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Titre du problème</label>
             <input
               className="w-full p-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-ciGreen outline-none transition-all text-sm placeholder:text-gray-400"
-              placeholder="Ex : Manque d'eau potable à Korhogo"
+              placeholder="Ex : Route dégradée, panne d'électricité..."
               value={formData.title}
               onChange={e => setFormData({...formData, title: e.target.value})}
-              minLength={5}
               required
             />
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Description détaillée</label>
+            <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Description</label>
             <textarea
               className="w-full p-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-ciGreen outline-none transition-all h-28 text-sm placeholder:text-gray-400 resize-none"
-              placeholder="Décrivez la situation en quelques phrases..."
+              placeholder="Décrivez le problème en quelques phrases..."
               value={formData.description}
               onChange={e => setFormData({...formData, description: e.target.value})}
-              minLength={10}
               required
             />
           </div>
@@ -116,32 +107,17 @@ export default function IssueForm({ onIssueAdded, initialSector }) {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Niveau d'urgence</label>
-              <select
-                className="w-full p-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-ciGreen outline-none transition-all text-sm cursor-pointer"
-                value={formData.priority}
-                onChange={e => setFormData({...formData, priority: e.target.value})}
-              >
-                <option value="Faible">Faible</option>
-                <option value="Moyenne">Moyenne</option>
-                <option value="Critique">Critique</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Photo (optionnelle)</label>
-              <label className="flex items-center gap-3 p-3.5 bg-gray-50 border border-gray-200 rounded-xl focus-within:ring-2 focus-within:ring-ciGreen transition-all cursor-pointer text-sm text-gray-400 hover:border-ciGreen/50">
-                <span className="text-lg">📷</span>
-                <span className="text-xs font-medium">{file ? file.name : 'Ajouter une photo'}</span>
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={e => setFile(e.target.files[0])}
-                />
-              </label>
-            </div>
+          <div>
+            <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Priorité</label>
+            <select
+              className="w-full p-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-ciGreen outline-none transition-all text-sm cursor-pointer"
+              value={formData.priority}
+              onChange={e => setFormData({...formData, priority: e.target.value})}
+            >
+              <option value="Faible">Faible</option>
+              <option value="Moyenne">Moyenne</option>
+              <option value="Critique">Critique</option>
+            </select>
           </div>
 
           <button
