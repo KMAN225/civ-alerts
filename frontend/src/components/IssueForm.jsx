@@ -73,6 +73,7 @@ export default function IssueForm({ onIssueAdded, initialSector }) {
               placeholder="Ex : Manque d'eau potable à Korhogo"
               value={formData.title}
               onChange={e => setFormData({...formData, title: e.target.value})}
+              minLength={5}
               required
             />
           </div>
@@ -84,6 +85,7 @@ export default function IssueForm({ onIssueAdded, initialSector }) {
               placeholder="Décrivez la situation en quelques phrases..."
               value={formData.description}
               onChange={e => setFormData({...formData, description: e.target.value})}
+              minLength={10}
               required
             />
           </div>

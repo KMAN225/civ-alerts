@@ -15,7 +15,15 @@ const app = express();
 const isProd = process.env.NODE_ENV === 'production';
 
 // Sécurité et performances
-app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: 'cross-origin' },
+  contentSecurityPolicy: {
+    directives: {
+      ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+      'img-src': ["'self'", 'data:', '*.tile.openstreetmap.org'],
+    },
+  },
+}));
 app.use(compression());
 app.use(cors({
   origin: isProd ? process.env.FRONTEND_URL || true : true,
