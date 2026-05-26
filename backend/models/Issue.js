@@ -27,6 +27,7 @@ const IssueSchema = new mongoose.Schema({
   verified: { type: Boolean, default: false }, // Ajouté pour la crédibilité
   aiProcessed: { type: Boolean, default: false },
   mediaUrl: { type: String },
+  deletedAt: { type: Date, default: null },
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   createdAt: { type: Date, default: Date.now }
 });

@@ -130,6 +130,14 @@ export default function Navbar({ selectedSector, setSelectedSector }) {
                     Admin
                   </a>
                 )}
+                {user && (
+                  <a
+                    href="/trash"
+                    className="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider text-gray-600 bg-gray-100 hover:bg-gray-200 transition-all duration-200"
+                  >
+                    Corbeille
+                  </a>
+                )}
               </div>
             </div>
 
@@ -214,6 +222,9 @@ export default function Navbar({ selectedSector, setSelectedSector }) {
               <a href="#explorer" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-wider bg-ciGreen text-white">Explorateur</a>
               {user && user.role === 'admin' && (
                 <a href="/admin" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-wider text-ciOrange bg-orange-50">Admin</a>
+              )}
+              {user && (
+                <a href="/trash" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-wider text-gray-600 bg-gray-50">Corbeille</a>
               )}
               {user && (
                 <div className="border-t border-gray-100 pt-3 mt-3">

@@ -3,14 +3,12 @@ const Issue = require('../models/Issue');
 exports.updateIssueStatus = async (req, res) => {
   try {
     const { status } = req.body;
-    const updatedIssue = await Issue.findByIdAndUpdate(
-      req.params.id,
-      { status },
-      { new: true, runValidators: true }
-    );
+    const issue = await Issue.findOne({ _id: req.params.id, deletedAt: null });
+    if (!issue) return res.status(404).json({ message: 'Signalement introuvable' });
 
-    if (!updatedIssue) return res.status(404).json({ message: 'Signalement introuvable' });
-    res.json(updatedIssue);
+    issue.status = status;
+    await issue.save();
+    res.json(issue);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -19,6 +17,7 @@ exports.updateIssueStatus = async (req, res) => {
 exports.getStats = async (req, res) => {
   try {
     const stats = await Issue.aggregate([
+      { $match: { deletedAt: null } },
       { $group: { _id: '$status', count: { $sum: 1 } } }
     ]);
     res.json(stats);

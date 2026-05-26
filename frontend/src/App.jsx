@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Home from './pages/Home';
 import AdminDashboard from './pages/AdminDashboard';
+import Trash from './pages/Trash';
 import About from './pages/About';
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
@@ -68,6 +69,7 @@ function App() {
                 <Home selectedSector={selectedSector} setSelectedSector={setSelectedSector} mapCenter={mapCenter} issues={allIssues} onLocateIssue={(coords) => setMapCenter(coords)} onIssueAdded={fetchIssues} />
               </>
             } />
+            <Route path="/trash" element={<Trash />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/about" element={<About />} />
             <Route path="/terms" element={<Terms />} />
