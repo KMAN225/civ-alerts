@@ -54,7 +54,7 @@ function ToastItem({ toast }) {
       <svg className={`w-5 h-5 flex-shrink-0 ${s.icon}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d={s.svg} />
       </svg>
-      <p className="text-sm font-semibold flex-1">{toast.message}</p>
+      <div className="text-sm font-semibold flex-1 whitespace-pre-line">{toast.message}</div>
     </div>
   );
 }

@@ -43,7 +43,8 @@ export default function IssueForm({ onIssueAdded, initialSector }) {
         setFile(null);
       } else {
         const err = await res.json();
-        toast.error(err.message || 'Erreur lors de l\'envoi');
+        const msg = err.errors ? err.errors.map(e => '• ' + e.message).join('\n') : err.message;
+        toast.error(msg || 'Erreur lors de l\'envoi');
       }
     } catch {
       toast.error('Erreur de connexion au serveur');
