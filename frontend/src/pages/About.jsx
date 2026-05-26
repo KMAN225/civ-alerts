@@ -18,11 +18,6 @@ const values = [
   },
 ];
 
-const team = [
-  { name: 'Boris K.', role: 'Fondateur & Développeur', initials: 'BK' },
-  { name: 'Vous ?', role: 'Rejoignez l\'équipe', initials: '?' },
-];
-
 const stats = [
   { value: '6', label: 'Secteurs couverts', sub: 'Agriculture, Santé, Éducation, Transport, Numérique, Énergie' },
   { value: 'AI', label: 'IA intégrée', sub: 'Catégorisation et priorisation automatiques' },
@@ -97,51 +92,7 @@ export default function About() {
           </div>
         </div>
 
-        {/* Tech */}
-        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 sm:p-12">
-          <h2 className="text-2xl font-black text-ciDark mb-6">Architecture technique</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {[
-              { label: 'Frontend', tech: 'React 18, Vite, Tailwind CSS', icon: '⚛️' },
-              { label: 'Backend', tech: 'Node.js, Express, MongoDB', icon: '🖥️' },
-              { label: 'IA', tech: 'Anthropic Claude API', icon: '🧠' },
-            ].map((t, i) => (
-              <div key={i} className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl border border-gray-100">
-                <span className="text-2xl">{t.icon}</span>
-                <div>
-                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-wider">{t.label}</p>
-                  <p className="text-xs font-bold text-ciDark">{t.tech}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
 
-        {/* Team */}
-        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 sm:p-12">
-          <h2 className="text-2xl font-black text-ciDark mb-6">Équipe</h2>
-          <p className="text-sm text-gray-500 mb-6">Un projet open source en cours de développement. Contribuez sur GitHub.</p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {team.map((m, i) => (
-              <div key={i} className="flex items-center gap-4 p-4 bg-gray-50 rounded-2xl border border-gray-100">
-                <div className="w-12 h-12 bg-ciGreen/10 rounded-2xl flex items-center justify-center text-sm font-black text-ciGreen">{m.initials}</div>
-                <div>
-                  <p className="text-sm font-bold text-ciDark">{m.name}</p>
-                  <p className="text-[10px] text-gray-400 font-medium">{m.role}</p>
-                </div>
-              </div>
-            ))}
-            <a
-              href="https://github.com/KMAN225/civ-alerts"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 p-4 bg-gray-50 rounded-2xl border border-dashed border-gray-200 hover:border-ciGreen/50 hover:bg-ciGreen/5 transition-all group"
-            >
-              <span className="text-lg">⭐</span>
-              <span className="text-xs font-bold text-gray-400 group-hover:text-ciGreen transition-colors">Contribuer sur GitHub</span>
-            </a>
-          </div>
-        </div>
 
       </div>
     </div>
