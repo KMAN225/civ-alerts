@@ -1,15 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ShieldIllustration } from './Illustrations';
 import MapView from './MapView';
-
-const stats = [
-  { value: '128', label: 'Signalements résolus', icon: '✓' },
-  { value: '6', label: 'Secteurs couverts', icon: '⊕' },
-  { value: '2 400+', label: 'Citoyens engagés', icon: '◉' },
-  { value: '48h', label: 'Délai moyen de réponse', icon: '⚡' },
-];
+import { API_URL } from '../config';
 
 export default function Hero({ mapCenter, issues }) {
+  const [stats, setStats] = useState(null);
+
+  useEffect(() => {
+    fetch(`${API_URL}/api/stats`)
+      .then(res => res.json())
+      .then(setStats)
+      .catch(() => {});
+  }, []);
+
+  const statItems = stats ? [
+    { value: stats.resolvedIssues, label: 'Signalements résolus', icon: '✓' },
+    { value: stats.totalSectors, label: 'Secteurs couverts', icon: '⊕' },
+    { value: stats.totalUsers, label: 'Citoyens engagés', icon: '◉' },
+    { value: stats.inProgressIssues, label: 'En cours de traitement', icon: '⚡' },
+  ] : [
+    { value: '—', label: 'Signalements résolus', icon: '✓' },
+    { value: '6', label: 'Secteurs couverts', icon: '⊕' },
+    { value: '—', label: 'Citoyens engagés', icon: '◉' },
+    { value: '—', label: 'En cours de traitement', icon: '⚡' },
+  ];
+
   return (
     <section className="relative min-h-[90vh] flex items-center pt-28 pb-16 overflow-hidden">
       <div className="absolute inset-0">
@@ -90,7 +105,7 @@ export default function Hero({ mapCenter, issues }) {
         </div>
 
         <div className="mt-16 sm:mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 animate-fade-in">
-          {stats.map((stat, idx) => (
+          {statItems.map((stat, idx) => (
             <div
               key={idx}
               className="group relative bg-white/60 backdrop-blur-sm border border-gray-100 rounded-2xl p-5 sm:p-6 hover:shadow-xl hover:shadow-gray-200/50 hover:border-ciGreen/20 transition-all duration-300 hover:-translate-y-0.5"
