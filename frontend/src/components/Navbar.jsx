@@ -199,7 +199,11 @@ export default function Navbar({ selectedSector, setSelectedSector }) {
               {sectors.map(sector => (
                 <button
                   key={sector}
-                  onClick={() => { setSelectedSector(sector); setIsMobileMenuOpen(false); }}
+                  onClick={() => {
+                    setSelectedSector(sector);
+                    setIsMobileMenuOpen(false);
+                    setTimeout(() => document.getElementById('signalement')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                  }}
                   className={`w-full text-left px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-wider transition-all ${
                     selectedSector === sector ? 'bg-ciGreen text-white' : 'text-gray-600 hover:bg-gray-50'
                   }`}
