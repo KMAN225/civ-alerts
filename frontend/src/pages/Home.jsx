@@ -134,7 +134,7 @@ export default function Home({ selectedSector, setSelectedSector, onLocateIssue,
           {filteredIssues.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {filteredIssues.map(issue => (
-                <IssueCard key={issue._id} issue={issue} />
+                <IssueCard key={issue._id} issue={issue} onDelete={onIssueAdded} />
               ))}
             </div>
           ) : (

@@ -3,9 +3,31 @@ import { VerifiedBadge } from './Illustrations';
 import { useToast } from './Toast';
 import { API_URL } from '../config';
 
-export default function IssueCard({ issue }) {
+export default function IssueCard({ issue, onDelete }) {
   const toast = useToast();
   const [imgError, setImgError] = useState(false);
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const isOwner = issue.userId?._id === user._id || issue.userId === user._id;
+
+  const handleDelete = async () => {
+    if (!confirm('Supprimer ce signalement ?')) return;
+    try {
+      const res = await fetch(`${API_URL}/api/issues/${issue._id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+      });
+      if (res.ok) {
+        toast.success('Signalement supprimé');
+        if (onDelete) onDelete(issue._id);
+      } else {
+        const data = await res.json();
+        toast.error(data.message);
+      }
+    } catch {
+      toast.error('Erreur lors de la suppression');
+    }
+  };
+
   const vote = async () => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -112,15 +134,28 @@ export default function IssueCard({ issue }) {
             <span className={`w-2 h-2 rounded-full ${stat.bar} ${issue.status === 'Résolu' ? '' : 'animate-pulse-soft'}`}></span>
             <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">{issue.status}</span>
           </div>
-          <button
-            onClick={vote}
-            className="group/btn inline-flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-xl text-xs font-bold text-gray-600 hover:bg-ciOrange hover:text-white hover:border-ciOrange transition-all duration-200 active:scale-90"
-          >
-            <svg className={`w-4 h-4 group-hover/btn:scale-110 transition-transform`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
-            </svg>
-            <span className="tabular-nums">{issue.votes}</span>
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={vote}
+              className="group/btn inline-flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-xl text-xs font-bold text-gray-600 hover:bg-ciOrange hover:text-white hover:border-ciOrange transition-all duration-200 active:scale-90"
+            >
+              <svg className={`w-4 h-4 group-hover/btn:scale-110 transition-transform`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
+              </svg>
+              <span className="tabular-nums">{issue.votes}</span>
+            </button>
+            {isOwner && (
+              <button
+                onClick={handleDelete}
+                className="group/btn inline-flex items-center gap-2 bg-white border border-red-200 px-3 py-2 rounded-xl text-xs font-bold text-red-500 hover:bg-red-500 hover:text-white hover:border-red-500 transition-all duration-200 active:scale-90"
+                title="Supprimer mon signalement"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>
