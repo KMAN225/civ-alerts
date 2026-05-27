@@ -5,6 +5,8 @@ const cors = require('cors');
 const path = require('path');
 const helmet = require('helmet');
 const compression = require('compression');
+const mongoSanitize = require('express-mongo-sanitize');
+const hpp = require('hpp');
 const issueRoutes = require('./routes/issueRoutes');
 const authRoutes = require('./routes/authRoutes');
 const adminRoutes = require('./routes/adminRoutes');
@@ -15,13 +17,23 @@ const app = express();
 
 const isProd = process.env.NODE_ENV === 'production';
 
-// Sécurité et performances
+// Sécurité
 app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' },
   contentSecurityPolicy: {
     directives: {
-      ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-      'img-src': ["'self'", 'data:', '*.tile.openstreetmap.org'],
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", 'https://pagead2.googlesyndication.com'],
+      scriptSrcAttr: ["'unsafe-inline'"],
+      styleSrc: ["'self'", 'https:', "'unsafe-inline'"],
+      imgSrc: ["'self'", 'data:', '*.tile.openstreetmap.org', 'https://pagead2.googlesyndication.com'],
+      fontSrc: ["'self'", 'https:', 'data:'],
+      connectSrc: ["'self'", 'https://*.tile.openstreetmap.org'],
+      formAction: ["'self'"],
+      frameAncestors: ["'self'"],
+      objectSrc: ["'none'"],
+      baseUri: ["'self'"],
+      upgradeInsecureRequests: [],
     },
   },
 }));
@@ -31,6 +43,8 @@ app.use(cors({
   credentials: true,
 }));
 app.use(express.json({ limit: '10mb' }));
+app.use(mongoSanitize());
+app.use(hpp());
 
 // Rendre le dossier uploads accessible publiquement
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));

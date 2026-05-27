@@ -14,7 +14,10 @@ const handleValidationErrors = (req, res, next) => {
 const validateSignup = [
   body('username').trim().isLength({ min: 3, max: 30 }).withMessage('Le nom d\'utilisateur doit contenir entre 3 et 30 caractères'),
   body('email').trim().isEmail().withMessage('Email invalide').normalizeEmail(),
-  body('password').isLength({ min: 6 }).withMessage('Le mot de passe doit contenir au moins 6 caractères'),
+  body('password')
+    .isLength({ min: 8 }).withMessage('Le mot de passe doit contenir au moins 8 caractères')
+    .matches(/[A-Z]/).withMessage('Le mot de passe doit contenir une majuscule')
+    .matches(/[0-9]/).withMessage('Le mot de passe doit contenir un chiffre'),
   handleValidationErrors
 ];
 
