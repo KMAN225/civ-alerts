@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { VerifiedBadge } from './Illustrations';
 
 const priorityColors = {
@@ -8,7 +8,9 @@ const priorityColors = {
 };
 
 export default function TimelineFeed({ issues, onIssueSelect, onLocateOnMap }) {
-  const sorted = [...issues].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  const sorted = useMemo(() => {
+    return [...issues].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  }, [issues]);
 
   if (sorted.length === 0) {
     return (

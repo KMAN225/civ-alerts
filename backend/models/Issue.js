@@ -32,4 +32,9 @@ const IssueSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
+IssueSchema.index({ deletedAt: 1, votes: -1 });
+IssueSchema.index({ userId: 1, deletedAt: 1 });
+IssueSchema.index({ status: 1, deletedAt: 1 });
+IssueSchema.index({ deletedAt: 1, createdAt: -1 });
+
 module.exports = mongoose.model('Issue', IssueSchema);

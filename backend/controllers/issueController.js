@@ -40,18 +40,16 @@ exports.createIssue = async (req, res) => {
 exports.voteIssue = async (req, res) => {
   try {
     const userId = req.user._id;
-    const issue = await Issue.findOne({ _id: req.params.id, deletedAt: null });
-    if (!issue) return res.status(404).json({ message: 'Signalement introuvable' });
-
-    if (issue.voters.includes(userId)) {
-      return res.status(400).json({ message: 'Vous avez déjà voté pour ce signalement' });
-    }
-
-    const updatedIssue = await Issue.findByIdAndUpdate(
-      req.params.id,
+    const updatedIssue = await Issue.findOneAndUpdate(
+      { _id: req.params.id, deletedAt: null, voters: { $ne: userId } },
       { $inc: { votes: 1 }, $push: { voters: userId } },
       { new: true }
     );
+    if (!updatedIssue) {
+      const exists = await Issue.exists({ _id: req.params.id, deletedAt: null });
+      if (!exists) return res.status(404).json({ message: 'Signalement introuvable' });
+      return res.status(400).json({ message: 'Vous avez déjà voté' });
+    }
     res.json(updatedIssue);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -106,14 +104,12 @@ exports.restoreIssue = async (req, res) => {
 
 exports.permanentDelete = async (req, res) => {
   try {
-    const issue = await Issue.findOne({
+    const result = await Issue.deleteOne({
       _id: req.params.id,
       userId: req.user._id,
       deletedAt: { $ne: null }
     });
-    if (!issue) return res.status(404).json({ message: 'Signalement introuvable dans la corbeille' });
-
-    await issue.deleteOne();
+    if (!result.deletedCount) return res.status(404).json({ message: 'Signalement introuvable dans la corbeille' });
     res.json({ message: 'Signalement supprimé définitivement' });
   } catch (err) {
     res.status(500).json({ message: err.message });

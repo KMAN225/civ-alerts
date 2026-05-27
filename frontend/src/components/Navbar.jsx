@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AuthModal from './AuthModal';
 import { useToast } from './Toast';
+import { sectors } from '../data/sectorData';
 
 export default function Navbar({ selectedSector, setSelectedSector }) {
   const toast = useToast();
@@ -26,8 +27,6 @@ export default function Navbar({ selectedSector, setSelectedSector }) {
     localStorage.removeItem('user');
     setUser(null);
   };
-
-  const sectors = ['Agriculture', 'Santé', 'Éducation', 'Transport', 'Numérique', 'Énergie'];
 
   return (
     <>

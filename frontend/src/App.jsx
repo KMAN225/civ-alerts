@@ -11,6 +11,7 @@ import Privacy from './pages/Privacy';
 import Contact from './pages/Contact';
 import { ToastProvider } from './components/Toast';
 import { API_URL } from './config';
+import { sectors } from './data/sectorData';
 
 class ErrorBoundary extends Component {
   constructor(props) {
@@ -49,9 +50,9 @@ function App() {
 
   const fetchIssues = () => {
     fetch(`${API_URL}/api/issues`)
-      .then(res => res.json())
+      .then(res => res.ok ? res.json() : [])
       .then(setAllIssues)
-      .catch(() => {});
+      .catch(() => setAllIssues([]));
   };
 
   useEffect(() => { fetchIssues(); }, []);
@@ -94,7 +95,7 @@ function App() {
                 <div>
                   <h4 className="text-[10px] font-black text-white uppercase tracking-widest mb-4">Secteurs</h4>
                   <ul className="space-y-2.5">
-                    {['Agriculture', 'Santé', 'Éducation', 'Transport', 'Numérique', 'Énergie'].map(s => (
+                    {sectors.map(s => (
                       <li key={s}>
                         <a href="#" className="text-xs text-gray-500 hover:text-white transition-colors font-medium">{s}</a>
                       </li>

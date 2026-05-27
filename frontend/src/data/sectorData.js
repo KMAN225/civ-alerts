@@ -1,3 +1,5 @@
+export const sectors = ['Agriculture', 'Santé', 'Éducation', 'Transport', 'Numérique', 'Énergie'];
+
 export const sectorData = {
   'Agriculture': {
     description: 'Soutien aux planteurs et modernisation des cultures.',

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useToast } from './Toast';
 import { API_URL } from '../config';
+import { sectors } from '../data/sectorData';
 
 export default function IssueForm({ onIssueAdded, initialSector }) {
   const toast = useToast();
@@ -90,7 +91,7 @@ export default function IssueForm({ onIssueAdded, initialSector }) {
                 value={formData.sector}
                 onChange={e => setFormData({...formData, sector: e.target.value})}
               >
-                {['Agriculture', 'Santé', 'Éducation', 'Transport', 'Numérique', 'Énergie'].map(s => (
+                {sectors.map(s => (
                   <option key={s}>{s}</option>
                 ))}
               </select>

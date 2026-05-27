@@ -1,20 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import IssueCard from '../components/IssueCard';
 import IssueForm from '../components/IssueForm';
 import TimelineFeed from '../components/TimelineFeed';
-import { sectorData } from '../data/sectorData';
+import { sectorData, sectors as sectorList } from '../data/sectorData';
 import { SectorIcon, EmptyIllustration, ReportIllustration } from '../components/Illustrations';
 
 export default function Home({ selectedSector, setSelectedSector, onLocateIssue, mapCenter, issues = [], onIssueAdded }) {
   const [selectedPriority, setSelectedPriority] = useState('Tous');
 
-  const filteredIssues = issues.filter(issue => {
-    const sectorMatch = selectedSector === 'Tous' || issue.sector === selectedSector;
-    const priorityMatch = selectedPriority === 'Tous' || issue.priority === selectedPriority;
-    return sectorMatch && priorityMatch;
-  });
+  const filteredIssues = useMemo(() => {
+    return issues.filter(issue => {
+      const sectorMatch = selectedSector === 'Tous' || issue.sector === selectedSector;
+      const priorityMatch = selectedPriority === 'Tous' || issue.priority === selectedPriority;
+      return sectorMatch && priorityMatch;
+    });
+  }, [issues, selectedSector, selectedPriority]);
 
-  const sectors = ['Tous', 'Agriculture', 'Santé', 'Éducation', 'Transport', 'Numérique', 'Énergie'];
+  const sectors = ['Tous', ...sectorList];
   const priorities = ['Tous', 'Critique', 'Moyenne', 'Faible'];
 
   const sectorIcons = {

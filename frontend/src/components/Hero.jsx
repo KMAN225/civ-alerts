@@ -8,7 +8,7 @@ export default function Hero({ mapCenter, issues }) {
 
   useEffect(() => {
     fetch(`${API_URL}/api/stats`)
-      .then(res => res.json())
+      .then(res => res.ok ? res.json() : null)
       .then(setStats)
       .catch(() => {});
   }, []);
