@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AuthModal from './AuthModal';
 import { useToast } from './Toast';
 import { sectors } from '../data/sectorData';
+import { getUser, clearAuth } from '../utils/auth';
 
 export default function Navbar({ selectedSector, setSelectedSector }) {
   const toast = useToast();
@@ -9,7 +10,7 @@ export default function Navbar({ selectedSector, setSelectedSector }) {
   const [isSectorsOpen, setIsSectorsOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+  const [user, setUser] = useState(getUser);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -18,13 +19,12 @@ export default function Navbar({ selectedSector, setSelectedSector }) {
   }, []);
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
+    const storedUser = getUser();
     if (storedUser) setUser(storedUser);
   }, [isAuthOpen]);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    clearAuth();
     setUser(null);
   };
 

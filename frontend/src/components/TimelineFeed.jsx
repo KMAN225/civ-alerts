@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { VerifiedBadge } from './Illustrations';
+import { formatShortDate } from '../utils/dates';
 
 const priorityColors = {
   Critique: { dot: 'bg-red-500', line: 'border-red-300', bg: 'bg-red-50', text: 'text-red-600', label: 'Urgent' },
@@ -74,7 +75,7 @@ export default function TimelineFeed({ issues, onIssueSelect, onLocateOnMap }) {
                 <span>•</span>
                 <span>{issue.location}</span>
                 <span>•</span>
-                <span>{new Date(issue.createdAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}</span>
+                <span>{formatShortDate(issue.createdAt)}</span>
               </div>
             </div>
 

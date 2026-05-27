@@ -1,12 +1,13 @@
 const Issue = require('../models/Issue');
 const { analyzeIssue } = require('../services/aiService');
+const { errorResponse, successResponse } = require('../utils/errorResponse');
 
 exports.getAllIssues = async (req, res) => {
   try {
     const issues = await Issue.find({ deletedAt: null }).sort({ votes: -1 });
-    res.json(issues);
+    successResponse(res, issues);
   } catch (err) {
-    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+    errorResponse(res, 500, 'Erreur serveur');
   }
 };
 
@@ -31,9 +32,9 @@ exports.createIssue = async (req, res) => {
 
     const issue = new Issue(issueData);
     const newIssue = await issue.save();
-    res.status(201).json(newIssue);
+    successResponse(res, newIssue, 201);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    errorResponse(res, 400, err.message);
   }
 };
 
@@ -47,29 +48,29 @@ exports.voteIssue = async (req, res) => {
     );
     if (!updatedIssue) {
       const exists = await Issue.exists({ _id: req.params.id, deletedAt: null });
-      if (!exists) return res.status(404).json({ message: 'Signalement introuvable' });
-      return res.status(400).json({ message: 'Vous avez déjà voté' });
+      if (!exists) return errorResponse(res, 404, 'Signalement introuvable');
+      return errorResponse(res, 400, 'Vous avez déjà voté');
     }
-    res.json(updatedIssue);
+    successResponse(res, updatedIssue);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    errorResponse(res, 400, err.message);
   }
 };
 
 exports.deleteIssue = async (req, res) => {
   try {
     const issue = await Issue.findOne({ _id: req.params.id, deletedAt: null });
-    if (!issue) return res.status(404).json({ message: 'Signalement introuvable' });
+    if (!issue) return errorResponse(res, 404, 'Signalement introuvable');
 
     if (issue.userId.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
-      return res.status(403).json({ message: 'Vous n\'êtes pas autorisé à supprimer ce signalement' });
+      return errorResponse(res, 403, 'Vous n\'êtes pas autorisé à supprimer ce signalement');
     }
 
     issue.deletedAt = new Date();
     await issue.save();
-    res.json({ message: 'Signalement déplacé dans la corbeille' });
+    successResponse(res, { message: 'Signalement déplacé dans la corbeille' });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    errorResponse(res, 500, err.message);
   }
 };
 
@@ -79,9 +80,9 @@ exports.getTrash = async (req, res) => {
       userId: req.user._id,
       deletedAt: { $ne: null }
     }).sort({ deletedAt: -1 });
-    res.json(issues);
+    successResponse(res, issues);
   } catch (err) {
-    res.status(500).json({ message: 'Erreur serveur' });
+    errorResponse(res, 500, 'Erreur serveur');
   }
 };
 
@@ -92,13 +93,13 @@ exports.restoreIssue = async (req, res) => {
       userId: req.user._id,
       deletedAt: { $ne: null }
     });
-    if (!issue) return res.status(404).json({ message: 'Signalement introuvable dans la corbeille' });
+    if (!issue) return errorResponse(res, 404, 'Signalement introuvable dans la corbeille');
 
     issue.deletedAt = null;
     await issue.save();
-    res.json({ message: 'Signalement restauré' });
+    successResponse(res, { message: 'Signalement restauré' });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    errorResponse(res, 500, err.message);
   }
 };
 
@@ -109,9 +110,9 @@ exports.permanentDelete = async (req, res) => {
       userId: req.user._id,
       deletedAt: { $ne: null }
     });
-    if (!result.deletedCount) return res.status(404).json({ message: 'Signalement introuvable dans la corbeille' });
-    res.json({ message: 'Signalement supprimé définitivement' });
+    if (!result.deletedCount) return errorResponse(res, 404, 'Signalement introuvable dans la corbeille');
+    successResponse(res, { message: 'Signalement supprimé définitivement' });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    errorResponse(res, 500, err.message);
   }
 };

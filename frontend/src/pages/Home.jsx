@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import IssueCard from '../components/IssueCard';
 import IssueForm from '../components/IssueForm';
 import TimelineFeed from '../components/TimelineFeed';
+import AdBanner from '../components/AdBanner';
 import { sectorData, sectors as sectorList } from '../data/sectorData';
 import { SectorIcon, EmptyIllustration, ReportIllustration } from '../components/Illustrations';
 
@@ -148,6 +149,8 @@ export default function Home({ selectedSector, setSelectedSector, onLocateIssue,
           )}
         </div>
       </section>
+
+      <AdBanner slot="1234567890" className="py-6 px-6 bg-gray-50/50" />
 
       <section className="py-20 px-6 bg-white border-t border-gray-100">
         <div className="max-w-7xl mx-auto">

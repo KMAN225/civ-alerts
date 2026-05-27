@@ -1,16 +1,17 @@
 const Issue = require('../models/Issue');
+const { errorResponse, successResponse } = require('../utils/errorResponse');
 
 exports.updateIssueStatus = async (req, res) => {
   try {
     const { status } = req.body;
     const issue = await Issue.findOne({ _id: req.params.id, deletedAt: null });
-    if (!issue) return res.status(404).json({ message: 'Signalement introuvable' });
+    if (!issue) return errorResponse(res, 404, 'Signalement introuvable');
 
     issue.status = status;
     await issue.save();
-    res.json(issue);
+    successResponse(res, issue);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    errorResponse(res, 400, err.message);
   }
 };
 
@@ -20,8 +21,8 @@ exports.getStats = async (req, res) => {
       { $match: { deletedAt: null } },
       { $group: { _id: '$status', count: { $sum: 1 } } }
     ]);
-    res.json(stats);
+    successResponse(res, stats);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    errorResponse(res, 500, err.message);
   }
 };

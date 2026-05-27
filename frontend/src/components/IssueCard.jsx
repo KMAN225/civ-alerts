@@ -1,71 +1,53 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { VerifiedBadge } from './Illustrations';
 import { useToast } from './Toast';
-import { API_URL } from '../config';
+import { api } from '../utils/api';
+import { formatDate } from '../utils/dates';
+import { getUser } from '../utils/auth';
 
-export default function IssueCard({ issue, onDelete }) {
+const priorityConfig = {
+  Critique: { bg: 'bg-red-50', text: 'text-red-600', border: 'border-red-200', dot: 'bg-red-500', label: 'Urgent' },
+  Moyenne: { bg: 'bg-amber-50', text: 'text-amber-600', border: 'border-amber-200', dot: 'bg-amber-500', label: 'Modéré' },
+  Faible: { bg: 'bg-blue-50', text: 'text-blue-600', border: 'border-blue-200', dot: 'bg-blue-500', label: 'Faible' }
+};
+
+const statusConfig = {
+  'Signalé': { bg: 'bg-yellow-50', text: 'text-yellow-700', border: 'border-yellow-200', bar: 'bg-yellow-400', width: '15%' },
+  'En cours': { bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200', bar: 'bg-blue-500', width: '55%' },
+  'Résolu': { bg: 'bg-green-50', text: 'text-green-700', border: 'border-green-200', bar: 'bg-ciGreen', width: '100%' }
+};
+
+const IssueCard = memo(function IssueCard({ issue, onDelete }) {
   const toast = useToast();
   const [imgError, setImgError] = useState(false);
-  const user = JSON.parse(localStorage.getItem('user') || '{}');
-  const isOwner = issue.userId?._id === user._id || issue.userId === user._id;
+  const user = getUser();
+  const isOwner = issue.userId?._id === user?._id || issue.userId === user?._id;
 
   const handleDelete = async () => {
     if (!confirm('Supprimer ce signalement ?')) return;
     try {
-      const res = await fetch(`${API_URL}/api/issues/${issue._id}`, {
-        method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
-      });
-      if (res.ok) {
-        toast.success('Signalement supprimé');
-        if (onDelete) onDelete(issue._id);
-      } else {
-        const data = await res.json();
-        toast.error(data.message);
-      }
-    } catch {
-      toast.error('Erreur lors de la suppression');
+      await api(`/api/issues/${issue._id}`, { method: 'DELETE' });
+      toast.success('Signalement supprimé');
+      if (onDelete) onDelete(issue._id);
+    } catch (err) {
+      toast.error(err.message);
     }
   };
 
   const vote = async () => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      toast.warning('Connectez-vous pour voter');
-      return;
-    }
     try {
-      const res = await fetch(`${API_URL}/api/issues/${issue._id}/vote`, {
-        method: 'PATCH',
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      if (res.ok) window.location.reload();
-      else {
-        const data = await res.json();
-        toast.error(data.message);
-      }
-    } catch (error) {
-      toast.error('Erreur lors du vote');
+      await api(`/api/issues/${issue._id}/vote`, { method: 'PATCH' });
+      window.location.reload();
+    } catch (err) {
+      toast.error(err.message);
     }
-  };
-
-  const priorityConfig = {
-    Critique: { bg: 'bg-red-50', text: 'text-red-600', border: 'border-red-200', dot: 'bg-red-500', label: 'Urgent' },
-    Moyenne: { bg: 'bg-amber-50', text: 'text-amber-600', border: 'border-amber-200', dot: 'bg-amber-500', label: 'Modéré' },
-    Faible: { bg: 'bg-blue-50', text: 'text-blue-600', border: 'border-blue-200', dot: 'bg-blue-500', label: 'Faible' }
-  };
-
-  const statusConfig = {
-    'Signalé': { bg: 'bg-yellow-50', text: 'text-yellow-700', border: 'border-yellow-200', bar: 'bg-yellow-400', width: '15%' },
-    'En cours': { bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200', bar: 'bg-blue-500', width: '55%' },
-    'Résolu': { bg: 'bg-green-50', text: 'text-green-700', border: 'border-green-200', bar: 'bg-ciGreen', width: '100%' }
   };
 
   const prio = priorityConfig[issue.priority] || priorityConfig.Moyenne;
   const stat = statusConfig[issue.status] || statusConfig['Signalé'];
 
   return (
-    <div className="group bg-white rounded-2xl border border-gray-100 hover:border-ciGreen/20 hover:shadow-xl hover:shadow-ciGreen/5 transition-all duration-300 hover:-translate-y-1 overflow-hidden animate-slide-up">
+    <div className="group bg-white rounded-2xl border border-gray-100 hover:border-ciGreen/20 hover:shadow-xl hover:shadow-ciGreen/5 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
       {issue.mediaUrl && !imgError && (
         <div className="relative h-44 bg-gray-50 overflow-hidden">
           <img
@@ -113,7 +95,7 @@ export default function IssueCard({ issue, onDelete }) {
         <div className="flex flex-wrap items-center gap-3 text-[11px] text-gray-400 font-medium mb-5">
           <span className="inline-flex items-center gap-1">📍 {issue.location}</span>
           <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
-          <span className="inline-flex items-center gap-1">📅 {new Date(issue.createdAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+          <span className="inline-flex items-center gap-1">📅 {formatDate(issue.createdAt)}</span>
         </div>
 
         <div className="p-4 bg-gray-50 rounded-xl mb-4">
@@ -122,10 +104,7 @@ export default function IssueCard({ issue, onDelete }) {
             <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md ${stat.bg} ${stat.text} ${stat.border}`}>{issue.status}</span>
           </div>
           <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-            <div
-              className={`h-full rounded-full transition-all duration-1000 ease-out ${stat.bar}`}
-              style={{ width: stat.width }}
-            ></div>
+            <div className={`h-full rounded-full transition-all duration-1000 ease-out ${stat.bar}`} style={{ width: stat.width }}></div>
           </div>
         </div>
 
@@ -139,7 +118,7 @@ export default function IssueCard({ issue, onDelete }) {
               onClick={vote}
               className="group/btn inline-flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-xl text-xs font-bold text-gray-600 hover:bg-ciOrange hover:text-white hover:border-ciOrange transition-all duration-200 active:scale-90"
             >
-              <svg className={`w-4 h-4 group-hover/btn:scale-110 transition-transform`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg className="w-4 h-4 group-hover/btn:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
               </svg>
               <span className="tabular-nums">{issue.votes}</span>
@@ -160,4 +139,6 @@ export default function IssueCard({ issue, onDelete }) {
       </div>
     </div>
   );
-}
+});
+
+export default IssueCard;

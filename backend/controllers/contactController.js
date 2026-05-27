@@ -1,23 +1,24 @@
 const Contact = require('../models/Contact');
+const { errorResponse, successResponse } = require('../utils/errorResponse');
 
 exports.submitContact = async (req, res) => {
   try {
     const { name, email, subject, message } = req.body;
     if (!name || !email || !subject || !message) {
-      return res.status(400).json({ message: 'Tous les champs sont obligatoires' });
+      return errorResponse(res, 400, 'Tous les champs sont obligatoires');
     }
     await Contact.create({ name, email, subject, message });
-    res.status(201).json({ message: 'Message envoyé avec succès' });
+    successResponse(res, { message: 'Message envoyé avec succès' }, 201);
   } catch (err) {
-    res.status(500).json({ message: 'Erreur lors de l\'envoi du message' });
+    errorResponse(res, 500, 'Erreur lors de l\'envoi du message');
   }
 };
 
 exports.getMessages = async (req, res) => {
   try {
     const messages = await Contact.find().sort({ createdAt: -1 });
-    res.json(messages);
+    successResponse(res, messages);
   } catch (err) {
-    res.status(500).json({ message: 'Erreur serveur' });
+    errorResponse(res, 500, 'Erreur serveur');
   }
 };

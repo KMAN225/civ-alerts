@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useToast } from './Toast';
-import { API_URL } from '../config';
+import { api } from '../utils/api';
+import { setAuth } from '../utils/auth';
 
 export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
   const toast = useToast();
@@ -11,27 +12,19 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSending(true);
-    const endpoint = isLogin ? 'login' : 'signup';
     try {
       const body = isLogin
         ? { identifier: formData.email, password: formData.password }
         : formData;
 
-      const res = await fetch(`${API_URL}/api/auth/${endpoint}`, {
+      const data = await api(`/api/auth/${isLogin ? 'login' : 'signup'}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
       });
-      const data = await res.json();
-      if (res.ok) {
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
-        toast.success(isLogin ? 'Connexion réussie' : 'Compte créé avec succès');
-        onAuthSuccess(data.user);
-        onClose();
-      } else {
-        toast.error(data.message || 'Une erreur est survenue');
-      }
+      setAuth(data.user, data.token);
+      toast.success(isLogin ? 'Connexion réussie' : 'Compte créé avec succès');
+      onAuthSuccess(data.user);
+      onClose();
     } catch {
       toast.error('Erreur de connexion au serveur');
     } finally {

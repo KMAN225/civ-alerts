@@ -1,69 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '../components/Toast';
-import { API_URL } from '../config';
+import { api } from '../utils/api';
+import { formatDate } from '../utils/dates';
+import Spinner from '../components/Spinner';
 
 export default function Trash() {
   const toast = useToast();
   const navigate = useNavigate();
   const [issues, setIssues] = useState([]);
   const [loading, setLoading] = useState(true);
-  const user = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
     if (!user) { navigate('/'); return; }
     fetchTrash();
   }, []);
 
   const fetchTrash = async () => {
     try {
-      const res = await fetch(`${API_URL}/api/issues/trash`, {
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
-      });
-      if (res.ok) setIssues(await res.json());
+      setIssues(await api('/api/issues/trash'));
     } catch { /* ignore */ }
     finally { setLoading(false); }
   };
 
   const handleRestore = async (id) => {
     try {
-      const res = await fetch(`${API_URL}/api/issues/${id}/restore`, {
-        method: 'PATCH',
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
-      });
-      const data = await res.json();
-      if (res.ok) {
-        toast.success('Signalement restauré');
-        setIssues(prev => prev.filter(i => i._id !== id));
-      } else toast.error(data.message);
-    } catch { toast.error('Erreur lors de la restauration'); }
+      await api(`/api/issues/${id}/restore`, { method: 'PATCH' });
+      toast.success('Signalement restauré');
+      setIssues(prev => prev.filter(i => i._id !== id));
+    } catch (err) { toast.error(err.message); }
   };
 
   const handlePermanentDelete = async (id) => {
     if (!confirm('Supprimer définitivement ? Cette action est irréversible.')) return;
     try {
-      const res = await fetch(`${API_URL}/api/issues/${id}/permanent`, {
-        method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
-      });
-      const data = await res.json();
-      if (res.ok) {
-        toast.success('Signalement supprimé définitivement');
-        setIssues(prev => prev.filter(i => i._id !== id));
-      } else toast.error(data.message);
-    } catch { toast.error('Erreur lors de la suppression'); }
+      await api(`/api/issues/${id}/permanent`, { method: 'DELETE' });
+      toast.success('Signalement supprimé définitivement');
+      setIssues(prev => prev.filter(i => i._id !== id));
+    } catch (err) { toast.error(err.message); }
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="flex items-center gap-3 px-6 py-4 bg-white rounded-2xl shadow-sm border border-gray-100">
-          <span className="w-5 h-5 border-2 border-gray-200 border-t-ciGreen rounded-full animate-spin"></span>
-          <span className="text-sm font-bold text-gray-500">Chargement...</span>
-        </div>
-      </div>
-    );
-  }
+  if (loading) return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <Spinner text="Chargement de la corbeille..." />
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-gray-50 pt-28 pb-12 px-4 sm:px-6 lg:px-8">
@@ -99,7 +81,7 @@ export default function Trash() {
                     <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
                     <span>{issue.location}</span>
                     <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
-                    <span>Supprimé le {new Date(issue.deletedAt).toLocaleDateString('fr-FR')}</span>
+                    <span>Supprimé le {formatDate(issue.deletedAt)}</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 flex-shrink-0">

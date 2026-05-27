@@ -1,5 +1,6 @@
 const Issue = require('../models/Issue');
 const User = require('../models/User');
+const { errorResponse, successResponse } = require('../utils/errorResponse');
 
 exports.getStats = async (req, res) => {
   try {
@@ -10,14 +11,8 @@ exports.getStats = async (req, res) => {
       User.countDocuments({})
     ]);
 
-    res.json({
-      resolvedIssues,
-      inProgressIssues,
-      totalIssues,
-      totalSectors: 6,
-      totalUsers
-    });
+    successResponse(res, { resolvedIssues, inProgressIssues, totalIssues, totalSectors: 6, totalUsers });
   } catch (err) {
-    res.status(500).json({ message: 'Erreur chargement statistiques' });
+    errorResponse(res, 500, 'Erreur chargement statistiques');
   }
 };

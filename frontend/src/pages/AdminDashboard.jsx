@@ -1,57 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import StatusDropdown from '../components/StatusDropdown';
 import { useNavigate } from 'react-router-dom';
-import { ShieldIllustration, SuccessIllustration } from '../components/Illustrations';
 import { useToast } from '../components/Toast';
-import { API_URL } from '../config';
+import { api } from '../utils/api';
+import { getUser } from '../utils/auth';
+import Spinner from '../components/Spinner';
 
 export default function AdminDashboard() {
   const toast = useToast();
+  const navigate = useNavigate();
   const [issues, setIssues] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem('user'));
+  const user = getUser();
 
   useEffect(() => {
-    if (!user || user.role !== 'admin') {
-      navigate('/');
-      return;
-    }
+    if (!user || user.role !== 'admin') { navigate('/'); return; }
     fetchIssues();
   }, []);
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      const res = await fetch(`${API_URL}/api/admin/issues/${id}/status`, {
+      await api(`/api/admin/issues/${id}/status`, {
         method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        },
         body: JSON.stringify({ status: newStatus })
       });
-      if (res.ok) {
-        setIssues(prev => prev.map(i => i._id === id ? { ...i, status: newStatus } : i));
-        toast.success('Statut mis à jour');
-      } else {
-        const data = await res.json();
-        toast.error(data.message || 'Erreur');
-      }
-    } catch {
-      toast.error('Erreur de connexion');
+      setIssues(prev => prev.map(i => i._id === id ? { ...i, status: newStatus } : i));
+      toast.success('Statut mis à jour');
+    } catch (err) {
+      toast.error(err.message || 'Erreur');
     }
   };
 
   const fetchIssues = async () => {
     try {
-      const res = await fetch(`${API_URL}/api/issues`);
-      setIssues(await res.json());
-    } catch (error) {
-      console.error('Erreur chargement signalements:', error);
-    } finally {
-      setLoading(false);
-    }
+      setIssues(await api('/api/issues'));
+    } catch { /* ignore */ }
+    finally { setLoading(false); }
   };
+
+  if (loading) return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50/50">
+      <Spinner text="Chargement..." />
+    </div>
+  );
 
   const stats = {
     all: issues.length,
@@ -59,17 +50,6 @@ export default function AdminDashboard() {
     ongoing: issues.filter(i => i.status === 'En cours').length,
     resolved: issues.filter(i => i.status === 'Résolu').length,
   };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50/50">
-        <div className="flex items-center gap-3 px-6 py-4 bg-white rounded-2xl shadow-sm border border-gray-100">
-          <span className="w-5 h-5 border-2 border-gray-200 border-t-ciGreen rounded-full animate-spin"></span>
-          <span className="text-sm font-bold text-gray-500">Chargement...</span>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gray-50/50 pt-28 pb-12 px-4 sm:px-6 lg:px-8">

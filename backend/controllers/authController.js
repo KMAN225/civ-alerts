@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const { errorResponse, successResponse } = require('../utils/errorResponse');
 
 const generateToken = (userId) => {
   return jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: '7d' });
@@ -9,21 +10,21 @@ exports.signup = async (req, res) => {
   try {
     const { username, email, password, nom, prenom, dateNaissance, localite } = req.body;
     const userExists = await User.findOne({ $or: [{ email }, { username }] });
-    if (userExists) return res.status(400).json({ message: 'Cet utilisateur ou email existe déjà' });
+    if (userExists) return errorResponse(res, 400, 'Cet utilisateur ou email existe déjà');
 
     const user = new User({ username, email, password, nom, prenom, dateNaissance, localite });
     await user.save();
 
     const token = generateToken(user._id);
-    res.status(201).json({
+    successResponse(res, {
       token,
       user: {
         id: user._id, username: user.username, role: user.role,
         nom: user.nom, prenom: user.prenom, dateNaissance: user.dateNaissance, localite: user.localite,
       }
-    });
+    }, 201);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    errorResponse(res, 500, err.message);
   }
 };
 
@@ -33,13 +34,13 @@ exports.login = async (req, res) => {
     const user = await User.findOne({
       $or: [{ email: identifier }, { username: identifier }]
     });
-    if (!user) return res.status(400).json({ message: 'Identifiants invalides' });
+    if (!user) return errorResponse(res, 400, 'Identifiants invalides');
 
     const isMatch = await user.comparePassword(password);
-    if (!isMatch) return res.status(400).json({ message: 'Identifiants invalides' });
+    if (!isMatch) return errorResponse(res, 400, 'Identifiants invalides');
 
     const token = generateToken(user._id);
-    res.json({
+    successResponse(res, {
       token,
       user: {
         id: user._id, username: user.username, role: user.role,
@@ -47,15 +48,15 @@ exports.login = async (req, res) => {
       }
     });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    errorResponse(res, 500, err.message);
   }
 };
 
 exports.getMe = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).select('-password');
-    res.json(user);
+    successResponse(res, user);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    errorResponse(res, 500, err.message);
   }
 };
