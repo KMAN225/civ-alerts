@@ -1,5 +1,5 @@
-function errorResponse(res, status, message) {
-  return res.status(status).json({ message });
+function errorResponse(res, status, message, extra = {}) {
+  return res.status(status).json({ message, ...extra });
 }
 
 function successResponse(res, data, status = 200) {

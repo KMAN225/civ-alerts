@@ -12,6 +12,8 @@ const authRoutes = require('./routes/authRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 const statsRoutes = require('./routes/statsRoutes');
+const osintRoutes = require('./routes/osintRoutes');
+const { preloadModel } = require('./services/moderationService');
 
 const app = express();
 
@@ -39,7 +41,7 @@ app.use(helmet({
 }));
 app.use(compression());
 app.use(cors({
-  origin: isProd ? process.env.FRONTEND_URL || true : true,
+  origin: isProd ? [process.env.FRONTEND_URL || '', 'null'].filter(Boolean) : true,
   credentials: true,
 }));
 app.use(express.json({ limit: '10mb' }));
@@ -72,6 +74,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/stats', statsRoutes);
+app.use('/api/osint', osintRoutes);
 
 // Global error handler
 app.use((err, req, res, next) => {
@@ -86,4 +89,7 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => console.log(`🚀 Serveur lancé sur le port ${PORT} [${isProd ? 'PROD' : 'DEV'}]`));
+app.listen(PORT, () => {
+  console.log(`🚀 Serveur lancé sur le port ${PORT} [${isProd ? 'PROD' : 'DEV'}]`);
+  preloadModel();
+});

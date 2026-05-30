@@ -28,8 +28,8 @@ const validateLogin = [
 ];
 
 const validateIssue = [
-  body('title').trim().isLength({ min: 5, max: 200 }).withMessage('Le titre doit contenir entre 5 et 200 caractères'),
-  body('description').trim().isLength({ min: 10, max: 2000 }).withMessage('La description doit contenir entre 10 et 2000 caractères'),
+  body('title').trim().isLength({ min: 3, max: 200 }).withMessage('Le titre doit contenir entre 3 et 200 caractères'),
+  body('description').trim().isLength({ min: 5, max: 2000 }).withMessage('La description doit contenir au moins 5 caractères'),
   body('location').trim().notEmpty().withMessage('La localisation est requise'),
   handleValidationErrors
 ];

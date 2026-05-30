@@ -10,6 +10,9 @@ const UserSchema = new mongoose.Schema({
   dateNaissance: { type: String, default: '' },
   localite: { type: String, default: '' },
   role: { type: String, enum: ['user', 'admin'], default: 'user' },
+  trustScore: { type: Number, default: 0 },
+  issuesCount: { type: Number, default: 0 },
+  helpfulVotesReceived: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now }
 });
 
