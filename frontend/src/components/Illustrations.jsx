@@ -6,22 +6,22 @@ export const MapIllustration = ({ className = '' }) => (
     <rect x="20" y="20" width="360" height="260" rx="12" fill="#F0FDF4"/>
     <path d="M40 120 L80 80 L140 100 L200 60 L260 110 L320 80 L360 130 L360 240 L320 260 L260 230 L200 250 L140 220 L80 240 L40 210 Z" fill="#DCFCE7" opacity="0.6"/>
     <path d="M80 80 L140 100 L140 220 L80 240 Z" fill="#BBF7D0" opacity="0.4"/>
-    <circle cx="120" cy="140" r="12" fill="#008532" opacity="0.15"/>
-    <circle cx="120" cy="140" r="6" fill="#008532"/>
+    <circle cx="120" cy="140" r="12" fill="#059669" opacity="0.15"/>
+    <circle cx="120" cy="140" r="6" fill="#059669"/>
     <circle cx="120" cy="140" r="2" fill="white"/>
-    <circle cx="220" cy="120" r="12" fill="#F89406" opacity="0.15"/>
-    <circle cx="220" cy="120" r="6" fill="#F89406"/>
+    <circle cx="220" cy="120" r="12" fill="#F59E0B" opacity="0.15"/>
+    <circle cx="220" cy="120" r="6" fill="#F59E0B"/>
     <circle cx="220" cy="120" r="2" fill="white"/>
-    <circle cx="300" cy="180" r="12" fill="#008532" opacity="0.15"/>
-    <circle cx="300" cy="180" r="6" fill="#008532"/>
+    <circle cx="300" cy="180" r="12" fill="#059669" opacity="0.15"/>
+    <circle cx="300" cy="180" r="6" fill="#059669"/>
     <circle cx="300" cy="180" r="2" fill="white"/>
-    <circle cx="180" cy="200" r="12" fill="#008532" opacity="0.15"/>
-    <circle cx="180" cy="200" r="6" fill="#008532"/>
+    <circle cx="180" cy="200" r="12" fill="#059669" opacity="0.15"/>
+    <circle cx="180" cy="200" r="6" fill="#059669"/>
     <circle cx="180" cy="200" r="2" fill="white"/>
-    <circle cx="90" cy="190" r="8" fill="#F89406" opacity="0.15"/>
-    <circle cx="90" cy="190" r="4" fill="#F89406"/>
+    <circle cx="90" cy="190" r="8" fill="#F59E0B" opacity="0.15"/>
+    <circle cx="90" cy="190" r="4" fill="#F59E0B"/>
     <circle cx="90" cy="190" r="1.5" fill="white"/>
-    <rect x="155" y="15" width="90" height="20" rx="10" fill="#008532"/>
+    <rect x="155" y="15" width="90" height="20" rx="10" fill="#059669"/>
     <text x="200" y="29" textAnchor="middle" fill="white" fontSize="10" fontWeight="bold" fontFamily="system-ui">CARTE INTERACTIVE</text>
     <rect x="30" y="260" width="100" height="16" rx="8" fill="#DCFCE7"/>
     <rect x="140" y="260" width="100" height="16" rx="8" fill="#FEF3C7"/>
@@ -48,29 +48,29 @@ export const EmptyIllustration = ({ className = '' }) => (
 
 export const SuccessIllustration = ({ className = '' }) => (
   <svg className={className} viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="60" cy="60" r="55" fill="#F0FDF4" stroke="#008532" strokeWidth="3"/>
+    <circle cx="60" cy="60" r="55" fill="#F0FDF4" stroke="#059669" strokeWidth="3"/>
     <circle cx="60" cy="60" r="40" fill="#DCFCE7"/>
-    <path d="M40 60 L55 75 L80 45" stroke="#008532" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round"/>
-    <circle cx="60" cy="60" r="55" fill="none" stroke="#008532" strokeWidth="3" strokeDasharray="10 5" opacity="0.3"/>
+    <path d="M40 60 L55 75 L80 45" stroke="#059669" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round"/>
+    <circle cx="60" cy="60" r="55" fill="none" stroke="#059669" strokeWidth="3" strokeDasharray="10 5" opacity="0.3"/>
   </svg>
 );
 
 export const ShieldIllustration = ({ className = '' }) => (
   <svg className={className} viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M50 10 L90 30 L90 60 C90 85 75 100 50 110 C25 100 10 85 10 60 L10 30 Z" fill="#F0FDF4" stroke="#008532" strokeWidth="3"/>
+    <path d="M50 10 L90 30 L90 60 C90 85 75 100 50 110 C25 100 10 85 10 60 L10 30 Z" fill="#F0FDF4" stroke="#059669" strokeWidth="3"/>
     <path d="M50 20 L80 35 L80 60 C80 80 68 92 50 100 C32 92 20 80 20 60 L20 35 Z" fill="#DCFCE7"/>
-    <path d="M38 65 L48 75 L62 55" stroke="#008532" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M38 65 L48 75 L62 55" stroke="#059669" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 
 export const ReportIllustration = ({ className = '' }) => (
   <svg className={className} viewBox="0 0 120 140" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect x="15" y="10" width="90" height="120" rx="8" fill="white" stroke="#D1D5DB" strokeWidth="2"/>
-    <rect x="25" y="20" width="70" height="6" rx="3" fill="#008532"/>
+    <rect x="25" y="20" width="70" height="6" rx="3" fill="#059669"/>
     <rect x="25" y="35" width="55" height="4" rx="2" fill="#D1D5DB"/>
     <rect x="25" y="45" width="60" height="4" rx="2" fill="#D1D5DB"/>
     <rect x="25" y="55" width="40" height="4" rx="2" fill="#D1D5DB"/>
-    <rect x="25" y="70" width="70" height="6" rx="3" fill="#F89406"/>
+    <rect x="25" y="70" width="70" height="6" rx="3" fill="#F59E0B"/>
     <rect x="25" y="82" width="55" height="4" rx="2" fill="#D1D5DB"/>
     <rect x="25" y="92" width="60" height="4" rx="2" fill="#D1D5DB"/>
     <rect x="25" y="102" width="35" height="4" rx="2" fill="#D1D5DB"/>
@@ -80,7 +80,7 @@ export const ReportIllustration = ({ className = '' }) => (
 
 export const VerifiedBadge = ({ className = '' }) => (
   <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12" cy="12" r="10" fill="#008532"/>
+    <circle cx="12" cy="12" r="10" fill="#059669"/>
     <path d="M8 12.5 L11 15.5 L16 9.5" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
@@ -90,9 +90,9 @@ export const SectorIcon = ({ sector, className = '' }) => {
     Agriculture: (
       <svg className={className} viewBox="0 0 40 40" fill="none">
         <circle cx="20" cy="20" r="18" fill="#F0FDF4"/>
-        <path d="M12 28 L20 12 L28 28" stroke="#008532" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M16 24 L20 22 L24 24" stroke="#008532" strokeWidth="1.5" strokeLinecap="round"/>
-        <rect x="18" y="28" width="4" height="3" rx="1" fill="#008532" opacity="0.5"/>
+        <path d="M12 28 L20 12 L28 28" stroke="#059669" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M16 24 L20 22 L24 24" stroke="#059669" strokeWidth="1.5" strokeLinecap="round"/>
+        <rect x="18" y="28" width="4" height="3" rx="1" fill="#059669" opacity="0.5"/>
       </svg>
     ),
     Santé: (
@@ -132,8 +132,8 @@ export const SectorIcon = ({ sector, className = '' }) => {
     Énergie: (
       <svg className={className} viewBox="0 0 40 40" fill="none">
         <circle cx="20" cy="20" r="18" fill="#FFF7ED"/>
-        <path d="M22 8 L14 22 L20 22 L18 32 L28 18 L22 18 Z" fill="#F89406" opacity="0.6"/>
-        <path d="M22 8 L14 22 L20 22 L18 32" stroke="#F89406" strokeWidth="1.5" strokeLinejoin="round"/>
+        <path d="M22 8 L14 22 L20 22 L18 32 L28 18 L22 18 Z" fill="#F59E0B" opacity="0.6"/>
+        <path d="M22 8 L14 22 L20 22 L18 32" stroke="#F59E0B" strokeWidth="1.5" strokeLinejoin="round"/>
       </svg>
     ),
   };

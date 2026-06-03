@@ -5,11 +5,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        ciOrange: '#F89406', // Orange institutionnel
-        ciGreen: '#008532',  // Vert drapeau officiel
+        ciOrange: '#F59E0B', // Ambre - accent chaud
+        ciGreen: '#059669',  // Émeraude - vert moderne et sobre
         ciWhite: '#FFFFFF',
-        ciDark: '#1A1A1A',   // Noir profond pour le sérieux
-        ciGray: '#F3F4F6',   // Gris très clair pour les fonds de section
+        ciDark: '#111827',   // Gris très foncé
+        ciGray: '#F3F4F6',
       },
     },
   },

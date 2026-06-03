@@ -44,7 +44,7 @@ export default function Hero({ mapCenter, issues }) {
 
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-ciDark leading-[1.05] tracking-tight text-balance">
               Contribuez à{' '}
-              <span className="bg-gradient-to-r from-ciGreen to-green-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-ciGreen to-emerald-400 bg-clip-text text-transparent">
                 l'amélioration
               </span>
               <br />

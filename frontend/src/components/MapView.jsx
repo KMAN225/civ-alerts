@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 
-const markerSvg = (color = '#008532') => `
+const markerSvg = (color = '#059669') => `
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="36" viewBox="0 0 24 36">
     <path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 24 12 24s12-15 12-24C24 5.4 18.6 0 12 0z" fill="${color}" stroke="white" stroke-width="2"/>
     <circle cx="12" cy="12" r="4" fill="white"/>
   </svg>`;
 
 const DefaultIcon = L.divIcon({
-  html: markerSvg('#008532'),
+  html: markerSvg('#059669'),
   className: '',
   iconSize: [24, 36],
   iconAnchor: [12, 36],
@@ -60,7 +60,7 @@ const MapView = ({ issues, compact, mapCenter }) => {
         <MapController center={mapCenter} />
         {issueMarkers.map(issue => {
           const [lng, lat] = issue.coordinates.coordinates;
-          const pColor = priorityColors[issue.priority] || '#008532';
+          const pColor = priorityColors[issue.priority] || '#059669';
           const icon = L.divIcon({ html: markerSvg(pColor), className: '', iconSize: [24, 36], iconAnchor: [12, 36], popupAnchor: [0, -36] });
           return (
             <Marker key={issue._id} position={[lat, lng]} icon={icon}>

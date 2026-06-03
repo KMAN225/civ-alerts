@@ -173,7 +173,7 @@ export default function Home({ selectedSector, setSelectedSector, onLocateIssue,
                   { num: '03', title: 'Engagement Citoyen', desc: 'Le vote communautaire permet d\'identifier les urgences collectives prioritaires.', color: 'blue-600' },
                 ].map((item, idx) => (
                   <div key={idx} className="flex gap-4 p-5 bg-gray-50 dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 hover:shadow-md hover:border-gray-200 dark:hover:border-gray-600 transition-all duration-300 group">
-                    <div className={`flex-shrink-0 w-10 h-10 bg-${item.color} text-white rounded-xl flex items-center justify-center font-black text-sm group-hover:scale-110 transition-transform shadow-sm`} style={{ backgroundColor: item.color === 'ciGreen' ? '#008532' : item.color === 'ciOrange' ? '#F89406' : '#2563eb' }}>
+                    <div className={`flex-shrink-0 w-10 h-10 bg-${item.color} text-white rounded-xl flex items-center justify-center font-black text-sm group-hover:scale-110 transition-transform shadow-sm`} style={{ backgroundColor: item.color === 'ciGreen' ? '#059669' : item.color === 'ciOrange' ? '#F59E0B' : '#2563eb' }}>
                       {item.num}
                     </div>
                     <div>

@@ -103,9 +103,22 @@ nav.nav-scrolled {
   color: #1A1A1A;
 }
 .nav-scrolled .nav-logo {
-  background: #008532;
+  background: #059669;
   color: white;
-  box-shadow: 0 2px 8px rgba(0, 133, 50, 0.2);
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.2);
+}
+
+.nav-usertag {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.nav-scrolled .nav-usertag {
+  background: rgba(5, 150, 105, 0.05);
+  border-color: rgba(5, 150, 105, 0.1);
+}
+.dark .nav-scrolled .nav-usertag {
+  background: rgba(5, 150, 105, 0.15);
+  border-color: rgba(5, 150, 105, 0.2);
 }
 
 .nav-title { color: white; }
