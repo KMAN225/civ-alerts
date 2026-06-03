@@ -31,9 +31,9 @@ export default function Contact() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-28 pb-16">
+    <div className="min-h-screen bg-gray-200 pt-28 pb-16">
       <div className="max-w-5xl mx-auto px-6">
-        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
+        <div className="bg-gray-50 rounded-3xl border border-gray-200 shadow-sm overflow-hidden">
           <div className="bg-gradient-to-br from-ciGreen to-green-700 p-8 sm:p-10 text-white">
             <h1 className="text-3xl sm:text-4xl font-black mb-2">Contactez-nous</h1>
             <p className="text-white/70 text-base max-w-xl font-medium">
@@ -49,7 +49,7 @@ export default function Contact() {
                   <div>
                     <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Nom complet <span className="text-red-400">*</span></label>
                     <input
-                      className="w-full p-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-ciGreen outline-none transition-all text-sm placeholder:text-gray-400"
+                      className="w-full p-3.5 bg-gray-200 border border-gray-200 rounded-xl focus:ring-2 focus:ring-ciGreen outline-none transition-all text-sm placeholder:text-gray-400"
                       placeholder="Votre nom et prénom"
                       value={form.name}
                       onChange={e => setForm({...form, name: e.target.value})}
@@ -60,7 +60,7 @@ export default function Contact() {
                     <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Email <span className="text-red-400">*</span></label>
                     <input
                       type="email"
-                      className="w-full p-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-ciGreen outline-none transition-all text-sm placeholder:text-gray-400"
+                      className="w-full p-3.5 bg-gray-200 border border-gray-200 rounded-xl focus:ring-2 focus:ring-ciGreen outline-none transition-all text-sm placeholder:text-gray-400"
                       placeholder="exemple@mail.com"
                       value={form.email}
                       onChange={e => setForm({...form, email: e.target.value})}
@@ -71,7 +71,7 @@ export default function Contact() {
                 <div>
                   <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Sujet <span className="text-red-400">*</span></label>
                   <input
-                    className="w-full p-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-ciGreen outline-none transition-all text-sm placeholder:text-gray-400"
+                    className="w-full p-3.5 bg-gray-200 border border-gray-200 rounded-xl focus:ring-2 focus:ring-ciGreen outline-none transition-all text-sm placeholder:text-gray-400"
                     placeholder="Objet de votre message"
                     value={form.subject}
                     onChange={e => setForm({...form, subject: e.target.value})}
@@ -81,7 +81,7 @@ export default function Contact() {
                 <div>
                   <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Message <span className="text-red-400">*</span></label>
                   <textarea
-                    className="w-full p-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-ciGreen outline-none transition-all h-40 text-sm placeholder:text-gray-400 resize-none"
+                    className="w-full p-3.5 bg-gray-200 border border-gray-200 rounded-xl focus:ring-2 focus:ring-ciGreen outline-none transition-all h-40 text-sm placeholder:text-gray-400 resize-none"
                     placeholder="Décrivez votre demande en quelques lignes..."
                     value={form.message}
                     onChange={e => setForm({...form, message: e.target.value})}
@@ -114,7 +114,7 @@ export default function Contact() {
             </div>
 
             {/* Info */}
-            <div className="lg:col-span-2 p-8 sm:p-10 bg-gray-50/50">
+            <div className="lg:col-span-2 p-8 sm:p-10 bg-gray-200/50">
               <h3 className="text-xs font-black text-gray-500 uppercase tracking-widest mb-6">Informations</h3>
               <div className="space-y-6">
                 <div className="flex items-start gap-3">
@@ -163,7 +163,7 @@ export default function Contact() {
                       <a
                         key={i}
                         href="#"
-                        className="w-9 h-9 bg-gray-100 rounded-xl flex items-center justify-center hover:bg-ciGreen hover:text-white transition-all text-sm"
+                        className="w-9 h-9 bg-gray-200 rounded-xl flex items-center justify-center hover:bg-ciGreen hover:text-white transition-all text-sm"
                       >
                         {icon}
                       </a>

@@ -37,11 +37,11 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4 animate-fade-in">
       <div
-        className="bg-white w-full max-w-md rounded-3xl shadow-2xl shadow-black/10 animate-scale-in overflow-hidden"
+        className="bg-gray-50 w-full max-w-md rounded-3xl shadow-2xl shadow-black/10 animate-scale-in overflow-hidden"
         onClick={e => e.stopPropagation()}
       >
         <div className="relative bg-gradient-to-br from-ciGreen to-green-700 p-8 text-white overflow-hidden">
-          <div className="absolute top-[-50%] right-[-50%] w-full h-full bg-white/5 rounded-full blur-2xl"></div>
+          <div className="absolute top-[-50%] right-[-50%] w-full h-full bg-gray-50/5 rounded-full blur-2xl"></div>
           <div className="relative z-10">
             <div className="flex items-center justify-between">
               <div>
@@ -52,7 +52,7 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
               </div>
               <button
                 onClick={onClose}
-                className="w-8 h-8 bg-white/10 hover:bg-white/20 rounded-xl flex items-center justify-center text-white/80 hover:text-white transition-all"
+                className="w-8 h-8 bg-gray-50/10 hover:bg-gray-50/20 rounded-xl flex items-center justify-center text-white/80 hover:text-white transition-all"
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />

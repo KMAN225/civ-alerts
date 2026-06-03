@@ -1,20 +1,17 @@
-import React, { useState, useEffect, Component, lazy, Suspense } from 'react';
+import React, { useState, useEffect, Component } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import Footer from './components/Footer';
-import ThemeToggle from './components/ThemeToggle';
+import Home from './pages/Home';
+import AdminDashboard from './pages/AdminDashboard';
+import Trash from './pages/Trash';
+import About from './pages/About';
+import Terms from './pages/Terms';
+import Privacy from './pages/Privacy';
+import Contact from './pages/Contact';
 import { ToastProvider } from './components/Toast';
-import { ThemeProvider } from './context/ThemeContext';
 import { API_URL } from './config';
-
-const Home = lazy(() => import('./pages/Home'));
-const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
-const Trash = lazy(() => import('./pages/Trash'));
-const About = lazy(() => import('./pages/About'));
-const Terms = lazy(() => import('./pages/Terms'));
-const Privacy = lazy(() => import('./pages/Privacy'));
-const Contact = lazy(() => import('./pages/Contact'));
+import { sectors } from './data/sectorData';
 
 class ErrorBoundary extends Component {
   constructor(props) {
@@ -27,11 +24,11 @@ class ErrorBoundary extends Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen flex items-center justify-center p-4 bg-gray-50 dark:bg-gray-900 text-center">
-          <div className="max-w-md p-10 bg-white dark:bg-gray-800 rounded-3xl border border-gray-100 dark:border-gray-700 shadow-xl">
+        <div className="min-h-screen flex items-center justify-center p-4 bg-gray-50 text-center">
+          <div className="max-w-md p-10 bg-gray-50 rounded-3xl border border-gray-200 shadow-xl">
             <div className="text-6xl mb-6">⚠️</div>
-            <h2 className="text-2xl font-black text-ciDark dark:text-white mb-3">Erreur d'affichage</h2>
-            <p className="text-gray-500 dark:text-gray-400 mb-8 font-medium">Une erreur critique a empêché le chargement de la page.</p>
+            <h2 className="text-2xl font-black text-ciDark mb-3">Erreur d'affichage</h2>
+            <p className="text-gray-500 mb-8 font-medium">Une erreur critique a empêché le chargement de la page.</p>
             <button
               onClick={() => window.location.reload()}
               className="bg-ciGreen text-white px-8 py-3 rounded-xl font-bold hover:bg-ciDark transition-all"
@@ -44,14 +41,6 @@ class ErrorBoundary extends Component {
     }
     return this.props.children;
   }
-}
-
-function PageLoading() {
-  return (
-    <div className="min-h-[60vh] flex items-center justify-center">
-      <div className="w-8 h-8 border-4 border-ciGreen/30 border-t-ciGreen rounded-full animate-spin" />
-    </div>
-  );
 }
 
 function App() {
@@ -70,33 +59,74 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <ThemeProvider>
-        <Router>
-          <ToastProvider>
-            <div className="min-h-screen bg-gray-50 dark:bg-gray-950 font-sans text-ciDark dark:text-gray-100 transition-colors duration-300">
-              <Navbar selectedSector={selectedSector} setSelectedSector={setSelectedSector} />
-              <ThemeToggle />
-              <Suspense fallback={<PageLoading />}>
-                <Routes>
-                  <Route path="/" element={
-                    <>
-                      <Hero mapCenter={mapCenter} issues={allIssues} />
-                      <Home selectedSector={selectedSector} setSelectedSector={setSelectedSector} mapCenter={mapCenter} issues={allIssues} onLocateIssue={(coords) => setMapCenter(coords)} onIssueAdded={fetchIssues} />
-                    </>
-                  } />
-                  <Route path="/trash" element={<Trash />} />
-                  <Route path="/admin" element={<AdminDashboard />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/terms" element={<Terms />} />
-                  <Route path="/privacy" element={<Privacy />} />
-                  <Route path="/contact" element={<Contact />} />
-                </Routes>
-              </Suspense>
-              <Footer />
+      <Router>
+        <ToastProvider>
+        <div className="min-h-screen bg-gray-50 font-sans text-ciDark">
+          <Navbar selectedSector={selectedSector} setSelectedSector={setSelectedSector} />
+          <Routes>
+            <Route path="/" element={
+              <>
+                <Hero mapCenter={mapCenter} issues={allIssues} />
+                <Home selectedSector={selectedSector} setSelectedSector={setSelectedSector} mapCenter={mapCenter} issues={allIssues} onLocateIssue={(coords) => setMapCenter(coords)} onIssueAdded={fetchIssues} />
+              </>
+            } />
+            <Route path="/trash" element={<Trash />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+          <footer className="bg-ciDark text-gray-400">
+            <div className="max-w-7xl mx-auto px-6 py-16">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                <div className="md:col-span-2">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 bg-ciGreen rounded-xl flex items-center justify-center text-lg shadow-sm">🇨🇮</div>
+                    <div className="flex flex-col leading-none">
+                      <span className="text-lg font-black text-white tracking-tight uppercase">Civ<span className="text-ciOrange">Alerts</span></span>
+                      <span className="text-[8px] font-bold text-gray-500 uppercase tracking-widest">Portail National</span>
+                    </div>
+                  </div>
+                  <p className="text-sm text-gray-500 leading-relaxed max-w-md">
+                    Plateforme citoyenne de signalement des dysfonctionnements urbains et sectoriels en Côte d'Ivoire. Ensemble, améliorons notre cadre de vie.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="text-[10px] font-black text-white uppercase tracking-widest mb-4">Secteurs</h4>
+                  <ul className="space-y-2.5">
+                    {sectors.map(s => (
+                      <li key={s}>
+                        <a href="#" className="text-xs text-gray-500 hover:text-white transition-colors font-medium">{s}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="text-[10px] font-black text-white uppercase tracking-widest mb-4">Liens utiles</h4>
+                  <ul className="space-y-2.5">
+                    <li><a href="/about" className="text-xs text-gray-500 hover:text-white transition-colors font-medium">À propos</a></li>
+                    <li><a href="/terms" className="text-xs text-gray-500 hover:text-white transition-colors font-medium">Conditions d'utilisation</a></li>
+                    <li><a href="/privacy" className="text-xs text-gray-500 hover:text-white transition-colors font-medium">Confidentialité</a></li>
+                    <li><a href="/contact" className="text-xs text-gray-500 hover:text-white transition-colors font-medium">Contact</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div className="border-t border-gray-800 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <p className="text-xs text-gray-600 font-medium">
+                  © {new Date().getFullYear()} CIV-Alerts. République de Côte d'Ivoire.
+                </p>
+                <div className="flex items-center gap-4">
+                  <span className="text-xs text-gray-600 font-medium">Fait avec</span>
+                  <span className="text-sm">🇨🇮</span>
+                  <span className="text-xs text-gray-600 font-medium">pour la Côte d'Ivoire</span>
+                </div>
+              </div>
             </div>
-          </ToastProvider>
-        </Router>
-      </ThemeProvider>
+          </footer>
+        </div>
+      </ToastProvider>
+      </Router>
     </ErrorBoundary>
   );
 }

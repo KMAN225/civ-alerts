@@ -45,18 +45,18 @@ const sections = [
 
 export default function Terms() {
   return (
-    <div className="min-h-screen bg-gray-50 pt-28 pb-16">
+    <div className="min-h-screen bg-gray-200 pt-28 pb-16">
       <div className="max-w-4xl mx-auto px-6">
-        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
+        <div className="bg-gray-50 rounded-3xl border border-gray-200 shadow-sm overflow-hidden">
           <div className="bg-gradient-to-br from-ciDark to-gray-900 p-8 sm:p-10 text-white">
-            <div className="inline-flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider border border-white/10 mb-4">
+            <div className="inline-flex items-center gap-2 bg-gray-50/10 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider border border-white/10 mb-4">
               Document légal
             </div>
             <h1 className="text-3xl sm:text-4xl font-black mb-2">Conditions Générales d'Utilisation</h1>
             <p className="text-white/60 text-sm font-medium">Dernière mise à jour : Mai 2026</p>
           </div>
           <div className="p-8 sm:p-10">
-            <div className="mb-8 p-4 bg-gray-50 rounded-2xl border border-gray-100">
+            <div className="mb-8 p-4 bg-gray-200 rounded-2xl border border-gray-200">
               <p className="text-xs text-gray-500 leading-relaxed">
                 <strong className="text-gray-700">Préambule :</strong> Les présentes Conditions Générales d'Utilisation (ci-après "CGU") sont conclues entre l'Éditeur de la plateforme CIV-Alerts et toute personne physique ou morale accédant à la plateforme ou créant un compte (ci-après "l'Utilisateur").
               </p>

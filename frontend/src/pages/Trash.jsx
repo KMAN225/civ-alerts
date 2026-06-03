@@ -42,13 +42,13 @@ export default function Trash() {
   };
 
   if (loading) return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+    <div className="min-h-screen flex items-center justify-center bg-gray-200">
       <Spinner text="Chargement de la corbeille..." />
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-28 pb-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-200 pt-28 pb-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -57,14 +57,14 @@ export default function Trash() {
           </div>
           <button
             onClick={() => navigate('/')}
-            className="inline-flex items-center gap-2 bg-white text-gray-600 border border-gray-200 px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider hover:bg-gray-50 transition-all"
+            className="inline-flex items-center gap-2 bg-gray-50 text-gray-600 border border-gray-200 px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider hover:bg-gray-200 transition-all"
           >
             ← Retour
           </button>
         </div>
 
         {issues.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-16 text-center">
+          <div className="bg-gray-50 rounded-2xl border border-gray-200 shadow-sm p-16 text-center">
             <div className="text-5xl mb-4 opacity-30">🗑️</div>
             <p className="text-gray-400 text-sm font-bold">Corbeille vide</p>
             <p className="text-gray-300 text-xs mt-1">Les signalements supprimés apparaîtront ici</p>
@@ -72,7 +72,7 @@ export default function Trash() {
         ) : (
           <div className="space-y-3">
             {issues.map(issue => (
-              <div key={issue._id} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex items-center justify-between gap-4 hover:shadow-md transition-shadow">
+              <div key={issue._id} className="bg-gray-50 rounded-2xl border border-gray-200 shadow-sm p-5 flex items-center justify-between gap-4 hover:shadow-md transition-shadow">
                 <div className="flex-1 min-w-0">
                   <h3 className="font-bold text-ciDark truncate">{issue.title}</h3>
                   <p className="text-xs text-gray-400 mt-1 truncate">{issue.description}</p>

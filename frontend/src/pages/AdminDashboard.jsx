@@ -39,7 +39,7 @@ export default function AdminDashboard() {
   };
 
   if (loading) return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50/50">
+    <div className="min-h-screen flex items-center justify-center bg-gray-200/50">
       <Spinner text="Chargement..." />
     </div>
   );
@@ -52,7 +52,7 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50/50 pt-28 pb-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-200/50 pt-28 pb-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10">
           <div>
@@ -63,7 +63,7 @@ export default function AdminDashboard() {
           </div>
           <button
             onClick={() => navigate('/')}
-            className="inline-flex items-center gap-2 bg-white text-gray-600 border border-gray-200 px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider hover:bg-gray-50 hover:border-gray-300 transition-all duration-200"
+            className="inline-flex items-center gap-2 bg-gray-50 text-gray-600 border border-gray-200 px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider hover:bg-gray-200 hover:border-gray-300 transition-all duration-200"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -74,12 +74,12 @@ export default function AdminDashboard() {
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {[
-            { label: 'Total', value: stats.all, color: 'bg-gray-500', icon: '📋' },
+            { label: 'Total', value: stats.all, color: 'bg-gray-2000', icon: '📋' },
             { label: 'Signalés', value: stats.signaled, color: 'bg-yellow-500', icon: '🆕' },
             { label: 'En cours', value: stats.ongoing, color: 'bg-blue-500', icon: '🔄' },
             { label: 'Résolus', value: stats.resolved, color: 'bg-ciGreen', icon: '✅' },
           ].map((stat, idx) => (
-            <div key={idx} className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200">
+            <div key={idx} className="bg-gray-50 p-5 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-all duration-200">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-2xl font-black text-ciDark">{stat.value}</span>
                 <span className={`w-8 h-8 rounded-xl flex items-center justify-center text-sm ${stat.color.replace('bg-', 'bg-')}/10`}>{stat.icon}</span>
@@ -89,7 +89,7 @@ export default function AdminDashboard() {
           ))}
         </div>
 
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+        <div className="bg-gray-50 rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
           <div className="p-6 border-b border-gray-50 flex items-center gap-3">
             <div className="w-1.5 h-6 bg-ciOrange rounded-full"></div>
             <h3 className="text-sm font-black text-ciDark uppercase tracking-wider">Signalements ({stats.all})</h3>
@@ -98,7 +98,7 @@ export default function AdminDashboard() {
           <div className="overflow-x-auto">
             <table className="w-full text-left">
               <thead>
-                <tr className="bg-gray-50 text-gray-400 text-[10px] uppercase font-bold tracking-wider">
+                <tr className="bg-gray-200 text-gray-400 text-[10px] uppercase font-bold tracking-wider">
                   <th className="px-6 py-4">Signalement</th>
                   <th className="px-6 py-4">Secteur</th>
                   <th className="px-6 py-4">Votes</th>
@@ -108,13 +108,13 @@ export default function AdminDashboard() {
               </thead>
               <tbody className="divide-y divide-gray-50">
                 {issues.map(issue => (
-                  <tr key={issue._id} className="hover:bg-gray-50/50 transition-colors">
+                  <tr key={issue._id} className="hover:bg-gray-200/50 transition-colors">
                     <td className="px-6 py-4">
                       <div className="font-bold text-ciDark text-sm">{issue.title}</div>
                       <div className="text-[11px] text-gray-400 truncate max-w-xs mt-0.5">{issue.description}</div>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="text-[10px] font-bold px-2.5 py-1.5 bg-gray-50 rounded-lg text-gray-600 border border-gray-100">
+                      <span className="text-[10px] font-bold px-2.5 py-1.5 bg-gray-200 rounded-lg text-gray-600 border border-gray-200">
                         {issue.sector}
                       </span>
                     </td>

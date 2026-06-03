@@ -26,13 +26,13 @@ const stats = [
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-gray-50 pt-28 pb-16">
+    <div className="min-h-screen bg-gray-200 pt-28 pb-16">
       <div className="max-w-5xl mx-auto px-6 space-y-8">
 
         {/* Hero section */}
-        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
+        <div className="bg-gray-50 rounded-3xl border border-gray-200 shadow-sm overflow-hidden">
           <div className="bg-gradient-to-br from-ciGreen to-green-700 p-8 sm:p-12 text-white">
-            <div className="inline-flex items-center gap-2 bg-white/15 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider border border-white/20 mb-5">
+            <div className="inline-flex items-center gap-2 bg-gray-50/15 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider border border-white/20 mb-5">
               Plateforme d'intérêt public
             </div>
             <h1 className="text-3xl sm:text-5xl font-black mb-4">
@@ -56,7 +56,7 @@ export default function About() {
         {/* Values */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {values.map((v, i) => (
-            <div key={i} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-md transition-shadow">
+            <div key={i} className="bg-gray-50 rounded-2xl border border-gray-200 shadow-sm p-6 hover:shadow-md transition-shadow">
               <span className="text-3xl block mb-4">{v.icon}</span>
               <h3 className="text-sm font-black text-ciDark uppercase tracking-wider mb-2">{v.title}</h3>
               <p className="text-sm text-gray-500 leading-relaxed">{v.desc}</p>
@@ -65,7 +65,7 @@ export default function About() {
         </div>
 
         {/* How it works */}
-        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 sm:p-12">
+        <div className="bg-gray-50 rounded-3xl border border-gray-200 shadow-sm p-8 sm:p-12">
           <h2 className="text-2xl font-black text-ciDark mb-8">Fonctionnement</h2>
           <div className="grid grid-cols-1 sm:grid-cols-5 gap-6">
             {[
@@ -82,7 +82,7 @@ export default function About() {
               </div>
             ))}
           </div>
-          <div className="mt-8 pt-6 border-t border-gray-100">
+          <div className="mt-8 pt-6 border-t border-gray-200">
             <div className="flex items-center gap-3 p-4 bg-amber-50 rounded-2xl border border-amber-200">
               <span className="text-xl">⚖️</span>
               <p className="text-xs text-amber-700 font-medium">
