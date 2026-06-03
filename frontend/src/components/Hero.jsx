@@ -5,12 +5,15 @@ import { API_URL } from '../config';
 
 export default function Hero({ mapCenter, issues }) {
   const [stats, setStats] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let mounted = true;
     fetch(`${API_URL}/api/stats`)
       .then(res => res.ok ? res.json() : null)
-      .then(setStats)
-      .catch(() => {});
+      .then(data => { if (mounted) { setStats(data); setLoading(false); } })
+      .catch(() => { if (mounted) setLoading(false); });
+    return () => { mounted = false; };
   }, []);
 
   const statItems = stats ? [
@@ -18,12 +21,7 @@ export default function Hero({ mapCenter, issues }) {
     { value: stats.totalSectors, label: 'Secteurs couverts', icon: '⊕' },
     { value: stats.totalUsers, label: 'Citoyens engagés', icon: '◉' },
     { value: stats.inProgressIssues, label: 'En cours de traitement', icon: '⚡' },
-  ] : [
-    { value: '—', label: 'Signalements résolus', icon: '✓' },
-    { value: '6', label: 'Secteurs couverts', icon: '⊕' },
-    { value: '—', label: 'Citoyens engagés', icon: '◉' },
-    { value: '—', label: 'En cours de traitement', icon: '⚡' },
-  ];
+  ] : [];
 
   return (
     <section className="relative min-h-[90vh] flex items-center pt-28 pb-16 overflow-hidden">
@@ -105,18 +103,32 @@ export default function Hero({ mapCenter, issues }) {
         </div>
 
         <div className="mt-16 sm:mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 animate-fade-in">
-          {statItems.map((stat, idx) => (
-            <div
-              key={idx}
-              className="group relative bg-white/60 backdrop-blur-sm border border-gray-100 rounded-2xl p-5 sm:p-6 hover:shadow-xl hover:shadow-gray-200/50 hover:border-ciGreen/20 transition-all duration-300 hover:-translate-y-0.5"
-            >
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-2xl sm:text-3xl font-black text-ciDark">{stat.value}</span>
-                <span className="w-8 h-8 bg-ciGreen/10 rounded-lg flex items-center justify-center text-ciGreen text-sm font-bold group-hover:bg-ciGreen group-hover:text-white transition-all duration-300">{stat.icon}</span>
+          {loading ? (
+            <>
+              {[1,2,3,4].map(i => (
+                <div key={i} className="bg-white/60 backdrop-blur-sm border border-gray-100 rounded-2xl p-5 sm:p-6">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="h-8 w-16 bg-gray-200 rounded-lg animate-pulse" />
+                    <div className="w-8 h-8 bg-gray-200 rounded-lg animate-pulse" />
+                  </div>
+                  <div className="h-3 w-24 bg-gray-200 rounded animate-pulse mt-2" />
+                </div>
+              ))}
+            </>
+          ) : (
+            statItems.map((stat, idx) => (
+              <div
+                key={idx}
+                className="group relative bg-white/60 backdrop-blur-sm border border-gray-100 dark:border-gray-800 dark:bg-gray-900/60 rounded-2xl p-5 sm:p-6 hover:shadow-xl hover:shadow-gray-200/50 dark:hover:shadow-black/20 hover:border-ciGreen/20 transition-all duration-300 hover:-translate-y-0.5"
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-2xl sm:text-3xl font-black text-ciDark dark:text-white">{stat.value}</span>
+                  <span className="w-8 h-8 bg-ciGreen/10 rounded-lg flex items-center justify-center text-ciGreen text-sm font-bold group-hover:bg-ciGreen group-hover:text-white transition-all duration-300">{stat.icon}</span>
+                </div>
+                <p className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">{stat.label}</p>
               </div>
-              <p className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">{stat.label}</p>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
     </section>

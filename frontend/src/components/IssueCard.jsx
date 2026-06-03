@@ -6,20 +6,22 @@ import { formatDate } from '../utils/dates';
 import { getUser } from '../utils/auth';
 
 const priorityConfig = {
-  Critique: { bg: 'bg-red-50', text: 'text-red-600', border: 'border-red-200', dot: 'bg-red-500', label: 'Urgent' },
-  Moyenne: { bg: 'bg-amber-50', text: 'text-amber-600', border: 'border-amber-200', dot: 'bg-amber-500', label: 'Modéré' },
-  Faible: { bg: 'bg-blue-50', text: 'text-blue-600', border: 'border-blue-200', dot: 'bg-blue-500', label: 'Faible' }
+  Critique: { bg: 'bg-red-50 dark:bg-red-900/20', text: 'text-red-600 dark:text-red-400', border: 'border-red-200 dark:border-red-800', dot: 'bg-red-500', label: 'Urgent' },
+  Moyenne: { bg: 'bg-amber-50 dark:bg-amber-900/20', text: 'text-amber-600 dark:text-amber-400', border: 'border-amber-200 dark:border-amber-800', dot: 'bg-amber-500', label: 'Modéré' },
+  Faible: { bg: 'bg-blue-50 dark:bg-blue-900/20', text: 'text-blue-600 dark:text-blue-400', border: 'border-blue-200 dark:border-blue-800', dot: 'bg-blue-500', label: 'Faible' }
 };
 
 const statusConfig = {
-  'Signalé': { bg: 'bg-yellow-50', text: 'text-yellow-700', border: 'border-yellow-200', bar: 'bg-yellow-400', width: '15%' },
-  'En cours': { bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200', bar: 'bg-blue-500', width: '55%' },
-  'Résolu': { bg: 'bg-green-50', text: 'text-green-700', border: 'border-green-200', bar: 'bg-ciGreen', width: '100%' }
+  'Signalé': { bg: 'bg-yellow-50 dark:bg-yellow-900/20', text: 'text-yellow-700 dark:text-yellow-400', border: 'border-yellow-200 dark:border-yellow-800', bar: 'bg-yellow-400', width: '15%' },
+  'En cours': { bg: 'bg-blue-50 dark:bg-blue-900/20', text: 'text-blue-700 dark:text-blue-400', border: 'border-blue-200 dark:border-blue-800', bar: 'bg-blue-500', width: '55%' },
+  'Résolu': { bg: 'bg-green-50 dark:bg-green-900/20', text: 'text-green-700 dark:text-green-400', border: 'border-green-200 dark:border-green-800', bar: 'bg-ciGreen', width: '100%' }
 };
 
 const IssueCard = memo(function IssueCard({ issue, onDelete }) {
   const toast = useToast();
   const [imgError, setImgError] = useState(false);
+  const [votes, setVotes] = useState(issue.votes);
+  const [voting, setVoting] = useState(false);
   const user = getUser();
   const isOwner = issue.userId?._id === user?._id || issue.userId === user?._id;
 
@@ -35,11 +37,16 @@ const IssueCard = memo(function IssueCard({ issue, onDelete }) {
   };
 
   const vote = async () => {
+    if (voting) return;
+    setVoting(true);
+    setVotes(v => v + 1);
     try {
       await api(`/api/issues/${issue._id}/vote`, { method: 'PATCH' });
-      window.location.reload();
     } catch (err) {
+      setVotes(v => v - 1);
       toast.error(err.message);
+    } finally {
+      setVoting(false);
     }
   };
 
@@ -47,7 +54,7 @@ const IssueCard = memo(function IssueCard({ issue, onDelete }) {
   const stat = statusConfig[issue.status] || statusConfig['Signalé'];
 
   return (
-    <div className="group bg-white rounded-2xl border border-gray-100 hover:border-ciGreen/20 hover:shadow-xl hover:shadow-ciGreen/5 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+    <div className="group bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-ciGreen/20 hover:shadow-xl hover:shadow-ciGreen/5 dark:hover:shadow-ciGreen/10 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
       {issue.mediaUrl && !imgError && (
         <div className="relative h-44 bg-gray-50 overflow-hidden">
           <img
@@ -121,7 +128,7 @@ const IssueCard = memo(function IssueCard({ issue, onDelete }) {
               <svg className="w-4 h-4 group-hover/btn:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
               </svg>
-              <span className="tabular-nums">{issue.votes}</span>
+                <span className="tabular-nums">{votes}</span>
             </button>
             {isOwner && (
               <button

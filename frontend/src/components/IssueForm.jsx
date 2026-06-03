@@ -49,12 +49,12 @@ export default function IssueForm({ onIssueAdded, initialSector }) {
 
   return (
     <div id="signalement" className="scroll-mt-28">
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
-        <div className="p-6 border-b border-gray-50">
+      <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm">
+        <div className="p-6 border-b border-gray-50 dark:border-gray-800">
           <div className="flex items-center gap-3">
             <div className="w-1.5 h-8 bg-ciOrange rounded-full"></div>
             <div>
-              <h3 className="text-lg font-black text-ciDark">Nouveau Signalement</h3>
+              <h3 className="text-lg font-black text-ciDark dark:text-white">Nouveau Signalement</h3>
               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Formulaire citoyen</p>
             </div>
           </div>
@@ -64,7 +64,7 @@ export default function IssueForm({ onIssueAdded, initialSector }) {
           <div>
             <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Titre du problème</label>
             <input
-              className="w-full p-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-ciGreen outline-none transition-all text-sm placeholder:text-gray-400"
+              className="w-full p-3.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-ciGreen outline-none transition-all text-sm dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500"
               placeholder="Ex : Route dégradée, panne d'électricité..."
               value={formData.title}
               onChange={e => setFormData({...formData, title: e.target.value})}
@@ -75,7 +75,7 @@ export default function IssueForm({ onIssueAdded, initialSector }) {
           <div>
             <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Description</label>
             <textarea
-              className="w-full p-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-ciGreen outline-none transition-all h-28 text-sm placeholder:text-gray-400 resize-none"
+              className="w-full p-3.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-ciGreen outline-none transition-all h-28 text-sm dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 resize-none"
               placeholder="Décrivez le problème en quelques phrases..."
               value={formData.description}
               onChange={e => setFormData({...formData, description: e.target.value})}
@@ -87,7 +87,7 @@ export default function IssueForm({ onIssueAdded, initialSector }) {
             <div>
               <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Secteur</label>
               <select
-                className="w-full p-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-ciGreen outline-none transition-all text-sm cursor-pointer"
+                className="w-full p-3.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-ciGreen outline-none transition-all text-sm dark:text-white cursor-pointer"
                 value={formData.sector}
                 onChange={e => setFormData({...formData, sector: e.target.value})}
               >

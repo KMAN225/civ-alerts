@@ -1,0 +1,1 @@
+function r(t){return new Date(t).toLocaleDateString("fr-FR",{day:"numeric",month:"short",year:"numeric"})}function e(t){return new Date(t).toLocaleDateString("fr-FR",{day:"numeric",month:"short"})}export{e as a,r as f};
