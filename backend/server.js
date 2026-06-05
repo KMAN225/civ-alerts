@@ -24,13 +24,13 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", 'https://*.googletagmanager.com', 'https://*.google.com', 'https://*.doubleclick.net', 'https://*.adtrafficquality.google', 'https://*.googlesyndication.com', "'unsafe-inline'"],
+      scriptSrc: ["'self'", 'https://*.doubleclick.net', 'https://*.adtrafficquality.google', 'https://*.googlesyndication.com', "'unsafe-inline'"],
       scriptSrcAttr: ["'unsafe-inline'"],
       styleSrc: ["'self'", 'https:', "'unsafe-inline'"],
-      imgSrc: ["'self'", 'data:', '*.tile.openstreetmap.org', 'https://*.doubleclick.net', 'https://*.google.com', 'https://*.google-analytics.com', 'https://*.googlesyndication.com'],
+      imgSrc: ["'self'", 'data:', '*.tile.openstreetmap.org', 'https://*.doubleclick.net', 'https://*.google.com', 'https://*.googlesyndication.com', 'https://*.adtrafficquality.google'],
       fontSrc: ["'self'", 'https:', 'data:'],
-      connectSrc: ["'self'", 'https://*.tile.openstreetmap.org', 'https://*.doubleclick.net', 'https://*.google.com', 'https://*.google-analytics.com', 'https://*.googletagmanager.com', 'https://*.adtrafficquality.google', 'https://*.googlesyndication.com'],
-      formAction: ["'self'", 'https://*.doubleclick.net', 'https://*.google.com', 'https://*.googlesyndication.com'],
+      connectSrc: ["'self'", 'https://*.tile.openstreetmap.org', 'https://*.doubleclick.net', 'https://*.adtrafficquality.google', 'https://*.googlesyndication.com'],
+      formAction: ["'self'", 'https://*.doubleclick.net', 'https://*.googlesyndication.com'],
       frameAncestors: ["'self'"],
       frameSrc: ["'self'", 'https://*.doubleclick.net', 'https://*.google.com', 'https://*.adtrafficquality.google', 'https://*.googlesyndication.com'],
       objectSrc: ["'none'"],
