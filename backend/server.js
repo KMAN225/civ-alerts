@@ -13,7 +13,6 @@ const adminRoutes = require('./routes/adminRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 const statsRoutes = require('./routes/statsRoutes');
 const osintRoutes = require('./routes/osintRoutes');
-const { preloadModel } = require('./services/moderationService');
 
 const app = express();
 
@@ -92,7 +91,6 @@ const HOST = process.env.HOST || '0.0.0.0';
 
 const server = app.listen(PORT, HOST, () => {
   console.log(`🚀 Serveur lancé sur ${HOST}:${PORT} [${isProd ? 'PROD' : 'DEV'}]`);
-  preloadModel();
 });
 
 server.keepAliveTimeout = 120000;
