@@ -17,9 +17,10 @@ const statusConfig = {
   'Résolu': { bg: 'bg-green-50', text: 'text-green-700', border: 'border-green-200', bar: 'bg-ciGreen', width: '100%' }
 };
 
-const IssueCard = memo(function IssueCard({ issue, onDelete }) {
+const IssueCard = memo(function IssueCard({ issue, onDelete, onVote }) {
   const toast = useToast();
   const [imgError, setImgError] = useState(false);
+  const [localVotes, setLocalVotes] = useState(issue.votes);
   const user = getUser();
   const isOwner = issue.userId?._id === user?._id || issue.userId === user?._id;
 
@@ -36,8 +37,10 @@ const IssueCard = memo(function IssueCard({ issue, onDelete }) {
 
   const vote = async () => {
     try {
-      await api(`/api/issues/${issue._id}/vote`, { method: 'PATCH' });
-      window.location.reload();
+      const data = await api(`/api/issues/${issue._id}/vote`, { method: 'PATCH' });
+      setLocalVotes(data.votes);
+      if (onVote) onVote(issue._id);
+      toast.success('Vote enregistré');
     } catch (err) {
       toast.error(err.message);
     }
@@ -121,7 +124,7 @@ const IssueCard = memo(function IssueCard({ issue, onDelete }) {
               <svg className="w-4 h-4 group-hover/btn:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
               </svg>
-              <span className="tabular-nums">{issue.votes}</span>
+              <span className="tabular-nums">{localVotes}</span>
             </button>
             {isOwner && (
               <button

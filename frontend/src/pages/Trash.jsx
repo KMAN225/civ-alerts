@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useToast } from '../components/Toast';
 import { api } from '../utils/api';
 import { formatDate } from '../utils/dates';
+import { getUser } from '../utils/auth';
 import Spinner from '../components/Spinner';
 
 export default function Trash() {
@@ -12,7 +13,7 @@ export default function Trash() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = getUser();
     if (!user) { navigate('/'); return; }
     fetchTrash();
   }, []);

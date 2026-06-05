@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useToast } from './Toast';
 import { API_URL } from '../config';
 import { sectors } from '../data/sectorData';
 
 export default function IssueForm({ onIssueAdded, initialSector }) {
   const toast = useToast();
-  const [formData, setFormData] = useState({ title: '', description: '', sector: initialSector || 'Agriculture', location: '', priority: 'Moyenne' });
+  const fileInputRef = useRef(null);
+  const [formData, setFormData] = useState({ title: '', description: '', sector: initialSector || 'Agriculture', location: '', priority: 'Moyenne', lat: '', lng: '' });
+  const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [locating, setLocating] = useState(false);
   const [sending, setSending] = useState(false);
 
   useEffect(() => {
@@ -13,6 +17,34 @@ export default function IssueForm({ onIssueAdded, initialSector }) {
       setFormData(prev => ({ ...prev, sector: initialSector }));
     }
   }, [initialSector]);
+
+  const getLocation = () => {
+    if (!navigator.geolocation) {
+      toast.warning('Géolocalisation non supportée par votre navigateur');
+      return;
+    }
+    setLocating(true);
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setFormData(prev => ({ ...prev, lat: pos.coords.latitude, lng: pos.coords.longitude }));
+        toast.success('Position détectée');
+        setLocating(false);
+      },
+      () => {
+        toast.warning('Impossible de vous localiser. Entrez le lieu manuellement.');
+        setLocating(false);
+      },
+      { enableHighAccuracy: true }
+    );
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImage(file);
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,18 +55,31 @@ export default function IssueForm({ onIssueAdded, initialSector }) {
     }
     setSending(true);
     try {
+      const body = new FormData();
+      body.append('title', formData.title);
+      body.append('description', formData.description);
+      body.append('sector', formData.sector);
+      body.append('location', formData.location);
+      body.append('priority', formData.priority);
+      if (formData.lat && formData.lng) {
+        body.append('coordinates', JSON.stringify({ type: 'Point', coordinates: [parseFloat(formData.lng), parseFloat(formData.lat)] }));
+      }
+      if (image) body.append('image', image);
+
       const res = await fetch(`${API_URL}/api/issues`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-          'Content-Type': 'application/json'
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
-        body: JSON.stringify(formData)
+        body
       });
       if (res.ok) {
         toast.success('Signalement transmis avec succès');
         onIssueAdded();
-        setFormData({ title: '', description: '', sector: 'Agriculture', location: '', priority: 'Moyenne' });
+        setFormData({ title: '', description: '', sector: 'Agriculture', location: '', priority: 'Moyenne', lat: '', lng: '' });
+        setImage(null);
+        setImagePreview(null);
+        if (fileInputRef.current) fileInputRef.current.value = '';
       } else {
         const err = await res.json();
         const msg = err.errors ? err.errors.map(e => e.message).join('\n') : (err.message || 'Erreur lors de l\'envoi');
@@ -119,6 +164,53 @@ export default function IssueForm({ onIssueAdded, initialSector }) {
               <option value="Moyenne">Moyenne</option>
               <option value="Critique">Critique</option>
             </select>
+          </div>
+
+          <div>
+            <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Photo (optionnelle)</label>
+            <div className="flex items-center gap-3">
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="w-full text-sm text-gray-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-ciGreen file:text-white hover:file:bg-ciDark file:cursor-pointer file:transition-all cursor-pointer"
+              />
+            </div>
+            {imagePreview && (
+              <div className="mt-3 relative inline-block">
+                <img src={imagePreview} alt="Aperçu" className="h-28 w-auto rounded-xl object-cover border border-gray-200" />
+                <button
+                  type="button"
+                  onClick={() => { setImage(null); setImagePreview(null); if (fileInputRef.current) fileInputRef.current.value = ''; }}
+                  className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full text-xs font-bold hover:bg-red-600 transition-all"
+                >×</button>
+              </div>
+            )}
+          </div>
+
+          <div>
+            <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Localisation GPS</label>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={getLocation}
+                disabled={locating}
+                className="px-4 py-3 bg-ciOrange text-white rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-ciDark transition-all disabled:opacity-50 flex items-center gap-2"
+              >
+                {locating ? (
+                  <>
+                    <span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                    Recherche...
+                  </>
+                ) : (
+                  <>📍 Me localiser</>
+                )}
+              </button>
+              {formData.lat && (
+                <span className="text-[10px] text-gray-400 font-medium">✓ Position acquise</span>
+              )}
+            </div>
           </div>
 
           <button

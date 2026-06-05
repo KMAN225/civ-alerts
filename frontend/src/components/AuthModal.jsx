@@ -76,11 +76,13 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
             </div>
           )}
           <div>
-            <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Email</label>
+            <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">
+              {isLogin ? 'Email ou nom d\'utilisateur' : 'Email'}
+            </label>
             <input
-              type="email"
+              {...(isLogin ? {} : { type: 'email' })}
               className="w-full p-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-ciGreen outline-none transition-all text-sm placeholder:text-gray-400"
-              placeholder="exemple@mail.com"
+              placeholder={isLogin ? "email@mail.com ou pseudo" : "exemple@mail.com"}
               value={formData.email}
               onChange={e => setFormData({...formData, email: e.target.value})}
               required

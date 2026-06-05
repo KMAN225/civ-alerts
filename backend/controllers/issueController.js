@@ -45,6 +45,15 @@ exports.createIssue = async (req, res) => {
 
     const trustScore = await calculateTrustScore(req.user._id);
 
+    let coordinates = undefined;
+    if (req.body.coordinates) {
+      try {
+        coordinates = typeof req.body.coordinates === 'string'
+          ? JSON.parse(req.body.coordinates)
+          : req.body.coordinates;
+      } catch { /* ignore invalid coordinates */ }
+    }
+
     const issueData = {
       title,
       description,
@@ -55,6 +64,7 @@ exports.createIssue = async (req, res) => {
       aiProcessed: !!aiAnalysis,
       moderated: true,
       hidden: trustScore < 20,
+      ...(coordinates && { coordinates }),
       mediaUrl: req.files?.image?.[0]
         ? `${req.protocol}://${req.get('host')}/uploads/${req.files.image[0].filename}`
         : req.body.mediaUrl,
