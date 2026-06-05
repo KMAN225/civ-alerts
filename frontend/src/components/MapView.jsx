@@ -50,9 +50,12 @@ function LocateButton() {
   const toast = useToast();
   const [position, setPosition] = useState(null);
   const [locating, setLocating] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleLocate = useCallback(() => {
+    setError(false);
     if (!navigator.geolocation) {
+      toast.warning('Géolocalisation non supportée par votre navigateur');
       return;
     }
     setLocating(true);
@@ -60,15 +63,25 @@ function LocateButton() {
       (pos) => {
         const coords = [pos.coords.latitude, pos.coords.longitude];
         setPosition(coords);
-        map.flyTo(coords, 14, { duration: 1.5 });
+        map.flyTo(coords, 16, { duration: 1.5 });
         setLocating(false);
       },
-      () => {
+      (err) => {
         setLocating(false);
+        setError(true);
+        if (err.code === 1) {
+          toast.warning('Autorisez la géolocalisation dans les paramètres de votre navigateur');
+        } else if (err.code === 2) {
+          toast.warning('Position indisponible. Vérifiez votre connexion GPS');
+        } else if (err.code === 3) {
+          toast.warning('Délai de localisation dépassé. Réessayez');
+        } else {
+          toast.warning('Impossible de vous localiser');
+        }
       },
-      { enableHighAccuracy: false, timeout: 10000 }
+      { enableHighAccuracy: false, timeout: 15000, maximumAge: 60000 }
     );
-  }, [map]);
+  }, [map, toast]);
 
   return (
     <>
@@ -84,7 +97,12 @@ function LocateButton() {
           </Popup>
         </Marker>
       )}
-      <div className="leaflet-bottom leaflet-left" style={{ zIndex: 1000, marginBottom: '20px', marginLeft: '10px' }}>
+      <div style={{
+        position: 'absolute',
+        bottom: '20px',
+        left: '10px',
+        zIndex: 1000,
+      }}>
         <button
           onClick={handleLocate}
           disabled={locating}
@@ -115,7 +133,7 @@ const MapView = ({ issues, compact, mapCenter }) => {
   const issueMarkers = issues?.filter(i => i.coordinates?.coordinates?.length) || [];
 
   return (
-    <div style={{ height, width: '100%' }}>
+    <div style={{ height, width: '100%', position: 'relative' }}>
       <MapContainer
         center={defaultCenter}
         zoom={zoom}
