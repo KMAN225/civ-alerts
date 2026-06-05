@@ -24,12 +24,12 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", 'https://pagead2.googlesyndication.com', 'https://www.googletagmanager.com', "'unsafe-inline'"],
+      scriptSrc: ["'self'", 'https://pagead2.googlesyndication.com', 'https://www.googletagmanager.com', 'https://ep2.adtrafficquality.google', "'unsafe-inline'"],
       scriptSrcAttr: ["'unsafe-inline'"],
       styleSrc: ["'self'", 'https:', "'unsafe-inline'"],
-      imgSrc: ["'self'", 'data:', '*.tile.openstreetmap.org', 'https://pagead2.googlesyndication.com', 'https://googleads.g.doubleclick.net'],
+      imgSrc: ["'self'", 'data:', '*.tile.openstreetmap.org', 'https://pagead2.googlesyndication.com', 'https://googleads.g.doubleclick.net', 'https://www.google.com', 'https://www.google-analytics.com'],
       fontSrc: ["'self'", 'https:', 'data:'],
-      connectSrc: ["'self'", 'https://*.tile.openstreetmap.org', 'https://ep1.adtrafficquality.google', 'https://googleads.g.doubleclick.net', 'https://www.googletagmanager.com'],
+      connectSrc: ["'self'", 'https://*.tile.openstreetmap.org', 'https://ep1.adtrafficquality.google', 'https://ep2.adtrafficquality.google', 'https://googleads.g.doubleclick.net', 'https://www.googletagmanager.com', 'https://www.google-analytics.com', 'https://www.google.com'],
       formAction: ["'self'"],
       frameAncestors: ["'self'"],
       frameSrc: ["'self'", 'https://googleads.g.doubleclick.net'],
