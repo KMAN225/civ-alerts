@@ -11,12 +11,21 @@ export default function AdminDashboard() {
   const navigate = useNavigate();
   const [issues, setIssues] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [totalVisits, setTotalVisits] = useState(0);
   const user = getUser();
 
   useEffect(() => {
     if (!user || user.role !== 'admin') { navigate('/'); return; }
     fetchIssues();
+    fetchAdminStats();
   }, []);
+
+  const fetchAdminStats = async () => {
+    try {
+      const data = await api('/api/admin/stats');
+      setTotalVisits(data.totalVisits || 0);
+    } catch {}
+  };
 
   const handleStatusChange = async (id, newStatus) => {
     try {
@@ -72,12 +81,13 @@ export default function AdminDashboard() {
           </button>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
           {[
             { label: 'Total', value: stats.all, color: 'bg-gray-500', icon: '📋' },
             { label: 'Signalés', value: stats.signaled, color: 'bg-yellow-500', icon: '🆕' },
             { label: 'En cours', value: stats.ongoing, color: 'bg-blue-500', icon: '🔄' },
             { label: 'Résolus', value: stats.resolved, color: 'bg-ciGreen', icon: '✅' },
+            { label: 'Visites', value: totalVisits, color: 'bg-purple-500', icon: '👁️' },
           ].map((stat, idx) => (
             <div key={idx} className="bg-gray-50 p-5 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-all duration-200">
               <div className="flex items-center justify-between mb-2">

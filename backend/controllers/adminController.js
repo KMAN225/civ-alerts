@@ -1,4 +1,5 @@
 const Issue = require('../models/Issue');
+const Counter = require('../models/Counter');
 const { errorResponse, successResponse } = require('../utils/errorResponse');
 
 exports.updateIssueStatus = async (req, res) => {
@@ -17,11 +18,14 @@ exports.updateIssueStatus = async (req, res) => {
 
 exports.getStats = async (req, res) => {
   try {
-    const stats = await Issue.aggregate([
-      { $match: { deletedAt: null } },
-      { $group: { _id: '$status', count: { $sum: 1 } } }
+    const [aggregated, visitsDoc] = await Promise.all([
+      Issue.aggregate([
+        { $match: { deletedAt: null } },
+        { $group: { _id: '$status', count: { $sum: 1 } } }
+      ]),
+      Counter.findOne({ name: 'visits' })
     ]);
-    successResponse(res, stats);
+    successResponse(res, { issues: aggregated, totalVisits: visitsDoc?.value || 0 });
   } catch (err) {
     errorResponse(res, 500, err.message);
   }

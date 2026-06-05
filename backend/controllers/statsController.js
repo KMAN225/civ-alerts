@@ -1,5 +1,6 @@
 const Issue = require('../models/Issue');
 const User = require('../models/User');
+const Counter = require('../models/Counter');
 const { errorResponse, successResponse } = require('../utils/errorResponse');
 
 exports.getStats = async (req, res) => {
@@ -14,5 +15,18 @@ exports.getStats = async (req, res) => {
     successResponse(res, { resolvedIssues, inProgressIssues, totalIssues, totalSectors: 6, totalUsers });
   } catch (err) {
     errorResponse(res, 500, 'Erreur chargement statistiques');
+  }
+};
+
+exports.trackVisit = async (req, res) => {
+  try {
+    await Counter.findOneAndUpdate(
+      { name: 'visits' },
+      { $inc: { value: 1 } },
+      { upsert: true }
+    );
+    res.status(200).json({ ok: true });
+  } catch (err) {
+    res.status(200).json({ ok: true });
   }
 };

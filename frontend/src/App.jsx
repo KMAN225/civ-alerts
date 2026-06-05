@@ -55,7 +55,10 @@ function AppContent() {
       .catch(() => setAllIssues([]));
   };
 
-  useEffect(() => { fetchIssues(); }, []);
+  useEffect(() => {
+    fetchIssues();
+    fetch(`${API_URL}/api/stats/visit`, { method: 'POST' }).catch(() => {});
+  }, []);
 
   const handleSectorClick = (sector) => {
     setSelectedSector(sector);
