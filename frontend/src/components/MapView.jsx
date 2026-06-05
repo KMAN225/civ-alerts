@@ -34,15 +34,14 @@ function MapController({ center }) {
 }
 
 const userIcon = L.divIcon({
-  html: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="44" viewBox="0 0 32 44">
-    <path d="M16 0C7.2 0 0 7.2 0 16c0 12 16 28 16 28s16-16 16-28C32 7.2 24.8 0 16 0z" fill="#F89406" stroke="white" stroke-width="3"/>
-    <circle cx="16" cy="16" r="6" fill="white"/>
-    <circle cx="16" cy="16" r="3" fill="#F89406"/>
-  </svg>`,
+  html: `<div style="position:relative;display:flex;align-items:center;justify-content:center;width:24px;height:24px">
+    <div style="position:absolute;width:24px;height:24px;border-radius:50%;background:#F89406;animation:locate-pulse 2s ease-out infinite;opacity:0.3"></div>
+    <div style="width:14px;height:14px;background:#F89406;border-radius:50%;border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.2)"></div>
+  </div>`,
   className: '',
-  iconSize: [32, 44],
-  iconAnchor: [16, 44],
-  popupAnchor: [0, -44],
+  iconSize: [24, 24],
+  iconAnchor: [12, 12],
+  popupAnchor: [0, -16],
 });
 
 function LocateButton() {
