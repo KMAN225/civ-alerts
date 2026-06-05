@@ -31,7 +31,7 @@ export default function Contact() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-200 pt-28 pb-16">
+    <div className="min-h-screen pt-28 pb-16">
       <div className="max-w-5xl mx-auto px-6">
         <div className="bg-gray-50 rounded-3xl border border-gray-200 shadow-sm overflow-hidden">
           <div className="bg-gradient-to-br from-ciGreen to-green-700 p-8 sm:p-10 text-white">
@@ -159,13 +159,18 @@ export default function Contact() {
                 <div className="pt-4 border-t border-gray-200">
                   <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">Suivez-nous</h4>
                   <div className="flex gap-3">
-                    {['🐦', '💼', '📘', '💻'].map((icon, i) => (
+                    {[
+                      { icon: 'X', href: '#' },
+                      { icon: 'in', href: '#' },
+                      { icon: 'fb', href: '#' },
+                      { icon: 'GH', href: '#' },
+                    ].map((s, i) => (
                       <a
                         key={i}
-                        href="#"
-                        className="w-9 h-9 bg-gray-200 rounded-xl flex items-center justify-center hover:bg-ciGreen hover:text-white transition-all text-sm"
+                        href={s.href}
+                        className="w-9 h-9 bg-gray-200 rounded-xl flex items-center justify-center hover:bg-ciGreen hover:text-white transition-all text-[11px] font-black text-gray-500"
                       >
-                        {icon}
+                        {s.icon}
                       </a>
                     ))}
                   </div>

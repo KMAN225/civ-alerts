@@ -31,8 +31,8 @@ export default function Home({ selectedSector, setSelectedSector, onLocateIssue,
   };
 
   return (
-    <div className="min-h-screen bg-gray-200/50">
-      <section className="py-12 px-6 border-b border-gray-200 bg-gray-50">
+    <div className="min-h-screen">
+      <section className="py-12 px-6 border-b border-gray-200 bg-gray-50/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
             <div className="bg-gray-50 rounded-2xl shadow-sm border border-gray-200 overflow-hidden max-h-[500px] overflow-y-auto">
@@ -152,7 +152,7 @@ export default function Home({ selectedSector, setSelectedSector, onLocateIssue,
 
       <AdBanner slot="1234567890" className="py-6 px-6 bg-gray-200/50" />
 
-      <section className="py-20 px-6 bg-gray-50 border-t border-gray-200">
+      <section className="py-20 px-6 border-t border-gray-200">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-8">

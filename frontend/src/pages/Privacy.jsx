@@ -82,7 +82,7 @@ const sections = [
 
 export default function Privacy() {
   return (
-    <div className="min-h-screen bg-gray-200 pt-28 pb-16">
+    <div className="min-h-screen pt-28 pb-16">
       <div className="max-w-4xl mx-auto px-6">
         <div className="bg-gray-50 rounded-3xl border border-gray-200 shadow-sm overflow-hidden">
           <div className="bg-gradient-to-br from-ciDark to-gray-900 p-8 sm:p-10 text-white">
@@ -93,7 +93,7 @@ export default function Privacy() {
             <p className="text-white/60 text-sm font-medium">Conforme à la loi n°2013-450 — Dernière mise à jour : Mai 2026</p>
           </div>
           <div className="p-8 sm:p-10">
-            <div className="mb-8 p-4 bg-gray-200 rounded-2xl border border-gray-200">
+            <div className="mb-8 p-4 bg-gray-100 rounded-2xl border border-gray-200">
               <p className="text-xs text-gray-600 leading-relaxed">
                 CIV-Alerts accorde une importance capitale à la protection de vos données personnelles. La présente politique vous informe de la manière dont nous collectons, utilisons et protégeons vos informations lorsque vous utilisez notre plateforme.
               </p>

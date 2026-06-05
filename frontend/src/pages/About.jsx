@@ -26,7 +26,7 @@ const stats = [
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-gray-200 pt-28 pb-16">
+    <div className="min-h-screen pt-28 pb-16">
       <div className="max-w-5xl mx-auto px-6 space-y-8">
 
         {/* Hero section */}
