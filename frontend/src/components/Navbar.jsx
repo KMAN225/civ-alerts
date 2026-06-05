@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AuthModal from './AuthModal';
 import { useToast } from './Toast';
 import { sectors } from '../data/sectorData';
-import { getUser, clearAuth } from '../utils/auth';
+import { getToken, getUser, clearAuth } from '../utils/auth';
 
 export default function Navbar({ selectedSector, setSelectedSector }) {
   const toast = useToast();
@@ -23,7 +23,13 @@ export default function Navbar({ selectedSector, setSelectedSector }) {
     if (storedUser) setUser(storedUser);
   }, [isAuthOpen]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${getToken()}` }
+      });
+    } catch {}
     clearAuth();
     setUser(null);
   };
