@@ -12,12 +12,15 @@ const handleValidationErrors = (req, res, next) => {
 };
 
 const validateSignup = [
-  body('username').trim().isLength({ min: 3, max: 30 }).withMessage('Le nom d\'utilisateur doit contenir entre 3 et 30 caractères'),
+  body('username').trim().escape().isLength({ min: 3, max: 30 }).withMessage('Le nom d\'utilisateur doit contenir entre 3 et 30 caractères'),
   body('email').trim().isEmail().withMessage('Email invalide').normalizeEmail(),
   body('password')
     .isLength({ min: 8 }).withMessage('Le mot de passe doit contenir au moins 8 caractères')
     .matches(/[A-Z]/).withMessage('Le mot de passe doit contenir une majuscule')
     .matches(/[0-9]/).withMessage('Le mot de passe doit contenir un chiffre'),
+  body('nom').optional().trim().escape().isLength({ max: 50 }),
+  body('prenom').optional().trim().escape().isLength({ max: 50 }),
+  body('localite').optional().trim().escape().isLength({ max: 100 }),
   handleValidationErrors
 ];
 
@@ -28,9 +31,9 @@ const validateLogin = [
 ];
 
 const validateIssue = [
-  body('title').trim().isLength({ min: 3, max: 200 }).withMessage('Le titre doit contenir entre 3 et 200 caractères'),
-  body('description').trim().isLength({ min: 5, max: 2000 }).withMessage('La description doit contenir au moins 5 caractères'),
-  body('location').trim().notEmpty().withMessage('La localisation est requise'),
+  body('title').trim().escape().isLength({ min: 3, max: 200 }).withMessage('Le titre doit contenir entre 3 et 200 caractères'),
+  body('description').trim().escape().isLength({ min: 5, max: 2000 }).withMessage('La description doit contenir au moins 5 caractères'),
+  body('location').trim().escape().notEmpty().withMessage('La localisation est requise'),
   handleValidationErrors
 ];
 

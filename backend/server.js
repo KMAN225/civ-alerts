@@ -48,6 +48,19 @@ app.use(express.json({ limit: '10mb' }));
 app.use(mongoSanitize());
 app.use(hpp());
 
+// Trust Render proxy for rate limiting
+app.set('trust proxy', 1);
+
+// Redirection HTTP → HTTPS en production
+if (isProd) {
+  app.use((req, res, next) => {
+    if (req.headers['x-forwarded-proto'] !== 'https') {
+      return res.redirect('https://' + req.headers.host + req.url);
+    }
+    next();
+  });
+}
+
 // Rendre le dossier uploads accessible publiquement
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 

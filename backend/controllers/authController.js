@@ -6,6 +6,11 @@ const generateToken = (userId) => {
   return jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: '7d' });
 };
 
+const handleError = (res, err) => {
+  const msg = process.env.NODE_ENV === 'production' ? 'Erreur interne du serveur' : err.message;
+  errorResponse(res, 500, msg);
+};
+
 exports.signup = async (req, res) => {
   try {
     const { username, email, password, nom, prenom, dateNaissance, localite } = req.body;
@@ -24,7 +29,7 @@ exports.signup = async (req, res) => {
       }
     }, 201);
   } catch (err) {
-    errorResponse(res, 500, err.message);
+    handleError(res, err);
   }
 };
 
@@ -48,7 +53,7 @@ exports.login = async (req, res) => {
       }
     });
   } catch (err) {
-    errorResponse(res, 500, err.message);
+    handleError(res, err);
   }
 };
 
@@ -57,6 +62,14 @@ exports.getMe = async (req, res) => {
     const user = await User.findById(req.user._id).select('-password');
     successResponse(res, user);
   } catch (err) {
-    errorResponse(res, 500, err.message);
+    handleError(res, err);
+  }
+};
+
+exports.logout = async (req, res) => {
+  try {
+    successResponse(res, { message: 'Déconnexion réussie' });
+  } catch (err) {
+    handleError(res, err);
   }
 };

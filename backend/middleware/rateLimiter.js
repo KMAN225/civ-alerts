@@ -8,6 +8,14 @@ const authLimiter = rateLimit({
   legacyHeaders: false
 });
 
+const signupLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: 3,
+  message: { message: 'Trop de créations de compte. Réessayez dans 1 heure.' },
+  standardHeaders: true,
+  legacyHeaders: false
+});
+
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
@@ -16,4 +24,4 @@ const apiLimiter = rateLimit({
   legacyHeaders: false
 });
 
-module.exports = { authLimiter, apiLimiter };
+module.exports = { authLimiter, signupLimiter, apiLimiter };
