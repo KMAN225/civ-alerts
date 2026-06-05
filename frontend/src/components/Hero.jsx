@@ -75,7 +75,7 @@ export default function Hero({ mapCenter, issues }) {
             </div>
           </div>
 
-          <div className="hidden lg:block lg:col-span-5 space-y-6">
+          <div className="lg:col-span-5 space-y-6">
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-br from-ciGreen/10 to-ciOrange/10 rounded-3xl blur-2xl -translate-y-4 translate-x-4"></div>
               <div className="relative bg-gray-50 rounded-3xl shadow-2xl shadow-gray-200/50 border border-gray-200 overflow-hidden">

@@ -83,7 +83,13 @@ function AppContent() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
             <div className="md:col-span-2">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-ciGreen rounded-xl flex items-center justify-center text-lg shadow-sm">🇨🇮</div>
+                <div className="w-10 h-10 bg-ciGreen rounded-xl flex items-center justify-center shadow-sm overflow-hidden">
+                  <svg viewBox="0 0 32 32" className="w-5 h-5" fill="none">
+                    <rect width="32" height="32" rx="7" fill="white"/>
+                    <path d="M16 6c-5 0-9 4-9 9 0 7 9 14 9 14s9-7 9-14c0-5-4-9-9-9z" fill="#F89406"/>
+                    <circle cx="16" cy="15" r="3.5" fill="white"/>
+                  </svg>
+                </div>
                 <div className="flex flex-col leading-none">
                   <span className="text-lg font-black text-white tracking-tight uppercase">Civ<span className="text-ciOrange">Alerts</span></span>
                   <span className="text-[8px] font-bold text-gray-500 uppercase tracking-widest">Portail National</span>

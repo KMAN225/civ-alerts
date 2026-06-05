@@ -50,7 +50,9 @@ function LocateButton() {
   const [locating, setLocating] = useState(false);
 
   const handleLocate = useCallback(() => {
-    if (!navigator.geolocation) return;
+    if (!navigator.geolocation) {
+      return;
+    }
     setLocating(true);
     navigator.geolocation.getCurrentPosition(
       (pos) => {
@@ -62,7 +64,7 @@ function LocateButton() {
       () => {
         setLocating(false);
       },
-      { enableHighAccuracy: true }
+      { enableHighAccuracy: false, timeout: 10000 }
     );
   }, [map]);
 

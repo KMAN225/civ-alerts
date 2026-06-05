@@ -41,12 +41,16 @@ export default function Navbar({ selectedSector, setSelectedSector }) {
           <div className="flex justify-between items-center h-20">
             <div className="flex items-center gap-3">
               <a href="/" className="flex items-center gap-3 group">
-                <div className={`w-11 h-11 rounded-2xl flex items-center justify-center text-xl shadow-sm transition-all duration-300 ${
+                <div className={`w-11 h-11 rounded-2xl flex items-center justify-center text-xl shadow-sm transition-all duration-300 overflow-hidden ${
                   scrolled
                     ? 'bg-ciGreen text-white shadow-ciGreen/20'
-                    : 'bg-gray-50/80 backdrop-blur-sm text-ciDark shadow-lg'
+                    : 'bg-gray-50/80 backdrop-blur-sm shadow-lg'
                 }`}>
-                  🇨🇮
+                  <svg viewBox="0 0 32 32" className="w-6 h-6" fill="none">
+                    <rect width="32" height="32" rx="7" fill={scrolled ? 'white' : '#008532'}/>
+                    <path d="M16 6c-5 0-9 4-9 9 0 7 9 14 9 14s9-7 9-14c0-5-4-9-9-9z" fill={scrolled ? '#008532' : '#F89406'}/>
+                    <circle cx="16" cy="15" r="3.5" fill={scrolled ? 'white' : 'white'}/>
+                  </svg>
                 </div>
                 <div className="flex flex-col leading-none">
                   <span className={`text-xl font-black tracking-tighter uppercase transition-colors duration-300 ${
