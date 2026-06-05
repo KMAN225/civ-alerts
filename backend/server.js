@@ -24,14 +24,15 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", 'https://pagead2.googlesyndication.com'],
+      scriptSrc: ["'self'", 'https://pagead2.googlesyndication.com', 'https://www.googletagmanager.com', "'unsafe-inline'"],
       scriptSrcAttr: ["'unsafe-inline'"],
       styleSrc: ["'self'", 'https:', "'unsafe-inline'"],
-      imgSrc: ["'self'", 'data:', '*.tile.openstreetmap.org', 'https://pagead2.googlesyndication.com'],
+      imgSrc: ["'self'", 'data:', '*.tile.openstreetmap.org', 'https://pagead2.googlesyndication.com', 'https://googleads.g.doubleclick.net'],
       fontSrc: ["'self'", 'https:', 'data:'],
-      connectSrc: ["'self'", 'https://*.tile.openstreetmap.org'],
+      connectSrc: ["'self'", 'https://*.tile.openstreetmap.org', 'https://ep1.adtrafficquality.google', 'https://googleads.g.doubleclick.net', 'https://www.googletagmanager.com'],
       formAction: ["'self'"],
       frameAncestors: ["'self'"],
+      frameSrc: ["'self'", 'https://googleads.g.doubleclick.net'],
       objectSrc: ["'none'"],
       baseUri: ["'self'"],
       upgradeInsecureRequests: [],
