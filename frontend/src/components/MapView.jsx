@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 
@@ -33,6 +33,77 @@ function MapController({ center }) {
   return null;
 }
 
+const userIcon = L.divIcon({
+  html: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="44" viewBox="0 0 32 44">
+    <path d="M16 0C7.2 0 0 7.2 0 16c0 12 16 28 16 28s16-16 16-28C32 7.2 24.8 0 16 0z" fill="#F89406" stroke="white" stroke-width="3"/>
+    <circle cx="16" cy="16" r="6" fill="white"/>
+    <circle cx="16" cy="16" r="3" fill="#F89406"/>
+  </svg>`,
+  className: '',
+  iconSize: [32, 44],
+  iconAnchor: [16, 44],
+  popupAnchor: [0, -44],
+});
+
+function LocateButton() {
+  const map = useMap();
+  const [position, setPosition] = useState(null);
+  const [locating, setLocating] = useState(false);
+
+  const handleLocate = useCallback(() => {
+    if (!navigator.geolocation) return;
+    setLocating(true);
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const coords = [pos.coords.latitude, pos.coords.longitude];
+        setPosition(coords);
+        map.flyTo(coords, 14, { duration: 1.5 });
+        setLocating(false);
+      },
+      () => {
+        setLocating(false);
+      },
+      { enableHighAccuracy: true }
+    );
+  }, [map]);
+
+  return (
+    <>
+      {position && (
+        <Marker position={position} icon={userIcon}>
+          <Popup>
+            <div className="text-center">
+              <p className="font-bold text-xs">Vous êtes ici</p>
+              <p className="text-[10px] text-gray-400">
+                {position[0].toFixed(4)}, {position[1].toFixed(4)}
+              </p>
+            </div>
+          </Popup>
+        </Marker>
+      )}
+      <div className="leaflet-bottom leaflet-left" style={{ zIndex: 1000, marginBottom: '20px', marginLeft: '10px' }}>
+        <button
+          onClick={handleLocate}
+          disabled={locating}
+          className="flex items-center gap-2 bg-white border border-gray-200 px-3 py-2 rounded-xl shadow-md hover:shadow-lg hover:bg-gray-50 transition-all text-xs font-bold text-gray-700 disabled:opacity-60"
+        >
+          {locating ? (
+            <>
+              <span className="w-3 h-3 border-2 border-gray-300 border-t-ciOrange rounded-full animate-spin"></span>
+              Localisation...
+            </>
+          ) : (
+            <>
+              <span className="text-base leading-none">📍</span>
+              Me localiser
+            </>
+          )}
+        </button>
+      </div>
+    </>
+  );
+}
+
 const MapView = ({ issues, compact, mapCenter }) => {
   const defaultCenter = [7.54, -5.55];
   const zoom = compact ? 5.5 : 7;
@@ -58,6 +129,7 @@ const MapView = ({ issues, compact, mapCenter }) => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <MapController center={mapCenter} />
+        <LocateButton />
         {issueMarkers.map(issue => {
           const [lng, lat] = issue.coordinates.coordinates;
           const pColor = priorityColors[issue.priority] || '#008532';
