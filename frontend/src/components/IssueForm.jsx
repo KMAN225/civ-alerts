@@ -5,11 +5,13 @@ import { sectors } from '../data/sectorData';
 
 export default function IssueForm({ onIssueAdded, initialSector }) {
   const toast = useToast();
-  const fileInputRef = useRef(null);
-  const [formData, setFormData] = useState({ title: '', description: '', sector: initialSector || 'Agriculture', location: '', priority: 'Moyenne', lat: '', lng: '' });
+  const imageInputRef = useRef(null);
+  const videoInputRef = useRef(null);
+  const [formData, setFormData] = useState({ title: '', description: '', sector: initialSector || 'Agriculture', location: '', priority: 'Moyenne' });
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
-  const [locating, setLocating] = useState(false);
+  const [video, setVideo] = useState(null);
+  const [videoPreview, setVideoPreview] = useState(null);
   const [sending, setSending] = useState(false);
 
   useEffect(() => {
@@ -18,31 +20,19 @@ export default function IssueForm({ onIssueAdded, initialSector }) {
     }
   }, [initialSector]);
 
-  const getLocation = () => {
-    if (!navigator.geolocation) {
-      toast.warning('Géolocalisation non supportée par votre navigateur');
-      return;
-    }
-    setLocating(true);
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        setFormData(prev => ({ ...prev, lat: pos.coords.latitude, lng: pos.coords.longitude }));
-        toast.success('Position détectée');
-        setLocating(false);
-      },
-      () => {
-        toast.warning('Impossible de vous localiser. Entrez le lieu manuellement.');
-        setLocating(false);
-      },
-      { enableHighAccuracy: true }
-    );
-  };
-
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setImage(file);
       setImagePreview(URL.createObjectURL(file));
+    }
+  };
+
+  const handleVideoChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setVideo(file);
+      setVideoPreview(URL.createObjectURL(file));
     }
   };
 
@@ -61,10 +51,8 @@ export default function IssueForm({ onIssueAdded, initialSector }) {
       body.append('sector', formData.sector);
       body.append('location', formData.location);
       body.append('priority', formData.priority);
-      if (formData.lat && formData.lng) {
-        body.append('coordinates', JSON.stringify({ type: 'Point', coordinates: [parseFloat(formData.lng), parseFloat(formData.lat)] }));
-      }
       if (image) body.append('image', image);
+      if (video) body.append('video', video);
 
       const res = await fetch(`${API_URL}/api/issues`, {
         method: 'POST',
@@ -76,10 +64,13 @@ export default function IssueForm({ onIssueAdded, initialSector }) {
       if (res.ok) {
         toast.success('Signalement transmis avec succès');
         onIssueAdded();
-        setFormData({ title: '', description: '', sector: 'Agriculture', location: '', priority: 'Moyenne', lat: '', lng: '' });
+        setFormData({ title: '', description: '', sector: 'Agriculture', location: '', priority: 'Moyenne' });
         setImage(null);
         setImagePreview(null);
-        if (fileInputRef.current) fileInputRef.current.value = '';
+        setVideo(null);
+        setVideoPreview(null);
+        if (imageInputRef.current) imageInputRef.current.value = '';
+        if (videoInputRef.current) videoInputRef.current.value = '';
       } else {
         const err = await res.json();
         const msg = err.errors ? err.errors.map(e => e.message).join('\n') : (err.message || 'Erreur lors de l\'envoi');
@@ -166,49 +157,49 @@ export default function IssueForm({ onIssueAdded, initialSector }) {
             </select>
           </div>
 
-          <div>
-            <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Photo (optionnelle)</label>
-            <div className="flex items-center gap-3">
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                className="w-full text-sm text-gray-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-ciGreen file:text-white hover:file:bg-ciDark file:cursor-pointer file:transition-all cursor-pointer"
-              />
-            </div>
-            {imagePreview && (
-              <div className="mt-3 relative inline-block">
-                <img src={imagePreview} alt="Aperçu" className="h-28 w-auto rounded-xl object-cover border border-gray-200" />
-                <button
-                  type="button"
-                  onClick={() => { setImage(null); setImagePreview(null); if (fileInputRef.current) fileInputRef.current.value = ''; }}
-                  className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full text-xs font-bold hover:bg-red-600 transition-all"
-                >×</button>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Photo (optionnelle)</label>
+              <div className="flex items-center gap-3">
+                <input
+                  ref={imageInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="w-full text-sm text-gray-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-ciGreen file:text-white hover:file:bg-ciDark file:cursor-pointer file:transition-all cursor-pointer"
+                />
               </div>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Localisation GPS</label>
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={getLocation}
-                disabled={locating}
-                className="px-4 py-3 bg-ciOrange text-white rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-ciDark transition-all disabled:opacity-50 flex items-center gap-2"
-              >
-                {locating ? (
-                  <>
-                    <span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
-                    Recherche...
-                  </>
-                ) : (
-                  <>📍 Me localiser</>
-                )}
-              </button>
-              {formData.lat && (
-                <span className="text-[10px] text-gray-400 font-medium">✓ Position acquise</span>
+              {imagePreview && (
+                <div className="mt-3 relative inline-block">
+                  <img src={imagePreview} alt="Aperçu" className="h-24 w-auto rounded-xl object-cover border border-gray-200" />
+                  <button
+                    type="button"
+                    onClick={() => { setImage(null); setImagePreview(null); if (imageInputRef.current) imageInputRef.current.value = ''; }}
+                    className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-white rounded-full text-[10px] font-bold hover:bg-red-600 transition-all flex items-center justify-center"
+                  >×</button>
+                </div>
+              )}
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Vidéo (optionnelle)</label>
+              <div className="flex items-center gap-3">
+                <input
+                  ref={videoInputRef}
+                  type="file"
+                  accept="video/*"
+                  onChange={handleVideoChange}
+                  className="w-full text-sm text-gray-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-ciOrange file:text-white hover:file:bg-ciDark file:cursor-pointer file:transition-all cursor-pointer"
+                />
+              </div>
+              {videoPreview && (
+                <div className="mt-3 relative inline-block">
+                  <video src={videoPreview} controls className="h-24 w-auto rounded-xl border border-gray-200" />
+                  <button
+                    type="button"
+                    onClick={() => { setVideo(null); setVideoPreview(null); if (videoInputRef.current) videoInputRef.current.value = ''; }}
+                    className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-white rounded-full text-[10px] font-bold hover:bg-red-600 transition-all flex items-center justify-center"
+                  >×</button>
+                </div>
               )}
             </div>
           </div>
