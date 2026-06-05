@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import { useToast } from './Toast';
 import L from 'leaflet';
 
 const markerSvg = (color = '#008532') => `
@@ -46,6 +47,7 @@ const userIcon = L.divIcon({
 
 function LocateButton() {
   const map = useMap();
+  const toast = useToast();
   const [position, setPosition] = useState(null);
   const [locating, setLocating] = useState(false);
 
