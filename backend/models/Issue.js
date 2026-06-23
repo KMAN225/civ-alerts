@@ -43,5 +43,6 @@ IssueSchema.index({ userId: 1, deletedAt: 1 });
 IssueSchema.index({ status: 1, deletedAt: 1 });
 IssueSchema.index({ deletedAt: 1, createdAt: -1 });
 IssueSchema.index({ title: 1, location: 1 });
+IssueSchema.index({ coordinates: '2dsphere' });
 
 module.exports = mongoose.model('Issue', IssueSchema);

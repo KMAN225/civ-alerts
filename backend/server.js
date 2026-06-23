@@ -13,6 +13,7 @@ const adminRoutes = require('./routes/adminRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 const statsRoutes = require('./routes/statsRoutes');
 const osintRoutes = require('./routes/osintRoutes');
+const prerender = require('./prerender');
 
 const app = express();
 
@@ -68,9 +69,18 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 if (isProd) {
   const frontendDist = path.join(__dirname, '..', 'frontend', 'dist');
   app.use(express.static(frontendDist));
+
+  const knownSPARoutes = ['/', '/about', '/terms', '/privacy', '/contact', '/admin', '/trash'];
+
   app.get('*', (req, res, next) => {
     if (!req.path.startsWith('/api')) {
-      res.sendFile(path.join(frontendDist, 'index.html'));
+      const html = prerender.getHTML(req.path);
+      res.set('Content-Type', 'text/html; charset=utf-8');
+      // Désactiver l'indexation des pages admin/trash
+      if (req.path === '/admin' || req.path === '/trash') {
+        res.set('X-Robots-Tag', 'noindex, nofollow');
+      }
+      res.send(html);
     } else {
       next();
     }
@@ -100,7 +110,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5002;
 const HOST = process.env.HOST || '0.0.0.0';
 
 const server = app.listen(PORT, HOST, () => {

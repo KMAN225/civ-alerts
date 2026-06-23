@@ -6,18 +6,270 @@
     <link rel="alternate icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CIV-Alerts | Portail National de Signalement</title>
+    <title>CIV-Alerts | Portail National de Signalement Citoyen - Côte d'Ivoire</title>
+    <meta name="description" content="CIV-Alerts est le portail national de signalement citoyen en Côte d'Ivoire. Signalez les dysfonctionnements urbains et sectoriels : agriculture, santé, éducation, transport, numérique, énergie. Suivez la résolution en temps réel." />
+    <meta name="keywords" content="CIV-Alerts, signalement citoyen, Côte d'Ivoire, dysfonctionnement urbain, portail national, agriculture, santé, éducation, transport, service public, Abidjan" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="CIV-Alerts" />
+    <meta property="og:title" content="CIV-Alerts | Portail National de Signalement Citoyen" />
+    <meta property="og:description" content="Plateforme citoyenne de signalement des dysfonctionnements urbains et sectoriels en Côte d'Ivoire. Ensemble, améliorons notre cadre de vie." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://civ-alerts.onrender.com" />
+    <meta property="og:locale" content="fr_CI" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="CIV-Alerts | Portail National de Signalement" />
+    <meta name="twitter:description" content="Signalez les dysfonctionnements urbains et suivez leur résolution en temps réel." />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <meta name="google-site-verification" content="aYLEoe7c24RR_eShWeatDruW8OyigmwfyJ4okYEVwFY" />
     <meta name="google-adsense-account" content="ca-pub-4484826917625401">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4484826917625401" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "CIV-Alerts",
+      "alternateName": "Portail National de Signalement Citoyen",
+      "url": "https://civ-alerts.onrender.com",
+      "description": "Plateforme de signalement citoyen des dysfonctionnements urbains et sectoriels en Côte d'Ivoire.",
+      "inLanguage": "fr-CI",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://civ-alerts.onrender.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "CIV-Alerts",
+      "url": "https://civ-alerts.onrender.com",
+      "description": "Portail national de signalement citoyen des dysfonctionnements urbains et sectoriels en République de Côte d'Ivoire.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "contact@civ-alerts.ci",
+        "contactType": "customer service",
+        "availableLanguage": ["French"]
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "CI",
+        "addressLocality": "Abidjan"
+      }
+    }
+    </script>
+    <style>
+      .civ-seo-content { visibility: visible; }
+      .civ-seo-hidden { display: none; }
+      .civ-seo-content h1 { font-size: 1.5rem; font-weight: 900; margin-bottom: 0.75rem; color: #1a1a1a; }
+      .civ-seo-content h2 { font-size: 1.2rem; font-weight: 800; margin-top: 1.5rem; margin-bottom: 0.5rem; color: #1a1a1a; }
+      .civ-seo-content h3 { font-size: 1rem; font-weight: 700; margin-top: 1rem; margin-bottom: 0.25rem; color: #1a1a1a; }
+      .civ-seo-content p { font-size: 0.9rem; line-height: 1.5; margin-bottom: 0.5rem; color: #4b5563; }
+      .civ-seo-content ul { margin: 0.5rem 0 1rem 1.5rem; }
+      .civ-seo-content li { font-size: 0.85rem; line-height: 1.4; color: #4b5563; margin-bottom: 0.25rem; }
+      .civ-seo-content .stats { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1rem 0; }
+      .civ-seo-content .stat { flex: 1; min-width: 120px; background: #f3f4f6; padding: 1rem; border-radius: 0.75rem; }
+      .civ-seo-content .stat strong { display: block; font-size: 1.5rem; color: #008532; }
+      .civ-seo-content .stat span { font-size: 0.75rem; color: #6b7280; }
+      .civ-seo-content .sector-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem; margin: 0.75rem 0; }
+      .civ-seo-content .sector-card { background: #f9fafb; border: 1px solid #e5e7eb; padding: 1rem; border-radius: 0.75rem; }
+      .civ-seo-content .sector-card h3 { margin-top: 0; color: #008532; }
+      .civ-seo-content .features { display: flex; flex-direction: column; gap: 0.75rem; margin: 0.75rem 0; }
+      .civ-seo-content .feature { display: flex; gap: 0.75rem; padding: 0.75rem; background: #f9fafb; border-radius: 0.75rem; border: 1px solid #e5e7eb; }
+      .civ-seo-content .feature .num { width: 2rem; height: 2rem; background: #008532; color: white; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.75rem; flex-shrink: 0; }
+      .civ-seo-content .feature .num.orange { background: #f89406; }
+      .civ-seo-content .feature .num.blue { background: #2563eb; }
+      .civ-seo-content .steps { display: flex; flex-direction: column; gap: 0.75rem; margin: 0.75rem 0; }
+      .civ-seo-content .step { display: flex; align-items: flex-start; gap: 0.75rem; }
+      .civ-seo-content .step .num { width: 2rem; height: 2rem; background: #008532; color: white; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.75rem; flex-shrink: 0; }
+      .civ-seo-content .legal-section { margin: 0.75rem 0; padding-bottom: 0.75rem; border-bottom: 1px solid #e5e7eb; }
+      .civ-seo-content .legal-section:last-child { border-bottom: none; }
+      .civ-seo-content .legal-section h3 { color: #1a1a1a; }
+      .civ-seo-content .legal-section p { font-size: 0.85rem; }
+      .civ-seo-content .info-item { display: flex; gap: 0.75rem; align-items: center; padding: 0.75rem 0; }
+      .civ-seo-content .info-item + .info-item { border-top: 1px solid #e5e7eb; }
+      .civ-seo-content hr { border: none; border-top: 1px solid #e5e7eb; margin: 0.75rem 0; }
+    </style>
   </head>
   <body class="font-sans">
-    <div id="root"></div>
+    <div id="root">
+
+      <!-- ===== CONTENU STATIQUE POUR CRAWLERS ===== -->
+      <div class="civ-seo-content">
+        <header style="padding: 1.5rem; border-bottom: 1px solid #e5e7eb;">
+          <nav style="display: flex; justify-content: space-between; align-items: center; max-width: 80rem; margin: 0 auto;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <strong style="font-size: 1.1rem; color: #1a1a1a;">CIV<span style="color: #f89406;">-Alerts</span></strong>
+              <span style="font-size: 0.6rem; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.1em;">Portail National</span>
+            </div>
+            <a href="/about" style="font-size: 0.75rem; color: #008532; font-weight: 700;">À propos</a>
+          </nav>
+        </header>
+
+        <main style="max-width: 80rem; margin: 0 auto; padding: 2rem 1.5rem;">
+
+          <!-- Badge officiel -->
+          <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 1.5rem;">
+            <span style="width: 0.5rem; height: 0.5rem; border-radius: 50%; background: #008532;"></span>
+            <span style="background: #008532; color: white; padding: 0.2rem 0.5rem; border-radius: 0.5rem; font-size: 0.6rem; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase;">Officiel</span>
+            <span style="font-size: 0.6rem; color: #6b7280; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">République de Côte d'Ivoire</span>
+          </div>
+
+          <!-- Hero -->
+          <h1 style="font-size: 2rem; font-weight: 900; color: #1a1a1a; line-height: 1.2; margin-bottom: 1rem;">
+            Contribuez à <span style="color: #008532;">l'amélioration</span><br />de notre cadre de vie.
+          </h1>
+          <p style="font-size: 1rem; color: #6b7280; line-height: 1.6; margin-bottom: 2rem; max-width: 36rem;">
+            Le portail CIV-Alerts permet à chaque citoyen de signaler les dysfonctionnements urbains et sectoriels pour une résolution rapide et transparente. Ensemble, construisons une Côte d'Ivoire meilleure.
+          </p>
+
+          <!-- Stats -->
+          <div class="stats">
+            <div class="stat"><strong>6</strong><span>Secteurs couverts</span></div>
+            <div class="stat"><strong>24/7</strong><span>Disponibilité</span></div>
+            <div class="stat"><strong>IA</strong><span>Catégorisation automatique</span></div>
+            <div class="stat"><strong>100%</strong><span>Transparent</span></div>
+          </div>
+
+          <!-- Secteurs -->
+          <h2>Secteurs de signalement</h2>
+          <p>CIV-Alerts couvre 6 secteurs clés du développement de la Côte d'Ivoire. Les citoyens peuvent signaler des problèmes spécifiques à chaque secteur :</p>
+          <div class="sector-grid">
+            <div class="sector-card">
+              <h3>Agriculture</h3>
+              <p>Soutien aux planteurs et modernisation des cultures.</p>
+              <ul>
+                <li>Pénurie d'engrais et de semences</li>
+                <li>Accès difficile au crédit agricole</li>
+                <li>Problèmes de transport des récoltes</li>
+              </ul>
+            </div>
+            <div class="sector-card">
+              <h3>Santé</h3>
+              <p>Amélioration de la couverture sanitaire et des soins.</p>
+              <ul>
+                <li>Manque de médicaments essentiels</li>
+                <li>Insuffisance de personnel qualifié</li>
+                <li>Équipements médicaux obsolètes</li>
+              </ul>
+            </div>
+            <div class="sector-card">
+              <h3>Éducation</h3>
+              <p>Formation et avenir de la jeunesse ivoirienne.</p>
+              <ul>
+                <li>Manque de salles de classe</li>
+                <li>Insuffisance d'enseignants diplômés</li>
+                <li>Vétusté du matériel pédagogique</li>
+              </ul>
+            </div>
+            <div class="sector-card">
+              <h3>Transport</h3>
+              <p>Fluidité et sécurité des déplacements.</p>
+              <ul>
+                <li>Dégradation des routes secondaires</li>
+                <li>Embouteillages massifs en zone urbaine</li>
+                <li>Insécurité routière et accidents</li>
+              </ul>
+            </div>
+            <div class="sector-card">
+              <h3>Numérique</h3>
+              <p>Transformation digitale et connectivité.</p>
+              <ul>
+                <li>Instabilité de la connexion internet</li>
+                <li>Coût élevé des données mobiles</li>
+                <li>Fracture numérique entre villes et villages</li>
+              </ul>
+            </div>
+            <div class="sector-card">
+              <h3>Énergie</h3>
+              <p>Électrification et stabilité énergétique.</p>
+              <ul>
+                <li>Coupures d'électricité répétées</li>
+                <li>Instabilité de la tension électrique</li>
+                <li>Manque d'éclairage public dans certains quartiers</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Fonctionnement -->
+          <h2>Comment ça marche ?</h2>
+          <p>Le processus de signalement est simple et transparent en 4 étapes :</p>
+          <div class="steps">
+            <div class="step"><span class="num">1</span><p><strong>Identification</strong> : Repérez un dysfonctionnement dans votre localité (nids-de-poule, panne d'éclairage, décharge sauvage, etc.).</p></div>
+            <div class="step"><span class="num">2</span><p><strong>Signalement</strong> : Soumettez via notre formulaire avec photo et géolocalisation.</p></div>
+            <div class="step"><span class="num">3</span><p><strong>Analyse IA</strong> : Notre intelligence artificielle catégorise et priorise automatiquement le signalement.</p></div>
+            <div class="step"><span class="num">4</span><p><strong>Suivi</strong> : Les autorités compétentes sont notifiées et vous pouvez suivre la résolution en temps réel.</p></div>
+          </div>
+
+          <!-- À propos / Features -->
+          <h2>Pourquoi CIV-Alerts ?</h2>
+          <div class="features">
+            <div class="feature">
+              <div class="num">01</div>
+              <div><strong>Transparence Administrative</strong><br /><span style="font-size: 0.8rem; color: #6b7280;">Chaque étape du traitement est visible par le citoyen, garantissant la redevabilité des services publics.</span></div>
+            </div>
+            <div class="feature">
+              <div class="num orange">02</div>
+              <div><strong>Intelligence Artificielle</strong><br /><span style="font-size: 0.8rem; color: #6b7280;">Catégorisation et priorisation objective des signalements via des modèles de langage avancés.</span></div>
+            </div>
+            <div class="feature">
+              <div class="num blue">03</div>
+              <div><strong>Engagement Citoyen</strong><br /><span style="font-size: 0.8rem; color: #6b7280;">Le vote communautaire permet d'identifier les urgences collectives prioritaires.</span></div>
+            </div>
+          </div>
+
+          <!-- Disclaimer -->
+          <hr />
+          <p style="font-size: 0.75rem; color: #9ca3af; font-style: italic;">
+            CIV-Alerts est une plateforme indépendante de signalement citoyen. Les signalements sont transmis aux autorités compétentes sans garantie de délai de traitement. En cas d'urgence, contactez les services d'urgence appropriés. Conformément à la loi n°2013-450 relative à la protection des données à caractère personnel en République de Côte d'Ivoire.
+          </p>
+          <p style="font-size: 0.75rem; color: #9ca3af; margin-top: 1rem;">
+            Dernière mise à jour : Juin 2026
+          </p>
+        </main>
+
+        <footer style="background: #1a1a1a; padding: 2rem 1.5rem; color: #9ca3af; font-size: 0.75rem;">
+          <div style="max-width: 80rem; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 3rem;">
+            <div style="flex: 2; min-width: 200px;">
+              <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                <strong style="color: white; font-size: 1rem;">CIV<span style="color: #f89406;">-Alerts</span></strong>
+              </div>
+              <p style="color: #6b7280; line-height: 1.5;">Plateforme citoyenne de signalement des dysfonctionnements urbains et sectoriels en Côte d'Ivoire. Ensemble, améliorons notre cadre de vie.</p>
+            </div>
+            <div>
+              <h4 style="color: white; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.75rem;">Secteurs</h4>
+              <ul style="list-style: none; margin: 0; padding: 0;">
+                <li style="margin-bottom: 0.25rem;"><a href="/" style="color: #6b7280; text-decoration: none;">Agriculture</a></li>
+                <li style="margin-bottom: 0.25rem;"><a href="/" style="color: #6b7280; text-decoration: none;">Santé</a></li>
+                <li style="margin-bottom: 0.25rem;"><a href="/" style="color: #6b7280; text-decoration: none;">Éducation</a></li>
+                <li style="margin-bottom: 0.25rem;"><a href="/" style="color: #6b7280; text-decoration: none;">Transport</a></li>
+                <li style="margin-bottom: 0.25rem;"><a href="/" style="color: #6b7280; text-decoration: none;">Numérique</a></li>
+                <li style="margin-bottom: 0.25rem;"><a href="/" style="color: #6b7280; text-decoration: none;">Énergie</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 style="color: white; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.75rem;">Liens utiles</h4>
+              <ul style="list-style: none; margin: 0; padding: 0;">
+                <li style="margin-bottom: 0.25rem;"><a href="/about" style="color: #6b7280; text-decoration: none;">À propos</a></li>
+                <li style="margin-bottom: 0.25rem;"><a href="/terms" style="color: #6b7280; text-decoration: none;">Conditions d'utilisation</a></li>
+                <li style="margin-bottom: 0.25rem;"><a href="/privacy" style="color: #6b7280; text-decoration: none;">Confidentialité</a></li>
+                <li style="margin-bottom: 0.25rem;"><a href="/contact" style="color: #6b7280; text-decoration: none;">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+          <div style="max-width: 80rem; margin: 1.5rem auto 0; padding-top: 1.5rem; border-top: 1px solid #374151; display: flex; justify-content: space-between; align-items: center;">
+            <span>© 2026 CIV-Alerts. République de Côte d'Ivoire.</span>
+            <span>Fait avec 🇨🇮 pour la Côte d'Ivoire</span>
+          </div>
+        </footer>
+      </div>
+      <!-- ===== FIN CONTENU STATIQUE ===== -->
+
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

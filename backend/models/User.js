@@ -7,7 +7,7 @@ const UserSchema = new mongoose.Schema({
   password: { type: String, required: true },
   nom: { type: String, default: '' },
   prenom: { type: String, default: '' },
-  dateNaissance: { type: String, default: '' },
+  dateNaissance: { type: Date, default: null },
   localite: { type: String, default: '' },
   role: { type: String, enum: ['user', 'admin'], default: 'user' },
   trustScore: { type: Number, default: 0 },

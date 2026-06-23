@@ -38,7 +38,10 @@ export default function IssueForm({ onIssueAdded, initialSector }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const user = JSON.parse(localStorage.getItem('user'));
+    let user;
+    try {
+      user = JSON.parse(localStorage.getItem('user'));
+    } catch { user = null; }
     if (!user) {
       toast.warning('Connectez-vous pour signaler un problème');
       return;

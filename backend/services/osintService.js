@@ -17,13 +17,10 @@ async function checkDuplicate(title, location) {
   const similar = await Issue.find({
     deletedAt: null,
     hidden: false,
-    $expr: {
-      $and: [
-        { $gte: [{ $strLenCP: '$title' }, 3] },
-        { $gte: [{ $strLenCP: '$location' }, 2] }
-      ]
-    }
-  }).lean();
+  })
+    .select('title location')
+    .limit(200)
+    .lean();
 
   const threshold = 0.7;
   const matches = [];
@@ -90,18 +87,26 @@ async function calculateTrustScore(userId) {
 
   const helpfulVotes = totalVotes[0]?.votes || 0;
 
-  let score = 50;
+  const suspiciousVotes = await Issue.aggregate([
+    { $match: { userId: new mongoose.Types.ObjectId(userId), deletedAt: null } },
+    { $group: { _id: null, votes: { $sum: { $size: { $ifNull: ['$suspiciousVotes', []] } } } } }
+  ]);
+  const suspiciousCount = suspiciousVotes[0]?.votes || 0;
+
+  let score = 20;
   if (accountAge > 30) score += 10;
   if (accountAge > 90) score += 10;
-  if (accountAge > 365) score += 10;
+  if (accountAge > 365) score += 15;
   if (issuesSubmitted >= 1) score += 5;
   if (issuesSubmitted >= 5) score += 5;
-  if (issuesSubmitted >= 10) score += 5;
+  if (issuesSubmitted >= 10) score += 10;
   if (helpfulVotes >= 3) score += 5;
-  if (helpfulVotes >= 10) score += 5;
-  if (helpfulVotes >= 50) score += 5;
+  if (helpfulVotes >= 10) score += 10;
+  if (helpfulVotes >= 50) score += 10;
+  if (suspiciousCount >= 3) score -= 10;
+  if (suspiciousCount >= 10) score -= 15;
 
-  return Math.min(100, score);
+  return Math.max(0, Math.min(100, score));
 }
 
 async function fetchNewsForRegion(issue) {

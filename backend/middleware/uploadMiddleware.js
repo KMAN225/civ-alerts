@@ -17,18 +17,26 @@ const storage = multer.diskStorage({
   }
 });
 
+const allowedExtensions = /\.(jpg|jpeg|png|gif|webp|mp4|mov|avi|webm)$/i;
+const allowedMimes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'video/mp4', 'video/quicktime', 'video/x-msvideo', 'video/webm'];
+
 const fileFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith('image/') || file.mimetype.startsWith('video/')) {
+  const extOk = allowedExtensions.test(path.extname(file.originalname));
+  const mimeOk = allowedMimes.includes(file.mimetype);
+  if (extOk && mimeOk) {
     cb(null, true);
   } else {
-    cb(new Error('Seules les images et vidéos sont acceptées'), false);
+    cb(new Error('Format de fichier non accepté. Formats autorisés : JPG, PNG, GIF, WebP, MP4, MOV, AVI, WebM'), false);
   }
 };
 
 const upload = multer({
   storage: storage,
   fileFilter: fileFilter,
-  limits: { fileSize: 50 * 1024 * 1024 }
+  limits: {
+    fileSize: 50 * 1024 * 1024,
+    files: 2
+  }
 });
 
 module.exports = upload;

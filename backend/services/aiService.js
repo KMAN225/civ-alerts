@@ -29,9 +29,17 @@ Return ONLY a JSON object like this:
     });
 
     const content = response.content[0].text;
-    // Extract JSON from response (in case Claude adds conversational text)
-    const jsonMatch = content.match(/\{.*\}/s);
-    return jsonMatch ? JSON.parse(jsonMatch[0]) : null;
+    const jsonMatch = content.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) return null;
+    try {
+      return JSON.parse(jsonMatch[0]);
+    } catch {
+      const cleaned = jsonMatch[0]
+        .replace(/\/\/.*$/gm, '')
+        .replace(/,\s*}/g, '}')
+        .replace(/,\s*]/g, ']');
+      try { return JSON.parse(cleaned); } catch { return null; }
+    }
   } catch (error) {
     console.error('AI Analysis Error:', error);
     return null;

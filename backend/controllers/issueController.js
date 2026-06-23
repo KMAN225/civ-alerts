@@ -9,7 +9,7 @@ const { errorResponse, successResponse } = require('../utils/errorResponse');
 
 exports.getAllIssues = async (req, res) => {
   try {
-    const issues = await Issue.find({ deletedAt: null, hidden: false }).sort({ votes: -1 });
+    const issues = await Issue.find({ deletedAt: null, hidden: false }).sort({ createdAt: -1 });
     successResponse(res, issues);
   } catch (err) {
     errorResponse(res, 500, 'Erreur serveur');
@@ -48,9 +48,12 @@ exports.createIssue = async (req, res) => {
     let coordinates = undefined;
     if (req.body.coordinates) {
       try {
-        coordinates = typeof req.body.coordinates === 'string'
+        const parsed = typeof req.body.coordinates === 'string'
           ? JSON.parse(req.body.coordinates)
           : req.body.coordinates;
+        if (Array.isArray(parsed) && parsed.length === 2 && parsed.every(n => typeof n === 'number' && isFinite(n))) {
+          coordinates = parsed;
+        }
       } catch { /* ignore invalid coordinates */ }
     }
 
@@ -89,26 +92,25 @@ exports.createIssue = async (req, res) => {
 
 exports.voteHelpful = async (req, res) => {
   try {
-    const issueId = req.params.id;
     const userId = req.user._id;
-
-    const issue = await Issue.findById(issueId);
-    if (!issue || issue.deletedAt) return errorResponse(res, 404, 'Signalement introuvable');
+    const issue = await Issue.findOne({ _id: req.params.id, deletedAt: null });
+    if (!issue) return errorResponse(res, 404, 'Signalement introuvable');
 
     const alreadyHelpful = issue.helpfulVotes.some(id => id.toString() === userId.toString());
     const alreadySuspicious = issue.suspiciousVotes.some(id => id.toString() === userId.toString());
 
     if (alreadyHelpful) {
-      issue.helpfulVotes.pull(userId);
+      await Issue.findByIdAndUpdate(req.params.id, { $pull: { helpfulVotes: userId } });
     } else {
-      if (alreadySuspicious) issue.suspiciousVotes.pull(userId);
-      issue.helpfulVotes.push(userId);
+      const ops = { $addToSet: { helpfulVotes: userId } };
+      if (alreadySuspicious) ops.$pull = { suspiciousVotes: userId };
+      await Issue.findByIdAndUpdate(req.params.id, ops);
     }
 
-    await issue.save();
+    const updated = await Issue.findById(req.params.id);
     successResponse(res, {
-      helpful: issue.helpfulVotes.length,
-      suspicious: issue.suspiciousVotes.length,
+      helpful: updated.helpfulVotes.length,
+      suspicious: updated.suspiciousVotes.length,
       userVote: alreadyHelpful ? null : 'helpful'
     });
   } catch (err) {
@@ -118,30 +120,29 @@ exports.voteHelpful = async (req, res) => {
 
 exports.voteSuspicious = async (req, res) => {
   try {
-    const issueId = req.params.id;
     const userId = req.user._id;
-
-    const issue = await Issue.findById(issueId);
-    if (!issue || issue.deletedAt) return errorResponse(res, 404, 'Signalement introuvable');
+    const issue = await Issue.findOne({ _id: req.params.id, deletedAt: null });
+    if (!issue) return errorResponse(res, 404, 'Signalement introuvable');
 
     const alreadySuspicious = issue.suspiciousVotes.some(id => id.toString() === userId.toString());
     const alreadyHelpful = issue.helpfulVotes.some(id => id.toString() === userId.toString());
 
     if (alreadySuspicious) {
-      issue.suspiciousVotes.pull(userId);
+      await Issue.findByIdAndUpdate(req.params.id, { $pull: { suspiciousVotes: userId } });
     } else {
-      if (alreadyHelpful) issue.helpfulVotes.pull(userId);
-      issue.suspiciousVotes.push(userId);
+      const ops = { $addToSet: { suspiciousVotes: userId } };
+      if (alreadyHelpful) ops.$pull = { helpfulVotes: userId };
+      await Issue.findByIdAndUpdate(req.params.id, ops);
     }
 
-    if (issue.suspiciousVotes.length >= 3) {
-      issue.hidden = true;
+    const updated = await Issue.findById(req.params.id);
+    if (updated.suspiciousVotes.length >= 3) {
+      await Issue.findByIdAndUpdate(req.params.id, { hidden: true });
     }
 
-    await issue.save();
     successResponse(res, {
-      helpful: issue.helpfulVotes.length,
-      suspicious: issue.suspiciousVotes.length,
+      helpful: updated.helpfulVotes.length,
+      suspicious: updated.suspiciousVotes.length,
       userVote: alreadySuspicious ? null : 'suspicious'
     });
   } catch (err) {

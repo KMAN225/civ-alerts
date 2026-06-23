@@ -6,6 +6,13 @@ const generateToken = (userId) => {
   return jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: '7d' });
 };
 
+const formatUser = (user) => ({
+  id: user._id, username: user.username, role: user.role,
+  nom: user.nom, prenom: user.prenom,
+  dateNaissance: user.dateNaissance ? new Date(user.dateNaissance).toISOString().split('T')[0] : null,
+  localite: user.localite,
+});
+
 const handleError = (res, err) => {
   const msg = process.env.NODE_ENV === 'production' ? 'Erreur interne du serveur' : err.message;
   errorResponse(res, 500, msg);
@@ -21,13 +28,7 @@ exports.signup = async (req, res) => {
     await user.save();
 
     const token = generateToken(user._id);
-    successResponse(res, {
-      token,
-      user: {
-        id: user._id, username: user.username, role: user.role,
-        nom: user.nom, prenom: user.prenom, dateNaissance: user.dateNaissance, localite: user.localite,
-      }
-    }, 201);
+    successResponse(res, { token, user: formatUser(user) }, 201);
   } catch (err) {
     handleError(res, err);
   }
@@ -45,13 +46,7 @@ exports.login = async (req, res) => {
     if (!isMatch) return errorResponse(res, 400, 'Identifiants invalides');
 
     const token = generateToken(user._id);
-    successResponse(res, {
-      token,
-      user: {
-        id: user._id, username: user.username, role: user.role,
-        nom: user.nom, prenom: user.prenom, dateNaissance: user.dateNaissance, localite: user.localite,
-      }
-    });
+    successResponse(res, { token, user: formatUser(user) });
   } catch (err) {
     handleError(res, err);
   }
@@ -60,7 +55,7 @@ exports.login = async (req, res) => {
 exports.getMe = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).select('-password');
-    successResponse(res, user);
+    successResponse(res, formatUser(user));
   } catch (err) {
     handleError(res, err);
   }

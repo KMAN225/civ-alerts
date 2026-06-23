@@ -74,6 +74,7 @@ async function moderateImage(imagePath) {
     return isInappropriate(predictions);
   } catch (error) {
     console.error('Image moderation error:', error.message);
+    console.warn('⚠️ Moderation NSFW désactivée silencieusement - toutes les images seront acceptées');
     return { safe: true };
   }
 }
