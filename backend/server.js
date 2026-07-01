@@ -13,6 +13,7 @@ const adminRoutes = require('./routes/adminRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 const statsRoutes = require('./routes/statsRoutes');
 const osintRoutes = require('./routes/osintRoutes');
+const sitemapRoutes = require('./routes/sitemapRoutes');
 const prerender = require('./prerender');
 
 const app = express();
@@ -98,6 +99,7 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/stats', statsRoutes);
 app.use('/api/osint', osintRoutes);
+app.use('/', sitemapRoutes);
 
 // Global error handler
 app.use((err, req, res, next) => {

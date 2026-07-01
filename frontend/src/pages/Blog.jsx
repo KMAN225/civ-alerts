@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getBlogPosts, getBlogCategories } from '../data/blogData';
 
@@ -6,9 +6,45 @@ export default function Blog() {
   const posts = getBlogPosts();
   const categories = getBlogCategories();
 
+  useEffect(() => {
+    const isBrowser = () => typeof window !== 'undefined';
+    if (!isBrowser()) return;
+    const existing = document.getElementById('blog-schema');
+    if (existing) existing.remove();
+
+    const schema = {
+      '@context': 'https://schema.org',
+      '@type': 'Blog',
+      name: 'Blog CIV-Alerts',
+      description: 'Analyses, enquêtes et articles sur les enjeux civiques en Côte d\'Ivoire.',
+      url: 'https://civ-alerts.onrender.com/blog',
+      publisher: {
+        '@type': 'Organization',
+        name: 'CIV-Alerts',
+      },
+    };
+
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'blog-schema';
+    script.textContent = JSON.stringify(schema);
+    document.head.appendChild(script);
+
+    return () => {
+      const s = document.getElementById('blog-schema');
+      if (s) s.remove();
+    };
+  }, []);
+
   return (
     <div className="min-h-screen pt-28 pb-16">
       <div className="max-w-6xl mx-auto px-6">
+        <nav className="flex items-center gap-2 text-[11px] text-gray-400 font-semibold mb-8">
+          <Link to="/" className="hover:text-ciGreen transition-colors">Accueil</Link>
+          <span>/</span>
+          <span className="text-gray-600">Blog</span>
+        </nav>
+
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 bg-ciGreen/10 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider text-ciGreen border border-ciGreen/20 mb-4">
             Actualités & Analyses
@@ -31,7 +67,7 @@ export default function Blog() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {posts.map(post => (
+          {posts.map((post, index) => (
             <Link
               key={post.id}
               to={`/blog/${post.id}`}
@@ -59,13 +95,30 @@ export default function Blog() {
                     <div className="w-6 h-6 bg-ciGreen rounded-full flex items-center justify-center text-[8px] font-black text-white">
                       CA
                     </div>
-                    <span className="text-[11px] text-gray-400 font-semibold">{post.author}</span>
+                    <span className="text-[11px] text-gray-400 font-semibold">{post.date}</span>
                   </div>
-                  <span className="text-[11px] text-gray-400">{post.date}</span>
+                  <span className="text-[11px] text-gray-400">{post.author}</span>
                 </div>
               </div>
             </Link>
           ))}
+        </div>
+
+        <div className="text-center mt-16 bg-gradient-to-br from-ciGreen to-green-700 rounded-3xl p-8 sm:p-12 text-white">
+          <h2 className="text-2xl font-black mb-3">Vous avez un problème à signaler ?</h2>
+          <p className="text-white/80 max-w-lg mx-auto mb-6">
+            Utilisez CIV-Alerts pour signaler les dysfonctionnements dans votre localité
+            et contribuer à l'amélioration de notre cadre de vie.
+          </p>
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 bg-white text-ciGreen px-8 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider hover:bg-gray-100 transition-all shadow-lg"
+          >
+            Faire un signalement
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </Link>
         </div>
       </div>
     </div>

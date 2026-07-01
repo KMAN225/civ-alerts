@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://civ-alerts.onrender.com/sitemap.xml

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const statsData = [
@@ -33,9 +33,36 @@ const regions = [
 export default function Rapports() {
   const maxRegion = Math.max(...regions.map(r => r.count));
 
+  useEffect(() => {
+    const schema = {
+      '@context': 'https://schema.org',
+      '@type': 'Dataset',
+      name: 'Données de signalement CIV-Alerts',
+      description: 'Rapports et statistiques des signalements citoyens en Côte d\'Ivoire : répartition par secteur, top des villes, taux de résolution.',
+      publisher: {
+        '@type': 'Organization',
+        name: 'CIV-Alerts',
+      },
+    };
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'rapports-schema';
+    script.textContent = JSON.stringify(schema);
+    const old = document.getElementById('rapports-schema');
+    if (old) old.remove();
+    document.head.appendChild(script);
+    return () => { const s = document.getElementById('rapports-schema'); if (s) s.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen pt-28 pb-16">
       <div className="max-w-6xl mx-auto px-6">
+        <nav className="flex items-center gap-2 text-[11px] text-gray-400 font-semibold mb-6">
+          <Link to="/" className="hover:text-ciGreen transition-colors">Accueil</Link>
+          <span>/</span>
+          <span className="text-gray-600">Rapports</span>
+        </nav>
+
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 bg-ciGreen/10 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider text-ciGreen border border-ciGreen/20 mb-4">
             Données & Analyses
