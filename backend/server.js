@@ -70,7 +70,7 @@ if (isProd) {
   const frontendDist = path.join(__dirname, '..', 'frontend', 'dist');
   app.use(express.static(frontendDist));
 
-  const knownSPARoutes = ['/', '/about', '/terms', '/privacy', '/contact', '/admin', '/trash', '/blog', '/blog/defis-agriculture-ivoirienne-2026', '/blog/numerique-transformation-services-publics', '/blog/sante-ivoirienne-progres-defis', '/blog/education-ivoirienne-avancees-obstacles', '/blog/transport-urbain-abidjan-defis'];
+  const knownSPARoutes = ['/', '/about', '/terms', '/privacy', '/contact', '/admin', '/trash', '/guide', '/rapports', '/blog', '/blog/defis-agriculture-ivoirienne-2026', '/blog/numerique-transformation-services-publics', '/blog/sante-ivoirienne-progres-defis', '/blog/education-ivoirienne-avancees-obstacles', '/blog/transport-urbain-abidjan-defis', '/blog/energie-electrification-ivoirienne', '/blog/assainissement-eau-potable-cote-ivoire', '/blog/dechets-urbains-gestion-environnement', '/blog/developpement-urbain-abidjan-infrastructures'];
 
   app.get('*', (req, res, next) => {
     if (!req.path.startsWith('/api')) {

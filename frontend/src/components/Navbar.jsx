@@ -126,10 +126,24 @@ export default function Navbar({ selectedSector, setSelectedSector }) {
                 </div>
 
                 <Link
+                  to="/guide"
+                  className="px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-200 bg-ciGreen text-white shadow-lg shadow-ciGreen/25 hover:bg-ciDark active:scale-[0.97] text-center"
+                >
+                  Guide
+                </Link>
+
+                <Link
                   to="/blog"
                   className="px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-200 bg-ciGreen text-white shadow-lg shadow-ciGreen/25 hover:bg-ciDark active:scale-[0.97] text-center"
                 >
                   Blog
+                </Link>
+
+                <Link
+                  to="/rapports"
+                  className="px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-200 bg-gray-100 text-ciDark hover:bg-gray-200 active:scale-[0.97] text-center"
+                >
+                  Rapports
                 </Link>
 
                 <a
@@ -236,7 +250,9 @@ export default function Navbar({ selectedSector, setSelectedSector }) {
                   {sector}
                 </button>
               ))}
+              <Link to="/guide" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-wider bg-ciGreen text-white">Guide</Link>
               <Link to="/blog" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-wider bg-ciGreen text-white">Blog</Link>
+              <Link to="/rapports" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-wider bg-gray-100 text-gray-600">Rapports</Link>
               <a href="#explorer" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-wider bg-ciGreen text-white">Explorateur</a>
               {user && user.role === 'admin' && (
                 <a href="/admin" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-wider text-ciOrange bg-orange-50">Admin</a>

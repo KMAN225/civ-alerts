@@ -272,6 +272,14 @@ const routeConfigs = {
         <div style="max-width:80rem;margin:0 auto;text-align:center;">© 2026 CIV-Alerts. Côte d'Ivoire.</div>
       </footer>
     </div>`
+  },
+  '/guide': {
+    title: 'Guide d\'utilisation | CIV-Alerts — Comment signaler efficacement',
+    description: 'Guide complet pour utiliser CIV-Alerts : comment identifier un problème, soumettre un signalement, suivre son traitement et participer à la communauté citoyenne.',
+  },
+  '/rapports': {
+    title: 'Rapports et Statistiques | CIV-Alerts — Données des signalements',
+    description: 'Consultez les rapports et statistiques de CIV-Alerts : nombre de signalements traités, répartition par secteur, top des villes signalantes et tendances.',
   }
 };
 
