@@ -9,6 +9,8 @@ import About from './pages/About';
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
 import Contact from './pages/Contact';
+import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
 import { ToastProvider } from './components/Toast';
 import { API_URL } from './config';
 import { sectors } from './data/sectorData';
@@ -80,6 +82,8 @@ function AppContent() {
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:id" element={<BlogPost />} />
       </Routes>
       <footer className="bg-ciDark text-gray-400">
         <div className="max-w-7xl mx-auto px-6 py-16">
@@ -115,6 +119,7 @@ function AppContent() {
             <div>
               <h4 className="text-[10px] font-black text-white uppercase tracking-widest mb-4">Liens utiles</h4>
               <ul className="space-y-2.5">
+                <li><a href="/blog" className="text-xs text-gray-500 hover:text-white transition-colors font-medium">Blog</a></li>
                 <li><a href="/about" className="text-xs text-gray-500 hover:text-white transition-colors font-medium">À propos</a></li>
                 <li><a href="/terms" className="text-xs text-gray-500 hover:text-white transition-colors font-medium">Conditions d'utilisation</a></li>
                 <li><a href="/privacy" className="text-xs text-gray-500 hover:text-white transition-colors font-medium">Confidentialité</a></li>

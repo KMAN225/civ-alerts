@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import AuthModal from './AuthModal';
 import { useToast } from './Toast';
 import { sectors } from '../data/sectorData';
@@ -124,6 +125,13 @@ export default function Navbar({ selectedSector, setSelectedSector }) {
                   )}
                 </div>
 
+                <Link
+                  to="/blog"
+                  className="px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-200 bg-ciGreen text-white shadow-lg shadow-ciGreen/25 hover:bg-ciDark active:scale-[0.97] text-center"
+                >
+                  Blog
+                </Link>
+
                 <a
                   href="#explorer"
                   className="px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-200 bg-ciGreen text-white shadow-lg shadow-ciGreen/25 hover:bg-ciDark active:scale-[0.97] text-center"
@@ -228,6 +236,7 @@ export default function Navbar({ selectedSector, setSelectedSector }) {
                   {sector}
                 </button>
               ))}
+              <Link to="/blog" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-wider bg-ciGreen text-white">Blog</Link>
               <a href="#explorer" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-wider bg-ciGreen text-white">Explorateur</a>
               {user && user.role === 'admin' && (
                 <a href="/admin" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-wider text-ciOrange bg-orange-50">Admin</a>

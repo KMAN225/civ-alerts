@@ -101,3 +101,75 @@ body {
 .card-hover:hover {
   @apply -translate-y-0.5 shadow-lg;
 }
+
+.prose-civ h2 {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #1a1a1a;
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+.prose-civ h3 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose-civ p {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: #4b5563;
+  margin-bottom: 1rem;
+}
+
+.prose-civ p:last-child {
+  background: #fefce8;
+  border: 1px solid #fde68a;
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+  color: #92400e;
+  font-size: 0.9rem;
+  margin-top: 2rem;
+}
+
+.prose-civ p:last-child em {
+  font-style: normal;
+  font-weight: 700;
+}
+
+.prose-civ em {
+  font-style: italic;
+  color: #6b7280;
+}
+
+.prose-civ strong {
+  font-weight: 800;
+  color: #1a1a1a;
+}
+
+.prose-civ a {
+  color: #008532;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose-civ a:hover {
+  color: #1a1a1a;
+}
+
+@media (max-width: 640px) {
+  .prose-civ h2 {
+    font-size: 1.15rem;
+  }
+  .prose-civ h3 {
+    font-size: 0.95rem;
+  }
+  .prose-civ p {
+    font-size: 0.88rem;
+  }
+}

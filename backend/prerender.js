@@ -150,6 +150,100 @@ const routeConfigs = {
       </footer>
     </div>`
   },
+  '/blog': {
+    title: 'Blog | CIV-Alerts — Actualités et Analyses Citoyennes',
+    description: 'Retrouvez les analyses, enquêtes et articles de fond de CIV-Alerts sur les enjeux civiques en Côte d\'Ivoire : agriculture, santé, éducation, transport, numérique et énergie.',
+    content: `<div class="civ-seo-content">
+      <header style="padding:1.5rem;border-bottom:1px solid #e5e7eb;">
+        <nav style="display:flex;justify-content:space-between;align-items:center;max-width:80rem;margin:0 auto;">
+          <div style="display:flex;align-items:center;gap:0.5rem;">
+            <strong style="font-size:1.1rem;color:#1a1a1a;">CIV<span style="color:#f89406;">-Alerts</span></strong>
+            <span style="font-size:0.6rem;color:#9ca3af;text-transform:uppercase;letter-spacing:0.1em;">Portail National</span>
+          </div>
+          <a href="/" style="font-size:0.75rem;color:#008532;font-weight:700;">Accueil</a>
+        </nav>
+      </header>
+      <main style="max-width:80rem;margin:0 auto;padding:2rem 1.5rem;">
+        <div style="background:#008532;border-radius:1rem;padding:1.5rem;color:white;margin-bottom:1.5rem;">
+          <div style="background:rgba(255,255,255,0.15);display:inline-block;padding:0.25rem 0.75rem;border-radius:1rem;font-size:0.6rem;font-weight:900;letter-spacing:0.1em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.2);margin-bottom:1rem;">Actualités & Analyses</div>
+          <h1 style="font-size:1.75rem;font-weight:900;margin-bottom:0.5rem;">Blog CIV-Alerts</h1>
+          <p style="opacity:0.8;line-height:1.5;">Analyses, enquêtes et informations sur les défis urbains et sectoriels en Côte d'Ivoire. Informez-vous pour mieux signaler.</p>
+        </div>
+        <div class="sector-grid">
+          <div class="sector-card">
+            <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
+              <span style="font-size:0.6rem;background:rgba(0,133,50,0.1);color:#008532;padding:0.15rem 0.5rem;border-radius:0.5rem;font-weight:900;letter-spacing:0.1em;text-transform:uppercase;">Agriculture</span>
+              <span style="font-size:0.55rem;color:#9ca3af;">6 min</span>
+            </div>
+            <h3 style="font-size:0.9rem;font-weight:800;color:#1a1a1a;margin-bottom:0.25rem;">Les 6 défis majeurs de l'agriculture ivoirienne en 2026</h3>
+            <p style="font-size:0.75rem;color:#6b7280;line-height:1.4;">De la pénurie d'engrais à la mécanisation, tour d'horizon des obstacles que doivent surmonter les planteurs ivoiriens et des solutions pour y remédier.</p>
+          </div>
+          <div class="sector-card">
+            <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
+              <span style="font-size:0.6rem;background:rgba(0,133,50,0.1);color:#008532;padding:0.15rem 0.5rem;border-radius:0.5rem;font-weight:900;letter-spacing:0.1em;text-transform:uppercase;">Numérique</span>
+              <span style="font-size:0.55rem;color:#9ca3af;">5 min</span>
+            </div>
+            <h3 style="font-size:0.9rem;font-weight:800;color:#1a1a1a;margin-bottom:0.25rem;">Comment le numérique transforme les services publics en Côte d'Ivoire</h3>
+            <p style="font-size:0.75rem;color:#6b7280;line-height:1.4;">Du paiement des impôts en ligne à la dématérialisation des actes d'état civil, la transformation digitale des services publics ivoiriens accélère.</p>
+          </div>
+          <div class="sector-card">
+            <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
+              <span style="font-size:0.6rem;background:rgba(0,133,50,0.1);color:#008532;padding:0.15rem 0.5rem;border-radius:0.5rem;font-weight:900;letter-spacing:0.1em;text-transform:uppercase;">Santé</span>
+              <span style="font-size:0.55rem;color:#9ca3af;">7 min</span>
+            </div>
+            <h3 style="font-size:0.9rem;font-weight:800;color:#1a1a1a;margin-bottom:0.25rem;">Système de santé ivoirien : les progrès accomplis et les défis qui restent</h3>
+            <p style="font-size:0.75rem;color:#6b7280;line-height:1.4;">Couverture sanitaire universelle, infrastructures, personnel soignant : analyse complète de l'état du système de santé en Côte d'Ivoire en 2026.</p>
+          </div>
+        </div>
+        <p style="text-align:center;margin-top:1rem;"><a href="/" style="color:#008532;font-weight:700;">Retour à l'accueil</a></p>
+      </main>
+      <footer style="background:#1a1a1a;padding:2rem 1.5rem;color:#9ca3af;font-size:0.75rem;">
+        <div style="max-width:80rem;margin:0 auto;text-align:center;">© 2026 CIV-Alerts. Côte d'Ivoire.</div>
+      </footer>
+    </div>`
+  },
+  '/blog/defis-agriculture-ivoirienne-2026': {
+    title: 'Les 6 défis majeurs de l\'agriculture ivoirienne en 2026 | CIV-Alerts',
+    description: 'De la pénurie d\'engrais à la mécanisation, tour d\'horizon des obstacles que doivent surmonter les planteurs ivoiriens et des solutions pour y remédier.',
+    content: `<div class="civ-seo-content">
+      <header style="padding:1.5rem;border-bottom:1px solid #e5e7eb;">
+        <nav style="display:flex;justify-content:space-between;align-items:center;max-width:80rem;margin:0 auto;">
+          <div style="display:flex;align-items:center;gap:0.5rem;">
+            <strong style="font-size:1.1rem;color:#1a1a1a;">CIV<span style="color:#f89406;">-Alerts</span></strong>
+            <span style="font-size:0.6rem;color:#9ca3af;text-transform:uppercase;letter-spacing:0.1em;">Portail National</span>
+          </div>
+          <a href="/blog" style="font-size:0.75rem;color:#008532;font-weight:700;">Blog</a>
+        </nav>
+      </header>
+      <main style="max-width:80rem;margin:0 auto;padding:2rem 1.5rem;">
+        <div style="background:#008532;border-radius:1rem;padding:1.5rem;color:white;margin-bottom:1.5rem;">
+          <div style="background:rgba(255,255,255,0.15);display:inline-block;padding:0.25rem 0.75rem;border-radius:1rem;font-size:0.6rem;font-weight:900;letter-spacing:0.1em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.2);margin-bottom:1rem;">Agriculture • 6 min</div>
+          <h1 style="font-size:1.75rem;font-weight:900;margin-bottom:0.5rem;">Les 6 défis majeurs de l'agriculture ivoirienne en 2026</h1>
+          <p style="opacity:0.8;font-size:0.85rem;">28 Juin 2026 — Par CIV-Alerts</p>
+        </div>
+        <div style="background:white;border-radius:1rem;padding:1.5rem;border:1px solid #e5e7eb;">
+          <p style="font-size:0.9rem;color:#4b5563;line-height:1.7;margin-bottom:1rem;">L'agriculture représente le pilier de l'économie ivoirienne, employant près des deux tiers de la population active. Pourtant, le secteur fait face à des défis structurels qui freinent son développement.</p>
+          <h2 style="font-size:1.2rem;font-weight:800;color:#1a1a1a;margin-top:1.5rem;margin-bottom:0.5rem;">1. La pénurie d'engrais et de semences de qualité</h2>
+          <p style="font-size:0.9rem;color:#4b5563;line-height:1.7;margin-bottom:1rem;">L'accès aux intrants agricoles reste un problème criant pour les petits planteurs. Les engrais subventionnés arrivent souvent avec retard, et les semences améliorées sont encore hors de portée pour une majorité d'agriculteurs.</p>
+          <h2 style="font-size:1.2rem;font-weight:800;color:#1a1a1a;margin-top:1.5rem;margin-bottom:0.5rem;">2. L'accès difficile au crédit agricole</h2>
+          <p style="font-size:0.9rem;color:#4b5563;line-height:1.7;margin-bottom:1rem;">Les taux d'intérêt élevés et les garanties exigées découragent les petits planteurs de solliciter des prêts auprès des banques.</p>
+          <h2 style="font-size:1.2rem;font-weight:800;color:#1a1a1a;margin-top:1.5rem;margin-bottom:0.5rem;">3. Les problèmes de transport et de stockage</h2>
+          <p style="font-size:0.9rem;color:#4b5563;line-height:1.7;margin-bottom:1rem;">Les routes secondaires sont dans un état de dégradation avancée. Les pertes post-récolte sont estimées entre 20% et 40% selon les filières.</p>
+          <h2 style="font-size:1.2rem;font-weight:800;color:#1a1a1a;margin-top:1.5rem;margin-bottom:0.5rem;">4. Le vieillissement de la main-d'oeuvre</h2>
+          <p style="font-size:0.9rem;color:#4b5563;line-height:1.7;margin-bottom:1rem;">Les jeunes délaissent massivement les campagnes pour la ville, laissant une population agricole dont l'âge moyen dépasse 50 ans.</p>
+          <h2 style="font-size:1.2rem;font-weight:800;color:#1a1a1a;margin-top:1.5rem;margin-bottom:0.5rem;">5. Les effets du changement climatique</h2>
+          <p style="font-size:0.9rem;color:#4b5563;line-height:1.7;margin-bottom:1rem;">Saisons des pluies imprévisibles, sécheresses, inondations : le dérèglement climatique bouleverse les calendriers culturaux traditionnels.</p>
+          <h2 style="font-size:1.2rem;font-weight:800;color:#1a1a1a;margin-top:1.5rem;margin-bottom:0.5rem;">6. L'insécurité foncière</h2>
+          <p style="font-size:0.9rem;color:#4b5563;line-height:1.7;margin-bottom:1rem;">Les certificats fonciers sont encore peu nombreux, ce qui dissuade les investissements et alimente les conflits entre communautés.</p>
+          <p style="font-size:0.85rem;color:#92400e;background:#fefce8;border:1px solid #fde68a;border-radius:0.75rem;padding:1rem;margin-top:1.5rem;font-weight:600;">Vous êtes confronté à l'un de ces problèmes ? Signalez-le sur CIV-Alerts pour qu'une action soit entreprise.</p>
+        </div>
+        <p style="text-align:center;margin-top:1rem;"><a href="/blog" style="color:#008532;font-weight:700;">← Retour au blog</a></p>
+      </main>
+      <footer style="background:#1a1a1a;padding:2rem 1.5rem;color:#9ca3af;font-size:0.75rem;">
+        <div style="max-width:80rem;margin:0 auto;text-align:center;">© 2026 CIV-Alerts. Côte d'Ivoire.</div>
+      </footer>
+    </div>`
+  },
   '/contact': {
     title: 'Contact | CIV-Alerts',
     description: 'Contactez l\'équipe CIV-Alerts. Une question, un partenariat ou un problème technique ? Notre équipe vous répond sous 48 heures ouvrées.',

@@ -70,7 +70,7 @@ if (isProd) {
   const frontendDist = path.join(__dirname, '..', 'frontend', 'dist');
   app.use(express.static(frontendDist));
 
-  const knownSPARoutes = ['/', '/about', '/terms', '/privacy', '/contact', '/admin', '/trash'];
+  const knownSPARoutes = ['/', '/about', '/terms', '/privacy', '/contact', '/admin', '/trash', '/blog', '/blog/defis-agriculture-ivoirienne-2026', '/blog/numerique-transformation-services-publics', '/blog/sante-ivoirienne-progres-defis', '/blog/education-ivoirienne-avancees-obstacles', '/blog/transport-urbain-abidjan-defis'];
 
   app.get('*', (req, res, next) => {
     if (!req.path.startsWith('/api')) {
